@@ -1,0 +1,42 @@
+{
+    "name": "queencitycodefactory/butter-cream",
+    "description": "Butter Cream - A CakePHP Bootstrap 4 Theme/Plugin",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "plugin", "booststap"],
+    "homepage": "https://github.com/QueenCityCodeFactory/butter-cream",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Willetts Tech",
+            "homepage": "https://www.willettstech.com/"
+        }
+    ],
+    "require": {
+        "cakephp/cakephp": "^3.6"
+    },
+    "require-dev": {
+        "cakephp/chronos": "^1.1",
+        "phpunit/phpunit": "^5.7.14|^6.0"
+    },
+    "support": {
+        "issues": "https://github.com/QueenCityCodeFactory/butter-cream/issues",
+        "source": "https://github.com/QueenCityCodeFactory/butter-cream"
+    },
+    "autoload": {
+        "psr-4": {
+            "ButterCream\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ButterCream\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check"
+        ],
+        "cs-check": "phpcs --colors -p ./src ./tests",
+        "cs-fix": "phpcbf --colors ./src ./tests"
+    }
+}
