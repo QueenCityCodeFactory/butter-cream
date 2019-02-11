@@ -1,0 +1,57 @@
+<?php
+namespace {{ namespace }}\Controller{{ prefix }};
+
+use {{ namespace }}\Controller\AppController;
+
+/**
+ * {{ name }} Controller
+ *
+{% if defaultModel %}
+ * @property \{{ defaultModel }} ${{ name }}
+{% endif %}
+
+{%- for component in components %}
+{% set classInfo = Bake.classInfo(component, 'Controller/Component', 'Component') %}
+ * @property {{ classInfo.fqn }} ${{ classInfo.name }}
+{% endfor %}
+
+{%- if 'index' in actions %}
+ *
+ * @method \{{ namespace }}\Model\Entity\{{ entityClassName }}[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+{% endif %}
+ */
+class {{ name }}Controller extends AppController
+{
+{% set helpers = Bake.arrayProperty('helpers', helpers, {'indent': false})|raw %}
+{% if helpers|trim %}
+    {{- helpers|raw }}
+{% endif %}
+
+{%- set components = Bake.arrayProperty('components', components, {'indent': false})|raw %}
+{% if components|trim %}
+    {{- components|raw }}
+{% endif %}
+
+    /**
+     * Initialization hook method.
+     *
+     * Implement this method to avoid having to overwrite
+     * the constructor and call parent.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Prg', [
+            'actions' => [
+                'index'
+            ]
+        ]);
+    }
+
+{%- for action in actions %}
+    {%- element 'Controller/' ~ action %}
+{% endfor %}
+}

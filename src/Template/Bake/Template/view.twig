@@ -1,0 +1,90 @@
+{% set associations = {'BelongsTo': [], 'HasOne': [], 'HasMany': [], 'BelongsToMany': []}|merge(associations) %}
+{% set fieldsData = Bake.getViewFieldsData(fields, schema, associations) %}
+{% set associationFields = fieldsData.associationFields %}
+{% set groupedFields = fieldsData.groupedFields %}
+{% set pK = '$' ~ singularVar ~ '->' ~ primaryKey[0] %}
+<?php
+    $this->extend('ButterCream./Layout/view');
+    $this->assign('page_heading', '{{ singularHumanName }}');
+    $this->start('panel_buttons');
+?>
+<div class="btn-group pull-right">
+    <?= $this->Html->actionDropdownMenu([
+        $this->Html->tagLink('Edit {{ singularHumanName }}', ['action' => 'edit', {{ pK|raw }}]),
+        $this->Html->tagLink('List {{ pluralHumanName }}', ['action' => 'index']),
+        $this->Html->tagLink('New {{ singularHumanName }}', ['action' => 'add']),
+{% set done = [] %}
+{% for type, data in associations %}
+{% for alias, details in data %}
+{% if details.controller is not same as(_view.name) and details.controller not in done %}
+        $this->Html->tagLink('List {{ alias|underscore|humanize }}', ['controller' => '{{ details.controller }}', 'action' => 'index']),
+        $this->Html->tagLink('New {{ alias|underscore|singularize|humanize }}', ['controller' => '{{ details.controller }}', 'action' => 'add']),
+{% set done = done|merge(['controller']) %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+    ]) ?>
+</div>
+<?php $this->end(); ?>
+
+{% set relations = associations.BelongsToMany|merge(associations.HasMany) %}
+{% if relations %}
+<?php $this->start('related_data');
+{% for alias, details in relations %}
+{% set otherSingularVar = alias|variable %}
+{% set domId = details.controller|lower|underscore|humanize|slug %}
+    echo $this->Ajax->relatedData('{{ domId }}-pagination', ['controller' => '{{ details.controller }}', 'action' => 'index', '?' => ['{{ details.foreignKey }}' => {{ pK|raw }}]]);
+{% endfor %}
+$this->end(); ?>
+{% endif %}
+
+<div class="row">
+{% if groupedFields['string'] %}
+    <div class="col-lg-5">
+{% for field in groupedFields['string'] %}
+{% if associationFields[field] %}
+{% set details = associationFields[field] %}
+        <h6>{{ details.property|humanize }}</h6>
+        <p><?= ${{ singularVar }}->has('{{ details.property }}') ? $this->Html->link(${{ singularVar }}->{{ details.property }}->{{ details.displayField }}, ['controller' => '{{ details.controller }}', 'action' => 'view', ${{ singularVar }}->{{ details.property }}->{{ details.primaryKey[0] }}]) : '' ?></p>
+{% else %}
+        <h6>{{ field|humanize }}</h6>
+        <p><?= h(${{ singularVar }}->{{ field }}) ?></p>
+{% endif %}
+{% endfor %}
+    </div>
+{% endif %}
+{% if groupedFields.number %}
+    <div class="col-lg-2">
+{% for field in groupedFields.number %}
+        <h6>{{ field|humanize }}</h6>
+        <p><?= $this->Number->format(${{ singularVar }}->{{ field }}) ?></p>
+{% endfor %}
+    </div>
+{% endif %}
+{% if groupedFields.date %}
+    <div class="col-lg-2">
+{% for field in groupedFields.date %}
+        <h6>{{ field|humanize }}</h6>
+        <p><?= $this->Time->userFormat(${{ singularVar }}->{{ field }}) ?></p>
+{% endfor %}
+    </div>
+{% endif %}
+{% if groupedFields.boolean %}
+    <div class="col-lg-2">
+{% for field in groupedFields.boolean %}
+        <h6>{{ field|humanize }}</h6>
+        <p><?= ${{ singularVar }}->{{ field }} ? 'Yes' : 'No' ?></p>
+{% endfor %}
+    </div>
+{% endif %}
+</div>
+{% if groupedFields.text %}
+{% for field in groupedFields.text %}
+<div class="row">
+    <div class="col-lg-12">
+        <h6>{{ field|humanize }}</h6>
+        <?= $this->Text->autoParagraph(h(${{ singularVar }}->{{ field }})) ?>
+    </div>
+</div>
+{% endfor %}
+{% endif %}

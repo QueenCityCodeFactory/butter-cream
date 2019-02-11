@@ -1,0 +1,39 @@
+{% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
+{% set belongsToMany = Bake.aliasExtractor(modelObj, 'belongsToMany') %}
+{% set compact = ["'#{singularName}'"] %}
+
+    /**
+     * Edit method
+     *
+     * @param string|null $id {{ singularHumanName }} id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+{% if belongsToMany is empty %}
+        ${{ singularName }} = $this->{{ currentModelName }}->get($id);
+{% else %}
+        ${{ singularName }} = $this->{{ currentModelName }}->get($id, [
+            'contain' => [{{ Bake.stringifyList(belongsToMany, {'indent': false})|raw }}]
+        ]);
+{% endif %}
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            ${{ singularName }} = $this->{{ currentModelName }}->patchEntity(${{ singularName }}, $this->request->getData());
+            if ($this->{{ currentModelName }}->save(${{ singularName }})) {
+                $this->Flash->success('The {{ singularHumanName|lower }} has been saved.');
+
+                return $this->Referer->redirect(['action' => 'index']);
+            }
+            $this->Flash->error('The {{ singularHumanName|lower }} could not be saved. Please, try again.');
+        }
+{% for assoc in belongsTo|merge(belongsToMany) %}
+    {%- set otherName = Bake.getAssociatedTableAlias(modelObj, assoc) %}
+    {%- set otherPlural = otherName|variable %}
+        ${{ otherPlural }} = $this->{{ currentModelName }}->{{ otherName }}->find('list');
+        {{- "\n" }}
+    {%- set compact = compact|merge(["'#{otherPlural}'"]) %}
+{% endfor %}
+        $this->set(compact({{ compact|join(', ')|raw }}));
+        $this->set('_serialize', ['{{ singularName }}']);
+    }

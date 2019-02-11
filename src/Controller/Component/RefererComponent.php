@@ -55,7 +55,7 @@ class RefererComponent extends Component
      */
     public function setReferer($default = null)
     {
-        if (empty($this->request->getData('Referer.url'))) {
+        if ($this->request->getData('Referer.url') === null) {
             $referer = $this->request->referer();
 
             if ($referer == '/' && !empty($default)) {
