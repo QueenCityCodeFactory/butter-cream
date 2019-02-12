@@ -20,8 +20,6 @@ if (!empty($plugin) && !Plugin::loaded($plugin)) {
     $filePath = $pluginPath . h($plugin) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
 }
 
-$this->layout = 'dev_error';
-
 $this->assign('templateName', 'missing_behavior.ctp');
 
 $this->assign('title', 'Missing Behavior');

@@ -1,8 +1,6 @@
 <?php
 use Cake\Core\Configure;
 
-$this->layout = 'dev_error';
-
 $pluginPath = Configure::read('App.paths.plugins.0');
 
 $this->assign('title', 'Missing Plugin');

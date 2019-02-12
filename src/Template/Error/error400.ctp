@@ -1,6 +1,7 @@
 <?php
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
+
 $this->assign('title', $code . ': ' . $message);
 $this->assign('templateName', 'error400.ctp');
 
@@ -29,11 +30,10 @@ endif;
 ?>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="bg-bamboo text-center">
-            <div class="error-bubble">
-                <?= $code ?> - <?= $message ?>
-            </div>
+    <div class="col">
+        <div class="alert alert-danger">
+            <h4 class="alert-heading"><?= $code ?></h4>
+            <p><?= $message ?></p>
         </div>
     </div>
 </div>

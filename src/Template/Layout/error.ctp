@@ -1,7 +1,8 @@
 <?php
-use Cake\I18n\Time;
 use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Cake\View\Exception\MissingElementException;
 
 /**
@@ -12,8 +13,6 @@ if (!$this->fetch('html')) {
     printf('<html lang="%s">', Configure::read('App.language'));
     $this->end();
 }
-
-$this->assign('title', Configure::read('App.title') . ': ' . Inflector::humanize(Inflector::underscore($this->request->getParam('controller'))));
 
 /**
  * Default `footer` block.
@@ -75,8 +74,11 @@ if (Configure::read('debug') === true) {
     $this->prepend('script', $this->Html->script(['app.min.js?cb=' . Configure::read('CacheBuster.jsCB')]));
 }
 
+/**
+ * Body tag attributes
+ */
 if (!$this->fetch('body_tag_attrs')) {
-    $bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action')];
+    $bodyClasses = ['error-page', Configure::read('App.environment'), strtolower(Text::slug(Inflector::dasherize($this->request->getParam('controller')))), strtolower(Text::slug(Inflector::dasherize($this->request->getParam('action'))))];
     $skinClass = $this->request->getSession()->read('Auth.User.theme');
     if (!empty($skinClass)) {
         $bodyClasses[] = $skinClass;
@@ -124,9 +126,9 @@ $this->append('script'); ?>
         var frames = document.querySelectorAll('.stack-frame');
         bindEvent('.stack-frame a', 'click', function(event) {
             each(frames, function(el) {
-                el.classList.remove('active');
+                el.classList.remove('list-group-item-secondary');
             });
-            this.parentNode.classList.add('active');
+            this.parentNode.classList.add('list-group-item-secondary');
 
             each(details, function(el) {
                 el.style.display = 'none';
@@ -160,11 +162,56 @@ $this->append('script'); ?>
     </head>
     <body<?= $this->fetch('body_tag_attrs'); ?>>
         <?= $this->fetch('header') ?>
-        <main role="main" class="container" spellcheck="true">
-            <?= $this->fetch('flash') ?>
-            <?= $this->fetch('callout') ?>
-            <?= $this->fetch('content') ?>
-        </main>
+        <div class="container-fluid">
+            <div class="row">
+                <main role="main" class="col-12" spellcheck="true">
+                    <?= $this->fetch('flash') ?>
+                    <?= $this->fetch('callout') ?>
+                    <?= $this->fetch('content') ?>
+                    <?php if (Configure::read('debug')) : ?>
+                        <div class="card border-danger">
+                            <div class="card-header text-danger">
+                                <div class="row">
+                                    <div class="col">
+                                        <?= h($this->fetch('title')) ?>
+                                    </div>
+                                    <div class="col text-right">
+                                        <small><?= get_class($error) ?></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 error-nav">
+                                        <?= $this->element('exception_stack_trace_nav') ?>
+                                    </div>
+                                    <div class="col-md-8 error-contents">
+                                        <?php if ($this->fetch('subheading')): ?>
+                                        <div class="alert alert-info error-subheading">
+                                            <?= $this->fetch('subheading') ?>
+                                        </div>
+                                        <?php endif; ?>
+
+                                        <?= $this->element('exception_stack_trace'); ?>
+
+                                        <div class="error-suggestion">
+                                            <?= $this->fetch('file') ?>
+                                        </div>
+
+                                        <?php if ($this->fetch('templateName')): ?>
+                                        <p class="customize">
+                                            If you want to customize this error message, create
+                                            <em><?= APP_DIR . DIRECTORY_SEPARATOR . 'Template' . DIRECTORY_SEPARATOR . 'Error' . DIRECTORY_SEPARATOR . $this->fetch('templateName') ?></em>
+                                        </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </main>
+            </div>
+        </div>
         <?= $this->fetch('footer') ?>
         <?= $this->fetch('script') ?>
     </body>

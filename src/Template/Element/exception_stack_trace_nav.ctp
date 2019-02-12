@@ -1,14 +1,14 @@
 <?php
 use Cake\Error\Debugger;
 ?>
-<a href="#" class="toggle-link toggle-vendor-frames btn btn-primary btn-block">Toggle Vendor/App Stack</a>
+<a href="#" class="toggle-link toggle-vendor-frames btn btn-secondary btn-block">Toggle Vendor/App Stack</a>
 
 <ul class="stack-trace list-group">
 <?php foreach ($error->getTrace() as $i => $stack): ?>
     <?php $class = (isset($stack['file']) && strpos($stack['file'], APP) === false) ? 'vendor-frame' : 'app-frame'; ?>
     <li class="list-group-item stack-frame <?= $class ?>">
     <?php if (isset($stack['function'])): ?>
-        <a href="#" data-target="stack-frame-<?= $i ?>">
+        <a href="#" class="text-secondary" data-target="stack-frame-<?= $i ?>">
             <?php if (isset($stack['class'])): ?>
                 <strong class="stack-function">&rang; <?= h($stack['class'] . $stack['type'] . $stack['function']) ?></strong>
             <?php else: ?>
@@ -23,7 +23,7 @@ use Cake\Error\Debugger;
             </span>
         </a>
     <?php else: ?>
-        <a href="#">&rang; [internal function]</a>
+        <a href="#" class="text-secondary">&rang; [internal function]</a>
     <?php endif; ?>
     </li>
 <?php endforeach; ?>

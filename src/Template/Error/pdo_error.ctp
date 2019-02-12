@@ -1,8 +1,6 @@
 <?php
 use Cake\Error\Debugger;
 
-$this->layout = 'dev_error';
-
 $this->assign('title', 'Database Error');
 $this->assign('templateName', 'pdo_error.ctp');
 

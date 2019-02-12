@@ -35,8 +35,6 @@ if (empty($plugin)) {
     $path = Plugin::classPath($plugin) . $type . DIRECTORY_SEPARATOR . $prefix . h($class) . '.php';
 }
 
-$this->layout = 'dev_error';
-
 $this->assign('title', sprintf('Missing Method in %s', h($class)));
 $this->assign(
     'subheading',

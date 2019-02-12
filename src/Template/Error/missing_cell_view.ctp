@@ -1,8 +1,6 @@
 <?php
 use Cake\Utility\Inflector;
 
-$this->layout = 'dev_error';
-
 $this->assign('templateName', 'missing_cell_view.ctp');
 $this->assign('title', 'Missing Cell View');
 

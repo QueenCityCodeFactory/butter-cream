@@ -27,8 +27,6 @@ if (empty($plugin)) {
     $path = Plugin::classPath($plugin) . 'Controller' . DIRECTORY_SEPARATOR . $prefixPath . h($class) . 'Controller.php';
 }
 
-//$this->layout = 'error';
-
 $this->assign('title', 'Missing Controller');
 $this->assign('templateName', 'missing_controller.ctp');
 

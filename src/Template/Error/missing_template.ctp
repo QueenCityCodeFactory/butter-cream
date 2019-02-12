@@ -1,8 +1,6 @@
 <?php
 use Cake\Utility\Inflector;
 
-$this->layout = 'dev_error';
-
 $this->assign('title', 'Missing Template');
 $this->assign('templateName', 'missing_template.ctp');
 

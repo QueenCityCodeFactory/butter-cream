@@ -1,6 +1,4 @@
 <?php
-$this->layout = 'dev_error';
-
 $this->assign('title', 'Missing Layout');
 $this->assign('templateName', 'missing_layout.ctp');
 

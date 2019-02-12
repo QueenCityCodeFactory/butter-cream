@@ -52,7 +52,8 @@ class ExceptionRenderer extends CakeExceptionRenderer
         $builder = $this->controller->viewBuilder();
         $builder->setHelpers($helpers, false)
             ->setLayoutPath('')
-            ->setTemplatePath('Error');
+            ->setTemplatePath('Error')
+            ->setTheme('ButterCream');
         $view = $this->controller->createView('View');
 
         $this->controller->response = $this->controller->response
