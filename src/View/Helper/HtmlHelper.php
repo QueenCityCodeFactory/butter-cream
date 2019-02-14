@@ -408,7 +408,7 @@ class HtmlHelper extends Helper
             'class' => 'rounded gravatar'
         ];
 
-        $gravatar = "http://www.gravatar.com/avatar/%s?s=%s&d=%s";
+        $gravatar = "https://www.gravatar.com/avatar/%s?s=%s&d=%s";
         $email = md5(strtolower(trim($email)));
         $url = sprintf($gravatar, $email, $options['size'], $options['default']);
         unset($options['size']);
