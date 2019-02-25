@@ -457,7 +457,9 @@ class FormHelper extends Helper
         ];
 
         if ($options['select2'] !== false && isset($options['options']) && is_array($options)) {
-            $options['type'] = $this->_inputType($fieldName, $options);
+            if (empty($options['type'])) {
+                $options['type'] = $this->_inputType($fieldName, $options);
+            }
 
             if ($options['type'] == 'select') {
                 $options += [
