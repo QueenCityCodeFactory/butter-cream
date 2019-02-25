@@ -8,7 +8,7 @@
     $this->assign('page_heading', '{{ singularHumanName }}');
     $this->start('panel_buttons');
 ?>
-<div class="btn-group pull-right">
+<div class="btn-group btn-group-xs pull-right">
     <?= $this->Html->actionDropdownMenu([
         $this->Html->tagLink('Edit {{ singularHumanName }}', ['action' => 'edit', {{ pK|raw }}]),
         $this->Html->tagLink('List {{ pluralHumanName }}', ['action' => 'index']),
