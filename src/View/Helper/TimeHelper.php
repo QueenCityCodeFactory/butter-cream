@@ -4,6 +4,7 @@ namespace ButterCream\View\Helper;
 use Cake\I18n\Time;
 use Cake\View\Helper\TimeHelper as Helper;
 use Cake\View\View;
+use DateTimeInterface;
 
 /**
  * TimeHelper Class
@@ -32,7 +33,7 @@ class TimeHelper extends Helper
             $timezone = $this->getView()->getRequest()->getSession()->read('Auth.User.timezone');
         }
         try {
-            if ($date instanceof Time) {
+            if ($date instanceof DateTimeInterface) {
                 $date = new Time($date);
             }
             $date->timezone = $timezone;
