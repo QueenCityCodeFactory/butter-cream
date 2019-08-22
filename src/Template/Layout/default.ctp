@@ -1,42 +1,71 @@
 <?php
-use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
-use Cake\View\Exception\MissingElementException;
 
 /**
  * Default `html` block.
  */
 if (!$this->fetch('html')) {
-    $this->start('html');
-    printf('<html lang="%s">', Configure::read('App.language'));
-    $this->end();
+    $this->assign('html', $this->Html->tag('html', null, ['lang' => Configure::read('App.language')]));
 }
 
-$this->assign('title', Configure::read('App.title') . ': ' . Inflector::humanize(Inflector::underscore($this->request->getParam('controller'))));
+/**
+ * Default title
+ */
+if (!$this->fetch('title')) {
+    $this->assign('title', Configure::read('App.title') . ': ' . Inflector::humanize(Inflector::underscore($this->request->getParam('controller'))));
+}
 
 /**
- * Default `footer` block.
+ * Default `meta` block.
  */
-if (!$this->fetch('meta')) :
-    $this->start('meta'); ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-<?php $this->end();
-endif;
+if (!$this->fetch('meta')) {
+    $this->start('meta');
+    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
+    echo $this->Html->meta('description', '');
+    echo $this->Html->meta('author', '');
+    $this->end();
+}
 
 /**
  * Default `Google Analytics` tracking code.
  */
 if (!$this->fetch('google_analytics')) {
-    $this->start('google_analytics');
-         echo $this->element('google_analytics', [], ['ignoreMissing' => true, 'plugin' => false]);
-    $this->end();
+    $this->assign('google_analytics', $this->element('google_analytics', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
 
 /**
- * Load assets
+ * Default `body` block.
+ */
+$bodyClasses = [Configure::read('App.environment'), $this->request->controller, $this->request->action];
+if ($this->get('sessionMonitor') === true) {
+    $bodyClasses[] = 'session-monitor';
+}
+$skinClass = $this->request->getSession()->read('Auth.User.theme');
+if (!empty($skinClass)) {
+    $bodyClasses[] = $skinClass;
+}
+
+$bodyAttributes = $this->get('bodyAttributes');
+
+if (empty($bodyAttributes)) {
+    $bodyAttributes = ['class' => $bodyClasses];
+}
+
+if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
+    $bodyAttributes['class'] = array_unique($bodyAttributes['class']);
+}
+
+if (!$this->fetch('body_start')) {
+    $this->assign('body_start', $this->Html->tag('body', null, $bodyAttributes));
+}
+
+if (!$this->fetch('body_end')) {
+    $this->assign('body_end', '</body>');
+}
+
+/**
+ * Load assets - These assets need provided by the application.
  */
 if (Configure::read('debug') === true) {
     $this->prepend('css', $this->Html->css(['app.css?cb=' . Configure::read('CacheBuster.cssCB')]));
@@ -46,9 +75,11 @@ if (Configure::read('debug') === true) {
     $this->prepend('script', $this->Html->script(['app.min.js?cb=' . Configure::read('CacheBuster.jsCB')]));
 }
 
+if (!(isset($noModalScript) && $noModalScript === true)) :
 $this->append('script'); ?>
 <script>
     var sessionTimeout = "<?= Configure::read('Session.timeout') ?>";
+    var lastAccessTime = "<?= $this->request->getSession()->read('SessionTimeoutFilter.lastAccess') ?>";
 </script>
 <script id="modal-template" type="text/x-jsrender">
     {{if id}}
@@ -98,7 +129,10 @@ $this->append('script'); ?>
          </div>
     </div>
 </script>
-<?php $this->end(); ?>
+<?php
+$this->end();
+endif;
+?>
 
 <!doctype html>
 <?= $this->fetch('html') ?>
@@ -109,11 +143,11 @@ $this->append('script'); ?>
         <?= $this->fetch('css') ?>
         <?= $this->fetch('google_analytics') ?>
     </head>
-    <body<?= $this->fetch('body_tag_attrs'); ?>>
+    <?= $this->fetch('body_start') ?>
         <?= $this->fetch('header') ?>
         <?= $this->fetch('content') ?>
         <?= $this->fetch('footer') ?>
         <?= $this->fetch('script') ?>
         <?= $this->fetch('modal') ?>
-    </body>
+    <?= $this->fetch('body_end') ?>
 </html>

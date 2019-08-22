@@ -2,7 +2,15 @@
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 
-$this->prepend('css', $this->Html->css(['app.min'], ['fullBase' => true]));
+/**
+ * Load assets - These assets need provided by the application.
+ */
+if (Configure::read('debug') === true) {
+    $this->prepend('css', $this->Html->css(['app.css?cb=' . Configure::read('CacheBuster.cssCB')], ['fullBase' => true]));
+} else {
+    $this->prepend('css', $this->Html->css(['app.min.css?cb=' . Configure::read('CacheBuster.cssCB')], ['fullBase' => true]));
+}
+
 if ($this instanceof \CakePdf\View\PdfView) {
     $this->renderer()->header([
         'left' => $this->fetch('pageNumbers') ? 'Page [page] of [toPage]' : '',
@@ -11,14 +19,31 @@ if ($this instanceof \CakePdf\View\PdfView) {
     ]);
 }
 
-if (!$this->fetch('body_tag_attrs')) {
-    $bodyClasses = [Configure::read('App.environment'),  strtolower(Inflector::slug(Inflector::dasherize($this->request->getParam('controller')))),  strtolower(Inflector::slug(Inflector::dasherize($this->request->getParam('action')))), 'pdf'];
-    $skinClass = $this->request->getSession()->read('Auth.User.theme');
-    if (!empty($skinClass)) {
-        $bodyClasses[] = $skinClass;
-    }
+/**
+ * Default `body` block.
+ */
+$bodyClasses = [Configure::read('App.environment'), $this->request->controller, $this->request->action, 'pdf-page'];
+$skinClass = $this->request->getSession()->read('Auth.User.theme');
+if (!empty($skinClass)) {
+    $bodyClasses[] = $skinClass;
+}
 
-    $this->assign('body_tag_attrs', ' class="' . join(' ', $bodyClasses) . '"');
+$bodyAttributes = $this->get('bodyAttributes');
+
+if (empty($bodyAttributes)) {
+    $bodyAttributes = ['class' => $bodyClasses];
+}
+
+if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
+    $bodyAttributes['class'] = array_unique($bodyAttributes['class']);
+}
+
+if (!$this->fetch('body_start')) {
+    $this->assign('body_start', $this->Html->tag('body', null, $bodyAttributes));
+}
+
+if (!$this->fetch('body_end')) {
+    $this->assign('body_end', '</body>');
 }
 ?>
 <!DOCTYPE html>
@@ -30,7 +55,7 @@ if (!$this->fetch('body_tag_attrs')) {
         <title><?= $this->fetch('title') ?></title>
         <?= $this->fetch('css') ?>
     </head>
-    <body <?= $this->fetch('body_tag_attrs'); ?>>
+    <?= $this->fetch('body_start') ?>
         <div class="print-container">
             <div class="container-fluid">
                 <div class="row">
@@ -40,5 +65,5 @@ if (!$this->fetch('body_tag_attrs')) {
                 </div>
             </div>
         </div>
-    </body>
+    <?= $this->fetch('body_end') ?>
 </html>

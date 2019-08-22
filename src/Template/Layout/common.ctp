@@ -2,7 +2,6 @@
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
-use Cake\View\Exception\MissingElementException;
 
 /**
  * Flash Messages
@@ -19,40 +18,26 @@ if (!$this->fetch('flash')) {
  * Default `header` block.
  */
 if (!$this->fetch('header')) {
-    $this->start('header');
-        echo $this->element('header', [], ['ignoreMissing' => true, 'plugin' => false]);
-    $this->end();
+    $this->assign('header', $this->element('header', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
 
 /**
  * Default `footer` block.
  */
 if (!$this->fetch('footer')) {
-    $this->start('footer');
-        echo $this->element('footer', [], ['ignoreMissing' => true, 'plugin' => false]);
-    $this->end();
-}
-
-/**
- * Body tag attributes
- */
-if (!$this->fetch('body_tag_attrs')) {
-    $bodyClasses = [Configure::read('App.environment'), strtolower(Text::slug(Inflector::dasherize($this->request->getParam('controller')))), strtolower(Text::slug(Inflector::dasherize($this->request->getParam('action'))))];
-    $skinClass = $this->request->getSession()->read('Auth.User.theme');
-    if (!empty($skinClass)) {
-        $bodyClasses[] = $skinClass;
-    }
-    if ($this->fetch('session_monitor')) {
-        $bodyClasses[] = 'session-monitor';
-    }
-
-    $this->assign('body_tag_attrs', ' class="' . join(' ', $bodyClasses) . '"');
+    $this->assign('footer', $this->element('footer', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
 ?>
 <div class="container-fluid">
     <div class="row">
         <main role="main" class="col-12" spellcheck="true">
             <?= $this->fetch('flash') ?>
+            <noscript>
+                <div class="bs-callout bs-callout-danger">
+                    <h4>JavaScript is Disabled</h4>
+                    <p>Without JavaScript enabled this web application may not function as intended. Please enable JavaScript before continuing.</p>
+                </div>
+            </noscript>
             <?= $this->fetch('callout') ?>
             <?= $this->fetch('content') ?>
         </main>

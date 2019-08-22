@@ -27,7 +27,7 @@ class SessionTimeoutMiddleware
             $session->destroy();
         }
 
-        if (!$request->is('ajax') || ($request->getQuery('session_timeout') && strtolower($request->getQuery('session_timeout')) === 'extend')) {
+        if ((!$request->is('ajax') || ($request->getQuery('session_timeout') && strtolower($request->getQuery('session_timeout')) === 'extend')) && $request->getParam('plugin') !== 'DebugKit') {
             $session->write('SessionTimeoutFilter.lastAccess', time());
         }
 

@@ -1,38 +1,33 @@
 <?php
 use Cake\Core\Configure;
-use Cake\I18n\Time;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
-use Cake\View\Exception\MissingElementException;
 
 /**
  * Default `html` block.
  */
 if (!$this->fetch('html')) {
-    $this->start('html');
-    printf('<html lang="%s">', Configure::read('App.language'));
-    $this->end();
+    $this->assign('html', $this->Html->tag('html', null, ['lang' => Configure::read('App.language')]));
 }
 
 /**
- * Default `footer` block.
+ * Default `meta` block.
  */
-if (!$this->fetch('meta')) :
-    $this->start('meta'); ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-<?php $this->end();
-endif;
+if (!$this->fetch('meta')) {
+    $this->start('meta');
+    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
+    echo $this->Html->meta('description', '');
+    echo $this->Html->meta('author', '');
+    $this->end();
+}
 
 /**
  * Default `Google Analytics` tracking code.
  */
 if (!$this->fetch('google_analytics')) {
-    $this->start('google_analytics');
-        echo $this->element('google_analytics', [], ['ignoreMissing' => true, 'plugin' => false]);
-    $this->end();
+    $this->assign('google_analytics', $this->element('google_analytics', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
+
 
 /**
  * Flash Messages
@@ -49,18 +44,14 @@ if (!$this->fetch('flash')) {
  * Default `header` block.
  */
 if (!$this->fetch('header')) {
-    $this->start('header');
-        echo $this->element('header', [], ['ignoreMissing' => true, 'plugin' => false]);
-    $this->end();
+    $this->assign('header', $this->element('header', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
 
 /**
  * Default `footer` block.
  */
 if (!$this->fetch('footer')) {
-    $this->start('footer');
-        echo $this->element('footer', [], ['ignoreMissing' => true, 'plugin' => false]);
-    $this->end();
+    $this->assign('footer', $this->element('footer', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
 
 /**
@@ -75,19 +66,33 @@ if (Configure::read('debug') === true) {
 }
 
 /**
- * Body tag attributes
+ * Default `body` block.
  */
-if (!$this->fetch('body_tag_attrs')) {
-    $bodyClasses = ['error-page', Configure::read('App.environment'), strtolower(Text::slug(Inflector::dasherize($this->request->getParam('controller')))), strtolower(Text::slug(Inflector::dasherize($this->request->getParam('action'))))];
-    $skinClass = $this->request->getSession()->read('Auth.User.theme');
-    if (!empty($skinClass)) {
-        $bodyClasses[] = $skinClass;
-    }
-    if ($this->fetch('session_monitor')) {
-        $bodyClasses[] = 'session-monitor';
-    }
+$bodyClasses = [Configure::read('App.environment'), $this->request->controller, $this->request->action, 'error-page'];
+if ($this->get('sessionMonitor') === true) {
+    $bodyClasses[] = 'session-monitor';
+}
+$skinClass = $this->request->getSession()->read('Auth.User.theme');
+if (!empty($skinClass)) {
+    $bodyClasses[] = $skinClass;
+}
 
-    $this->assign('body_tag_attrs', ' class="' . join(' ', $bodyClasses) . '"');
+$bodyAttributes = $this->get('bodyAttributes');
+
+if (empty($bodyAttributes)) {
+    $bodyAttributes = ['class' => $bodyClasses];
+}
+
+if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
+    $bodyAttributes['class'] = array_unique($bodyAttributes['class']);
+}
+
+if (!$this->fetch('body_start')) {
+    $this->assign('body_start', $this->Html->tag('body', null, $bodyAttributes));
+}
+
+if (!$this->fetch('body_end')) {
+    $this->assign('body_end', '</body>');
 }
 
 $this->append('script'); ?>
@@ -160,12 +165,18 @@ $this->append('script'); ?>
         <?= $this->fetch('css') ?>
         <?= $this->fetch('google_analytics') ?>
     </head>
-    <body<?= $this->fetch('body_tag_attrs'); ?>>
+    <?= $this->fetch('body_start') ?>
         <?= $this->fetch('header') ?>
         <div class="container-fluid">
             <div class="row">
                 <main role="main" class="col-12" spellcheck="true">
                     <?= $this->fetch('flash') ?>
+                    <noscript>
+                        <div class="bs-callout bs-callout-danger">
+                            <h4>JavaScript is Disabled</h4>
+                            <p>Without JavaScript enabled this web application may not function as intended. Please enable JavaScript before continuing.</p>
+                        </div>
+                    </noscript>
                     <?= $this->fetch('callout') ?>
                     <?= $this->fetch('content') ?>
                     <?php if (Configure::read('debug')) : ?>
@@ -214,5 +225,5 @@ $this->append('script'); ?>
         </div>
         <?= $this->fetch('footer') ?>
         <?= $this->fetch('script') ?>
-    </body>
+    <?= $this->fetch('body_end') ?>
 </html>
