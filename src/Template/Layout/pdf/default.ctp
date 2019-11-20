@@ -22,7 +22,7 @@ if ($this instanceof \CakePdf\View\PdfView) {
 /**
  * Default `body` block.
  */
-$bodyClasses = [Configure::read('App.environment'), $this->request->controller, $this->request->action, 'pdf-page'];
+$bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action'), 'pdf-page'];
 $skinClass = $this->request->getSession()->read('Auth.User.theme');
 if (!empty($skinClass)) {
     $bodyClasses[] = $skinClass;
