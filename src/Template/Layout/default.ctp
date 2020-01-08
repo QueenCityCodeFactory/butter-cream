@@ -37,7 +37,7 @@ if (!$this->fetch('google_analytics')) {
 /**
  * Default `body` block.
  */
-$bodyClasses = [Configure::read('App.environment'), $this->request->controller, $this->request->action];
+$bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action')];
 if ($this->get('sessionMonitor') === true) {
     $bodyClasses[] = 'session-monitor';
 }

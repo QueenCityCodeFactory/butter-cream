@@ -68,7 +68,7 @@ if (Configure::read('debug') === true) {
 /**
  * Default `body` block.
  */
-$bodyClasses = [Configure::read('App.environment'), $this->request->controller, $this->request->action, 'error-page'];
+$bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action'), 'error-page'];
 if ($this->get('sessionMonitor') === true) {
     $bodyClasses[] = 'session-monitor';
 }
