@@ -112,4 +112,4 @@ class ModelTask extends CakeModelTask
 
         return $associations;
     }
-
+}
