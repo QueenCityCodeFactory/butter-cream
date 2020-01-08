@@ -64,4 +64,52 @@ class ModelTask extends CakeModelTask
 
         return parent::bakeTable($model, $data);
     }
-}
+
+    /**
+     * Find belongsTo relations and add them to the associations list.
+     *
+     * @param \Cake\ORM\Table $model Database\Table instance of table being generated.
+     * @param array $associations Array of in progress associations
+     * @return array Associations with belongsTo added in.
+     */
+    public function findBelongsTo($model, array $associations)
+    {
+        $schema = $model->getSchema();
+        foreach ($schema->columns() as $fieldName) {
+            if (!preg_match('/^.+_id$/', $fieldName)) { // Don't need to skip if primary key
+                continue;
+            }
+
+            if ($fieldName === 'parent_id') {
+                $className = ($this->plugin) ? $this->plugin . '.' . $model->getAlias() : $model->getAlias();
+                $assoc = [
+                    'alias' => 'Parent' . $model->getAlias(),
+                    'className' => $className,
+                    'foreignKey' => $fieldName
+                ];
+            } else {
+                $tmpModelName = $this->_modelNameFromKey($fieldName);
+                if (!in_array(Inflector::tableize($tmpModelName), $this->_tables)) {
+                    $found = $this->findTableReferencedBy($schema, $fieldName);
+                    if ($found) {
+                        $tmpModelName = Inflector::camelize($found);
+                    }
+                }
+                $assoc = [
+                    'alias' => $tmpModelName,
+                    'foreignKey' => $fieldName
+                ];
+                if ($schema->getColumn($fieldName)['null'] === false) {
+                    $assoc['joinType'] = 'INNER';
+                }
+            }
+
+            if ($this->plugin && empty($assoc['className'])) {
+                $assoc['className'] = $this->plugin . '.' . $assoc['alias'];
+            }
+            $associations['belongsTo'][] = $assoc;
+        }
+
+        return $associations;
+    }
+
