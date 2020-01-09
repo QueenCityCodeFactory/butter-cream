@@ -3,6 +3,7 @@ namespace ButterCream\Shell\Task;
 
 use Bake\Shell\Task\ModelTask as CakeModelTask;
 use Cake\Console\ConsoleIo;
+use Cake\Utility\Inflector;
 
 class ModelTask extends CakeModelTask
 {
