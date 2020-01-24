@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View;
 
 use Cake\View\View;
@@ -14,7 +16,7 @@ class AppView extends View
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadHelper('Ajax', [
             'className' => 'ButterCream.Ajax'

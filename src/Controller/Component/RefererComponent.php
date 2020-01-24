@@ -55,8 +55,9 @@ class RefererComponent extends Component
      */
     public function setReferer($default = null)
     {
-        if ($this->request->getData('Referer.url') === null) {
-            $referer = $this->request->referer();
+        $request = $this->_registry->getController()->getRequest();
+        if ($request->getData('Referer.url') === null) {
+            $referer = $request->referer();
 
             if ($referer == '/' && !empty($default)) {
                 $referer = $default;
@@ -66,7 +67,7 @@ class RefererComponent extends Component
                 }
             }
         } else {
-            $referer = $this->request->getData('Referer.url');
+            $referer = $request->getData('Referer.url');
         }
 
         $referer = $this->normalizeUrl($referer);
@@ -80,10 +81,11 @@ class RefererComponent extends Component
      */
     public function getReferer()
     {
-        if ($this->request->getData('Referer.url')) {
-            $referer = $this->request->getData('Referer.url');
+        $request = $this->_registry->getController()->getRequest();
+        if ($request->getData('Referer.url')) {
+            $referer = $request->getData('Referer.url');
         } else {
-            $referer = $this->request->referer();
+            $referer = $request->referer();
         }
 
         $referer = $this->normalizeUrl($referer);

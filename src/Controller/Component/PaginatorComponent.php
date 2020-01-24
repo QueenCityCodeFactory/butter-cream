@@ -2,6 +2,7 @@
 namespace ButterCream\Controller\Component;
 
 use Cake\Controller\Component\PaginatorComponent as Component;
+use Cake\Datasource\ResultSetInterface;
 use Cake\Network\Exception\NotFoundException;
 
 /**
@@ -110,12 +111,12 @@ class PaginatorComponent extends Component
      * /dashboard?articles[page]=1&tags[page]=2
      * ```
      *
-     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\QueryInterface $object The table or query to paginate.
+     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\QueryInterface $object Table or query to paginate.
      * @param array $settings The settings/configuration used for pagination.
      * @return \Cake\Datasource\ResultSetInterface Query results
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function paginate($object, array $settings = [])
+    public function paginate(object $object, array $settings = []): ResultSetInterface
     {
         try {
             return parent::paginate($object, $settings);
