@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * QueenCityCodeFactory(tm) : Web application developers (http://queencitycodefactory.com)
  * Copyright (c) Queen City Code Factory, Inc. (http://queencitycodefactory.com)
@@ -16,6 +18,7 @@ namespace ButterCream\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Event\Event;
+use Cake\Http\Response;
 use Cake\Routing\Router;
 
 /**
@@ -42,7 +45,7 @@ class RefererComponent extends Component
      * @param \Cake\Event\Event $event The startup event.
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(Event $event): void
     {
         $this->setReferer();
     }
@@ -53,7 +56,7 @@ class RefererComponent extends Component
      * @param sting $default default referer
      * @return void
      */
-    public function setReferer($default = null)
+    public function setReferer($default = null): void
     {
         $request = $this->_registry->getController()->getRequest();
         if ($request->getData('Referer.url') === null) {
@@ -79,7 +82,7 @@ class RefererComponent extends Component
      * Get the current referer
      * @return string referring URL
      */
-    public function getReferer()
+    public function getReferer(): string
     {
         $request = $this->_registry->getController()->getRequest();
         if ($request->getData('Referer.url')) {
@@ -99,7 +102,7 @@ class RefererComponent extends Component
      * @param string $url The URL
      * @return bool true if the match, otherwise false
      */
-    public function isMatch($url)
+    public function isMatch(string $url): bool
     {
         return $this->getReferer() === $this->normalizeUrl($url);
     }
@@ -110,7 +113,7 @@ class RefererComponent extends Component
      * @param string $url The URL
      * @return void
      */
-    public function ignore($url)
+    public function ignore(string $url): void
     {
         $url = $this->normalizeUrl($url);
         $this->_config['ignored'][] = $url;
@@ -119,10 +122,10 @@ class RefererComponent extends Component
     /**
      * This function strips the host and protocol out of a URL if the host and url match
      *
-     * @param string $url url to normalize
+     * @param string|null $url url to normalize
      * @return string normalized $url
      */
-    public function normalizeUrl($url)
+    public function normalizeUrl($url = null): ?string
     {
         if (is_array($url)) {
             $url = Router::url($url);
@@ -130,7 +133,7 @@ class RefererComponent extends Component
         $baseUrl = Router::url('/', true);
         $baseUri = parse_url($baseUrl);
 
-        $uri = parse_url($url);
+        $uri = isset($url) ? parse_url($url) : null;
 
         if (isset($uri['host']) && isset($baseUri['host']) && $baseUri['host'] == $uri['host']) {
             $url = urldecode((!empty($uri['path']) ? $uri['path'] : '') . (!empty($uri['query']) ? '?' . $uri['query'] : ''));
@@ -147,7 +150,7 @@ class RefererComponent extends Component
      * @param bool $exit calling php exit or not after redirect, default is true
      * @return mixed
      */
-    public function redirect($url, $status = null, $exit = true)
+    public function redirect($url, int $status = 302): ?Response
     {
         $referer = $this->getReferer();
 
@@ -156,9 +159,9 @@ class RefererComponent extends Component
         }
 
         if (strlen($referer) == 0 || $referer == '/') {
-            return $this->getController()->redirect($url, $status, $exit);
+            return $this->getController()->redirect($url, $status);
         } else {
-            return $this->getController()->redirect($referer, $status, $exit);
+            return $this->getController()->redirect($referer, $status);
         }
     }
 }
