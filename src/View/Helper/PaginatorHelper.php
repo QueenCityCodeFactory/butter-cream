@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use BootstrapUI\View\Helper\PaginatorHelper as Helper;
@@ -13,7 +15,7 @@ class PaginatorHelper extends Helper
      * @param array $options list of options
      * @return void
      */
-    public function ajaxTemplateOptions($domId, $options = [])
+    public function ajaxTemplateOptions(string $domId, array $options = [])
     {
         $options += ['class' => 'ajax-pagination-link'];
 
@@ -32,7 +34,7 @@ class PaginatorHelper extends Helper
         $this->templater()->add($templates);
     }
 
-    /**
+   /**
      * Generates a "previous" link for a set of paged records
      *
      * ### Options:
@@ -43,13 +45,16 @@ class PaginatorHelper extends Helper
      * - `escape` Whether you want the contents html entity encoded, defaults to true
      * - `model` The model to use, defaults to PaginatorHelper::defaultModel()
      * - `url` An array of additional URL options to use for link generation.
+     * - `templates` An array of templates, or template file name containing the
+     *   templates you'd like to use when generating the link for previous page.
+     *   The helper's original templates will be restored once prev() is done.
      *
      * @param string $title Title for the link. Defaults to '<< Previous'.
      * @param array $options Options for pagination link. See above for list of keys.
      * @return string A "previous" link or a disabled link.
-     * @link http://book.cakephp.org/3.0/en/views/helpers/paginator.html#creating-jump-links
+     * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-jump-links
      */
-    public function prev($title = '<em class="fas fa-angle-left"></em>', array $options = [])
+    public function prev(string $title = '<em class="fas fa-angle-left"></em>', array $options = []): string
     {
         $defaults = [
             'escape' => false,
@@ -70,13 +75,16 @@ class PaginatorHelper extends Helper
      * - `escape` Whether you want the contents html entity encoded, defaults to true
      * - `model` The model to use, defaults to PaginatorHelper::defaultModel()
      * - `url` An array of additional URL options to use for link generation.
+     * - `templates` An array of templates, or template file name containing the
+     *   templates you'd like to use when generating the link for next page.
+     *   The helper's original templates will be restored once next() is done.
      *
      * @param string $title Title for the link. Defaults to 'Next >>'.
      * @param array $options Options for pagination link. See above for list of keys.
      * @return string A "next" link or $disabledTitle text if the link is disabled.
-     * @link http://book.cakephp.org/3.0/en/views/helpers/paginator.html#creating-jump-links
+     * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-jump-links
      */
-    public function next($title = '<em class="fas fa-angle-right"></em>', array $options = [])
+    public function next(string $title = '<em class="fas fa-angle-right"></em>', array $options = []): string
     {
         $defaults = [
             'escape' => false,
@@ -87,24 +95,42 @@ class PaginatorHelper extends Helper
     }
 
     /**
-     * Returns a set of numbers for the paged result set.
+     * Returns a set of numbers for the paged result set
+     * uses a modulus to decide how many numbers to show on each side of the current page (default: 8).
      *
-     * In addition to the numbers, the method can also generate previous and next
-     * links using additional options as shown below which are not available in
-     * CakePHP core's PaginatorHelper::numbers().
+     * ```
+     * $this->Paginator->numbers(['first' => 2, 'last' => 2]);
+     * ```
+     *
+     * Using the first and last options you can create links to the beginning and end of the page set.
      *
      * ### Options
      *
-     * - `prev` If set generates "previous" link. Can be `true` or string.
-     * - `next` If set generates "next" link. Can be `true` or string.
-     * - `size` Used to control sizing class added to UL tag. For eg.
-     *   using `'size' => 'lg'` would add class `pagination-lg` to UL tag.
+     * - `before` Content to be inserted before the numbers, but after the first links.
+     * - `after` Content to be inserted after the numbers, but before the last links.
+     * - `model` Model to create numbers for, defaults to PaginatorHelper::defaultModel()
+     * - `modulus` How many numbers to include on either side of the current page, defaults to 8.
+     *    Set to `false` to disable and to show all numbers.
+     * - `first` Whether you want first links generated, set to an integer to define the number of 'first'
+     *    links to generate. If a string is set a link to the first page will be generated with the value
+     *    as the title.
+     * - `last` Whether you want last links generated, set to an integer to define the number of 'last'
+     *    links to generate. If a string is set a link to the last page will be generated with the value
+     *    as the title.
+     * - `templates` An array of templates, or template file name containing the templates you'd like to
+     *    use when generating the numbers. The helper's original templates will be restored once
+     *    numbers() is done.
+     * - `url` An array of additional URL options to use for link generation.
+     *
+     * The generated number links will include the 'ellipsis' template when the `first` and `last` options
+     * and the number of pages exceed the modulus. For example if you have 25 pages, and use the first/last
+     * options and a modulus of 8, ellipsis content will be inserted after the first and last link sets.
      *
      * @param array $options Options for the numbers.
      * @return string Numbers string.
-     * @link http://book.cakephp.org/3.0/en/views/helpers/paginator.html#creating-page-number-links
+     * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-page-number-links
      */
-    public function numbers(array $options = [])
+    public function numbers(array $options = []): string
     {
         $defaults = [
             'before' => false,

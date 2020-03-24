@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use BootstrapUI\View\Helper\HtmlHelper as Helper;
@@ -64,7 +66,7 @@ class HtmlHelper extends Helper
      *
      * @return string HTML icon markup.
      */
-    public function icon($name, array $options = [])
+    public function icon(string $name, array $options = []): string
     {
         $options += [
             'tag' => 'em'
@@ -80,7 +82,7 @@ class HtmlHelper extends Helper
      * @param array $options The options
      * @return string HTML icon with Tooltip markup
      */
-    public function tooltip($text, array $options = [])
+    public function tooltip(string $text, array $options = []): string
     {
         $options += [
             'icon' => 'info-circle',
@@ -104,7 +106,7 @@ class HtmlHelper extends Helper
      * @param array $options The options
      * @return string HTML icon with Popover markup
      */
-    public function popover($title, $text, array $options = [])
+    public function popover(string $title, string $text, array $options = []): string
     {
         $options += [
             'icon' => 'question-circle',
@@ -146,7 +148,7 @@ class HtmlHelper extends Helper
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
-    public function link($title, $url = null, array $options = [])
+    public function link($title, $url = null, array $options = []): string
     {
         $options += ['tooltip' => true];
 
@@ -199,7 +201,7 @@ class HtmlHelper extends Helper
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
-    public function tagLink($title, $url = null, array $options = [])
+    public function tagLink($title, $url = null, array $options = []): string
     {
         $options += ['tag' => ['name' => 'li', 'options' => []]];
 
@@ -235,7 +237,7 @@ class HtmlHelper extends Helper
      *
      * @return string HTML button markup using either `<button>` OR `<A>`
      */
-    public function button($title, $options = [])
+    public function button(string $title, array $options = []): string
     {
         $options += [
             'url' => [],
@@ -304,7 +306,7 @@ class HtmlHelper extends Helper
      * @param array $options The standard options for links
      * @return string HTML Link
      */
-    public function viewBtn($primaryKey, array $options = [])
+    public function viewBtn($primaryKey, array $options = []): string
     {
         $options += [
             'escape' => false,
@@ -322,7 +324,7 @@ class HtmlHelper extends Helper
      * @param array $options The standard options for links
      * @return string HTML Link
      */
-    public function editBtn($primaryKey, array $options = [])
+    public function editBtn($primaryKey, array $options = []): string
     {
         $options += [
             'escape' => false,
@@ -339,7 +341,7 @@ class HtmlHelper extends Helper
      * @param array $options The options
      * @return string|bool Html Link
      */
-    public function addBtn(array $options = [])
+    public function addBtn(array $options = []): string
     {
         $url = ['action' => 'add'];
         $options['default'] = false;
@@ -362,7 +364,7 @@ class HtmlHelper extends Helper
      * @param string $menuButton The Menu button to use
      * @return string|bool Menu HTML otherwise false
      */
-    public function actionDropdownMenu(array $tagLinks = [], $menuButton = '<em class="fa fa-bars"></em>')
+    public function actionDropdownMenu(array $tagLinks = [], string $menuButton = '<em class="fa fa-bars"></em>'): string
     {
         $menuItems = [];
         foreach ($tagLinks as $tagLink) {
@@ -400,7 +402,7 @@ class HtmlHelper extends Helper
      * - class: The css class of the image tag (gravatar default)
      * @return string The HTML IMG tag for the gravatar
      */
-    public function gravatar($email, $options = [])
+    public function gravatar(string $email, array $options = []): string
     {
         $options += [
             'size' => 150,

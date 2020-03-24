@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use Cake\Routing\Router;
@@ -13,15 +15,27 @@ class UrlHelper extends Helper
     /**
      * Returns a URL based on provided parameters.
      *
-     * @param string|array $url Either a relative string url like `/products/view/23` or
+     * ### Options:
+     *
+     * - `escape`: If false, the URL will be returned unescaped, do only use if it is manually
+     *    escaped afterwards before being displayed.
+     * - `fullBase`: If true, the full base URL will be prepended to the result
+     *
+     * @param string|array|null $url Either a relative string URL like `/products/view/23` or
      *    an array of URL parameters. Using an array for URLs will allow you to leverage
      *    the reverse routing features of CakePHP.
-     * @param bool $full If true, the full base URL will be prepended to the result
+     * @param array $options Array of options.
      * @return string Full translated URL with base path.
      */
-    public function build($url = null, $full = false)
+    public function build($url = null, array $options = []): string
     {
-        return Router::url($url, $full);
+        $defaults = [
+            'fullBase' => false,
+            'escape' => false,
+        ];
+        $options += $defaults;
+
+        return parent::build($url, $options);
     }
 
     /**
@@ -31,7 +45,7 @@ class UrlHelper extends Helper
      * @param  array|string $url2 The second url
      * @return bool Are they the same URL???
      */
-    public function isEqual($url, $url2)
+    public function isEqual($url, $url2): bool
     {
         $url = Router::parse(Router::url($url));
         $url2 = Router::parse(Router::url($url2));
