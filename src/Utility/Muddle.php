@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Utility;
 
 /**
@@ -15,7 +17,7 @@ class Muddle
      * @param string $separator The separator character
      * @return bool True/False did the value get inserted
      */
-    public static function insert(array &$array, $path, $value, $separator = '.')
+    public static function insert(array &$array, string $path, $value, string $separator = '.'): bool
     {
         if (!is_array($path)) {
             $path = explode($separator, $path);
@@ -43,7 +45,7 @@ class Muddle
      * @param string $separator The separator character
      * @return string The separator separated string path
      */
-    public static function buildDotNotationPath(array $path, $prefix = null, $suffix = null, $separator = '.')
+    public static function buildDotNotationPath(array $path, ?string $prefix = null, ?string $suffix = null, string $separator = '.'): string
     {
         if ($prefix !== null && $prefix !== false) {
             if (!is_array($prefix)) {

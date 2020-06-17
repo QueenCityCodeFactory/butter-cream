@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Utility;
 
 /**
@@ -15,7 +17,7 @@ class Format
      * @param string $format The format to be applied
      * @return string The formatted ssn
      */
-    public static function ssn($ssn, $format = '000-00-0000')
+    public static function ssn(string $ssn, string $format = '000-00-0000'): string
     {
         return self::formatString(self::_stripNonAlphaNumeric($ssn), $format);
     }
@@ -27,7 +29,7 @@ class Format
      * @param array $formats An array of formats where the index is the number of digits present in the zipcode
      * @return string The formatted zipcode
      */
-    public static function zip($zip, $formats = [])
+    public static function zip(string $zip, array $formats = []): string
     {
         $formats += [
             5 => '00000',
@@ -51,7 +53,7 @@ class Format
      * @param string $extFormat The ext format
      * @return string The Formatted Phone
      */
-    public static function phone($phone, $formats = [], $extFormat = ' x')
+    public static function phone(string $phone, array $formats = [], string $extFormat = ' x'): string
     {
         $formats += [
             7 => '000-0000',
@@ -76,7 +78,7 @@ class Format
      * @param bool $returnBoth Whether or not an array containing both the phone string and phone parts is returned
      * @return string|array Defaults to returning a string(NO ext included) of an array with both string and parts
      */
-    public static function parsePhone($phone, $returnBoth = false)
+    public static function parsePhone(string $phone, bool $returnBoth = false)
     {
         $rx = '/^.*?(\d{3})?[^\d]*(\d{3})[^\d]*(\d{4})\D*(\d{1,8})?.*$/';
 
@@ -111,7 +113,7 @@ class Format
      * @param string $format The format to be applied
      * @return string The formatted string
      */
-    public static function formatString($string, $format)
+    public static function formatString(string $string, string $format): string
     {
         if (empty($format) || empty($string)) {
             return $string;
@@ -144,7 +146,7 @@ class Format
      * @param string $ignore Characters to be ignored in the format (Defaults: single space)
      * @return string The masked string
      */
-    public static function maskString($string = '', $format = '', $ignore = ' ')
+    public static function maskString(string $string = '', string $format = '', string $ignore = ' '): string
     {
         if (empty($format) || empty($string)) {
             return $string;
@@ -176,7 +178,7 @@ class Format
      * @param string $string The string to remove chars from
      * @return string The string with chars removed
      */
-    protected static function _stripNonAlphaNumeric($string)
+    protected static function _stripNonAlphaNumeric(string $string): string
     {
         return preg_replace('/[^0-9]/', '', $string);
     }

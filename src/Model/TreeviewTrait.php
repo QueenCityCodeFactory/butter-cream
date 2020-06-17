@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Model;
 
 use ArrayIterator;
@@ -39,7 +41,7 @@ trait TreeviewTrait
      * @param array $options The options to find with
      * @return \Cake\ORM\Query The query builder
      */
-    public function findTreeview(Query $query, array $options)
+    public function findTreeview(Query $query, array $options): Query
     {
         $options += [
             'keyField' => $this->primaryKey(),

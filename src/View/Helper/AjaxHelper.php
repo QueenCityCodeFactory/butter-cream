@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use Cake\Routing\Router;
@@ -35,9 +37,9 @@ class AjaxHelper extends Helper
      * @param string $domId - the HTML DOM ID
      * @param string $url - Router::url() format
      * @param array $options - options for the HTML Element
-     * @return bool|string
+     * @return string
      */
-    public function relatedData($domId, $url, array $options = [])
+    public function relatedData(string $domId, string $url, array $options = []): string
     {
         $options += [
             'tag' => 'div',

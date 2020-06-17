@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Model;
 
 use Cake\I18n\Time;
@@ -18,7 +20,7 @@ class Validation
      * @param string $check The value to check.
      * @return bool Success.
      */
-    public static function phone($check)
+    public static function phone(string $check): bool
     {
         $regex = '/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)';
         $regex .= '|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*';
@@ -34,7 +36,7 @@ class Validation
      * @param string $check The value to check.
      * @return bool Success.
      */
-    public static function postal($check)
+    public static function postal(string $check): bool
     {
         $regex = '/\\A\\b[0-9]{5}(?:-?[0-9]{4})?\\b\\z/i';
 
@@ -47,7 +49,7 @@ class Validation
      * @param string $check The value to check.
      * @return bool Success
      */
-    public static function ssn($check)
+    public static function ssn(string $check): bool
     {
         $regex = '/\\A\\b[0-9]{3}-?[0-9]{2}-?[0-9]{4}\\b\\z/i';
 
@@ -59,7 +61,7 @@ class Validation
      * @param  string $check The value to check.
      * @return bool Success
      */
-    public static function birthdate($check)
+    public static function birthdate(string $check): bool
     {
         if ($check->toUnixString() > (new Time('00:00:00'))->toUnixString()) {
             return false;
@@ -75,7 +77,7 @@ class Validation
      * @param string $regex Regular expression
      * @return bool Success of match
      */
-    protected static function _check($check, $regex)
+    protected static function _check(string $check, string $regex): bool
     {
         if (is_string($regex) && preg_match($regex, $check)) {
             return true;

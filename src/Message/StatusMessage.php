@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Message;
 
 use Cake\Core\Configure;
@@ -84,8 +86,9 @@ class StatusMessage
     ];
 
     /**
-     * [getMessages description]
-     * @return [type] [description]
+     * Get all of the messages
+     *
+     * @return mixed The all the messages or false if no messages
      */
     public static function getMessages()
     {
@@ -93,61 +96,66 @@ class StatusMessage
     }
 
     /**
-     * [getMessage description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
+     * Get a messages by key
+     *
+     * @param string $key The array key for the message
+     * @return mixed The message array or false if not found
      */
-    public static function getMessage($key)
+    public static function getMessage(string $key)
     {
         return isset(static::$_messages[$key]) ? static::$_messages[$key] : false;
     }
 
     /**
-     * [getStatus description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
+     * Get a message's status
+     *
+     * @param string $key The array key for the message
+     * @return mixed The message status or false if not found
      */
-    public static function getStatus($key)
+    public static function getStatus(string $key)
     {
         return isset(static::$_messages[$key]['status']) ? static::$_messages[$key]['status'] : false;
     }
 
     /**
-     * [getResponseText description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
+     * Get Response Text
+     * @param string $key The array key for the message
+     * @return mixed The message response text or false if not found
      */
-    public static function getResponseText($key)
+    public static function getResponseText(string $key)
     {
         return isset(static::$_messages[$key]['responseText']) ? static::$_messages[$key]['responseText'] : false;
     }
 
     /**
-     * [getCode description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
+     * Get Code
+     *
+     * @param string $key The array key for the message
+     * @return mixed The message code or false if not found
      */
-    public static function getCode($key)
+    public static function getCode(string $key)
     {
         return isset(static::$_messages[$key]['code']) ? static::$_messages[$key]['code'] : false;
     }
 
     /**
-     * [getType description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
+     * Get type
+     *
+     * @param string $key The array key for the message
+     * @return mixed The message type or false if not found
      */
-    public static function getType($key)
+    public static function getType(string $key)
     {
         return isset(static::$_messages[$key]['type']) ? static::$_messages[$key]['type'] : false;
     }
 
     /**
-     * [getCode description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
+     * To Sting - Message/Type/Code
+     *
+     * @param string $key The array key for the message
+     * @return mixed The message string with type and code or false if not found
      */
-    public static function toString($key)
+    public static function toString(string $key)
     {
         $code = isset(static::$_messages[$key]['code']) ? static::$_messages[$key]['code'] : '';
         $message = isset(static::$_messages[$key]['responseText']) ? static::$_messages[$key]['responseText'] : '';

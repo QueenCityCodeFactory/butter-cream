@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use ButterCream\Utility\Format;
@@ -17,7 +19,7 @@ class FormatHelper extends Helper
      * @return string The formatted ssn
      * @see \App\Utility\Format::ssn()
      */
-    public function ssn($ssn, $format = '000-00-0000')
+    public function ssn(string $ssn, string $format = '000-00-0000'): string
     {
         return Format::ssn($ssn, $format);
     }
@@ -30,7 +32,7 @@ class FormatHelper extends Helper
      * @return string The formatted zipcode
      * @see \App\Utility\Format::zip()
      */
-    public function zip($zip, $formats = [])
+    public function zip(string $zip, array $formats = []): string
     {
         return Format::zip($zip, $formats);
     }
@@ -44,7 +46,7 @@ class FormatHelper extends Helper
      * @return string The formatted phone
      * @see \App\Utility\Format::phone()
      */
-    public function phone($phone, $formats = [], $extFormat = ' x')
+    public function phone(string $phone, array $formats = [], string $extFormat = ' x'): string
     {
         return Format::phone($phone, $formats, $extFormat);
     }
@@ -57,7 +59,7 @@ class FormatHelper extends Helper
      * @return string|array Defaults to returning a string(NO ext included) of an array with both string and parts
      * @see \App\Utility\Format::parsePhone()
      */
-    public function parsePhone($phone, $returnBoth = false)
+    public function parsePhone(string $phone, bool $returnBoth = false)
     {
         return Format::parsePhone($phone, $returnBoth);
     }
@@ -71,7 +73,7 @@ class FormatHelper extends Helper
      * @return string The formatted string
      * @see \App\Utility\Format::formatString()
      */
-    public function formatString($string, $format)
+    public function formatString(string $string, string $format): string
     {
         return Format::formatString($string, $format);
     }
@@ -87,7 +89,7 @@ class FormatHelper extends Helper
      * @return string The masked string
      * @see \App\Utility\Format::maskString()
      */
-    public function maskString($string = '', $format = '', $ignore = ' ')
+    public function maskString(string $string = '', string $format = '', string $ignore = ' '): string
     {
         return Format::maskString($string, $format, $ignore);
     }

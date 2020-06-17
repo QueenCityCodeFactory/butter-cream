@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use Bake\View\Helper\BakeHelper as Helper;
@@ -16,7 +18,7 @@ class BakeHelper extends Helper
      * @param mixed $primaryKey Primary key.
      * @return array
      */
-    public function getFieldAccessibility($fields = null, $primaryKey = null)
+    public function getFieldAccessibility($fields = null, $primaryKey = null): array
     {
         $accessible = [];
 
