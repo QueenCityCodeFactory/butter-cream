@@ -50,9 +50,9 @@ class Plugin extends BasePlugin
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        $middleware = parent::middleware($middleware);
+        $middlewareQueue = parent::middleware($middlewareQueue);
 
-        return $middleware;
+        return $middlewareQueue;
     }
 
     /**
