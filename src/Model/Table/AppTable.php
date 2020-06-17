@@ -73,7 +73,7 @@ class AppTable extends Table
     /**
      * Recursive Function to Clean Up submitted form Fields
      *
-     * @param  ArrayObject $data The data being marshalled
+     * @param ArrayObject $data The data being marshalled
      * @return ArrayObject The cleaned up data
      */
     protected function cleanData($data)
