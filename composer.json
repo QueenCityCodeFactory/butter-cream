@@ -13,7 +13,7 @@
     ],
     "require": {
         "cakephp/cakephp": "^4.0",
-        "friendsofcake/search": "dev-cake-4.x",
+        "friendsofcake/search": "^6.0.0",
         "friendsofcake/bootstrap-ui" : "dev-cake-4-bs-4"
     },
     "require-dev": {
