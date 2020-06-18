@@ -1,5 +1,5 @@
 <?php $this->set('sessionMonitor', true); ?>
-<?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./Layout/common'); ?>
+<?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./layout/common'); ?>
 <div class="card">
     <div class="card-header">
         <div class="row">

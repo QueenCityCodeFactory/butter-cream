@@ -1,5 +1,5 @@
 <?php $this->set('sessionMonitor', true); ?>
-<?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./Layout/common'); ?>
+<?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./layout/common'); ?>
 <?php if (!$this->fetch('index_panel_footer') && empty($this->fetch('nopaginate'))) : ?>
     <?php $this->start('index_panel_footer'); ?>
         <div class="card-footer">
