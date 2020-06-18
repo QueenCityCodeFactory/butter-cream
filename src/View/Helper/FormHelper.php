@@ -35,7 +35,7 @@ class FormHelper extends Helper
         $out = parent::create($context, $options);
 
         if (empty($noreferer)) {
-            $out .= parent::hidden('Referer.url', ['value' => $this->_View->viewVars['referer']]);
+            $out .= parent::hidden('Referer.url', ['value' => $this->_View->get('referer')]);
         }
 
         return $out;
@@ -217,7 +217,7 @@ class FormHelper extends Helper
             'confirm' => 'Are you sure you want to cancel?'
         ];
 
-        return $this->Html->link($title, $this->_View->viewVars['referer'], $options);
+        return $this->Html->link($title, $this->_View->get('referer'), $options);
     }
 
     /**
@@ -239,7 +239,7 @@ class FormHelper extends Helper
             'confirm' => 'Are you sure you want go back to the previous page? Your changes on the current page will not be saved!'
         ];
 
-        return $this->Html->link($title, $this->_View->viewVars['referer'], $options);
+        return $this->Html->link($title, $this->_View->get('referer'), $options);
     }
 
     /**
