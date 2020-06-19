@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ButterCream\Controller;
 
 use Cake\Controller\Controller as CakeController;
+use Cake\Event\EventInterface;
 
 class Controller extends CakeController
 {
