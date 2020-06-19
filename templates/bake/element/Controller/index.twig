@@ -1,0 +1,18 @@
+
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function index()
+    {
+{% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
+{% if belongsTo %}
+        $this->paginate = [
+            'contain' => [{{ Bake.stringifyList(belongsTo, {'indent': false})|raw }}],
+        ];
+{% endif %}
+        ${{ pluralName }} = $this->paginate($this->{{ currentModelName }}->find('search', ['search' => $this->request->getQueryParams()]));
+
+        $this->set(compact('{{ pluralName }}'));
+    }
