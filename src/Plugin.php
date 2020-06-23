@@ -15,6 +15,13 @@ use Cake\Routing\RouteBuilder;
 class Plugin extends BasePlugin
 {
     /**
+     * Plugin name.
+     *
+     * @var string
+     */
+    protected $name = 'ButterCream';
+
+    /**
      * Load all the plugin configuration and bootstrap logic.
      *
      * The host application is provided as an argument. This allows you to load
