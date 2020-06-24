@@ -40,6 +40,7 @@ class Plugin extends BasePlugin
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
+        $app->addPlugin('BootstrapUI');
         parent::bootstrap($app);
     }
 
