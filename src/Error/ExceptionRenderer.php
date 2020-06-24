@@ -51,9 +51,9 @@ class ExceptionRenderer extends CakeExceptionRenderer
     protected function _outputMessageSafe(string $template): Response
     {
         $helpers = ['ButterCream.Form', 'ButterCream.Html', 'ButterCream.Time'];
-        $this->controller->helpers = $helpers;
         $builder = $this->controller->viewBuilder();
-        $builder->setHelpers($helpers, false)
+        $builder
+            ->setHelpers($helpers, false)
             ->setLayoutPath('')
             ->setTemplatePath('Error')
             ->setTheme('ButterCream');
