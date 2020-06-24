@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace {{ namespace }}\Model\Table;
 
 {% set uses = ['use Cake\\ORM\\Query;', 'use Cake\\ORM\\RulesChecker;', 'use ButterCream\\Model\\Table\\AppTable as Table;', 'use Cake\\Validation\\Validator;', 'use ' ~ namespace ~ '\\Model\\Entity\\' ~ entity ~ ';'] %}
-{% if callbacks %}
+{% if not noCallbacks %}
     {%- set uses = uses|merge(['use ArrayObject;', 'use Cake\\Datasource\\EntityInterface;', 'use Cake\\Event\\Event;']) %}
 {% endif %}
 {{ uses|sort|join('\n')|raw }}
@@ -124,7 +124,7 @@ class {{ name }}Table extends Table
     }
 {% endif %}
 
-{%- if callbacks %}
+{%- if not noCallbacks %}
 
     /**
      * Before Marshal Callback

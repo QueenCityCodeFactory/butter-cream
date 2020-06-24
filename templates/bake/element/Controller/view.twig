@@ -15,7 +15,7 @@
         ${{ singularName }} = $this->{{ currentModelName }}->get($id);
 {% else %}
         ${{ singularName }} = $this->{{ currentModelName }}->get($id, [
-            'contain' => [{{ Bake.stringifyList(allAssociations, {'indent': false})|raw }}]
+            'contain' => [{{ Bake.stringifyList(allAssociations, {'indent': 4})|raw }}]
         ]);
 {% endif %}
 

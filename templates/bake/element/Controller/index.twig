@@ -8,7 +8,7 @@
 {% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
 {% if belongsTo %}
         $this->paginate = [
-            'contain' => [{{ Bake.stringifyList(belongsTo, {'indent': false})|raw }}],
+            'contain' => [{{ Bake.stringifyList(belongsTo, {'indent': 4})|raw }}],
         ];
 {% endif %}
         ${{ pluralName }} = $this->paginate($this->{{ currentModelName }}->find('search', ['search' => $this->request->getQueryParams()]));
