@@ -192,6 +192,7 @@ class FormHelper extends Helper
             $title = $this->Html->icon('save') . ' Save';
         }
         $options += [
+            'escapeTitle' => false,
             'class' => 'btn btn-success'
         ];
 
