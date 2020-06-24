@@ -35,11 +35,11 @@ class AjaxHelper extends Helper
      * - `class`
      *
      * @param string $domId - the HTML DOM ID
-     * @param string $url - Router::url() format
+     * @param string|array $url - Router::url() format
      * @param array $options - options for the HTML Element
      * @return string
      */
-    public function relatedData(string $domId, string $url, array $options = []): string
+    public function relatedData(string $domId, $url, array $options = []): string
     {
         $options += [
             'tag' => 'div',
