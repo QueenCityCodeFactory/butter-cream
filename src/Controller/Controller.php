@@ -72,7 +72,7 @@ class Controller extends CakeController
 
         if ($this->request->is('ajax')) {
             $this->paginate['limit'] = $this->ajaxPaginationLimit;
-            $this->viewBuilder()->layout('ajax');
+            $this->viewBuilder()->setLayout('ajax');
         }
     }
 }
