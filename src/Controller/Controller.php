@@ -5,6 +5,7 @@ namespace ButterCream\Controller;
 
 use Cake\Controller\Controller as CakeController;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\NotFoundException;
 
 class Controller extends CakeController
 {
@@ -35,7 +36,7 @@ class Controller extends CakeController
                 'pdf' => 'CakePdf.Pdf',
             ]
         ]);
-        $this->loadComponent('ButterCream.Paginator');
+        $this->loadComponent('Paginator');
         $this->loadComponent('ButterCream.Flash');
         $this->loadComponent('ButterCream.Referer', [
             'ignored' => [
@@ -73,6 +74,63 @@ class Controller extends CakeController
         if ($this->request->is('ajax')) {
             $this->paginate['limit'] = $this->ajaxPaginationLimit;
             $this->viewBuilder()->setLayout('ajax');
+        }
+    }
+
+   /**
+     * Handles pagination of records in Table objects.
+     *
+     * Will load the referenced Table object, and have the PaginatorComponent
+     * paginate the query using the request date and settings defined in `$this->paginate`.
+     *
+     * This method will also make the PaginatorHelper available in the view.
+     *
+     * @param \Cake\ORM\Table|string|\Cake\ORM\Query|null $object Table to paginate
+     * (e.g: Table instance, 'TableName' or a Query object)
+     * @param array $settings The settings/configuration used for pagination.
+     * @return \Cake\ORM\ResultSet|\Cake\Datasource\ResultSetInterface Query results
+     * @link https://book.cakephp.org/4/en/controllers.html#paginating-a-model
+     * @throws \RuntimeException When no compatible table object can be found.
+     */
+    public function paginate($object = null, array $settings = [])
+    {
+        if (is_object($object)) {
+            $table = $object;
+        }
+
+        if (is_string($object) || $object === null) {
+            $try = [$object, $this->modelClass];
+            foreach ($try as $tableName) {
+                if (empty($tableName)) {
+                    continue;
+                }
+                $table = $this->loadModel($tableName);
+                break;
+            }
+        }
+
+        $this->loadComponent('Paginator');
+        if (empty($table)) {
+            throw new RuntimeException('Unable to locate an object compatible with paginate.');
+        }
+        $settings += $this->paginate;
+
+        try {
+            return $this->Paginator->paginate($table, $settings);
+        } catch (NotFoundException $e) {
+            $request = $this->getRequest();
+            $queryString = $request->getQueryParams();
+            if (isset($queryString['page'])) {
+                $queryString['page'] = 1;
+            }
+
+            return $this->redirect([
+                'plugin' => $request->getParam('plugin'),
+                'prefix' => $request->getParam('prefix'),
+                'controller' => $request->getParam('controller'),
+                'action' => $request->getParam('action'),
+                '?' => $queryString
+            ]);
         }
     }
 }
