@@ -103,14 +103,22 @@ $this->append('script'); ?>
                         <div class="form-group text">
                             <label class="control-label" for="username">Username or Email</label>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-at"></i></span>
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-at"></i>
+                                    </span>
+                                </span>
                                 <input type="text" name="username" autocomplete="off" id="expired-username" class="form-control">
                             </div>
                         </div>
                         <div class="form-group password">
                             <label class="control-label" for="password">Password</label>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                                </span>
                                 <input type="password" name="password" autocomplete="off" id="expired-password" class="form-control">
                             </div>
                         </div>
