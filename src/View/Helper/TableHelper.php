@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use BootstrapUI\View\Helper\OptionsAwareTrait;
@@ -35,40 +37,25 @@ class TableHelper extends Helper
     ];
 
     /**
-     * Default model of the paged sets
-     *
-     * @var string
-     */
-    protected $_defaultModel;
-
-    /**
-     * Constructor. Overridden to merge passed args with URL options.
-     *
-     * @param \Cake\View\View $View The View this helper is being attached to.
-     * @param array $config Configuration settings for the helper.
-     */
-    public function __construct(View $View, array $config = [])
-    {
-        parent::__construct($View, $config);
-        if ($this->getView()->getRequest()->getParam('paging')) {
-            list($this->_defaultModel) = array_keys($this->getView()->getRequest()->getParam('paging'));
-        }
-    }
-
-    /**
      * Generate Table header
      *
      * @param string $key - column key/name
-     * @param string $title - alternate header title
+     * @param string|null $title - alternate header title
      * @param array $options - options
      * @return string
      */
-    public function header($key, $title = null, $options = [])
+    public function header(string $key, $title = null, array $options = []): string
     {
-        if (!(isset($options['keySkip']) && !empty($options['keySkip'])) && strpos($key, '.') === false) {
-            $key = $this->_defaultModel . '.' . $key;
+        $options += [
+            'modelClass' => $this->getView()->getRequest()->getParam('controller')
+        ];
+
+        if (isset($options['modelClass'])) {
+            $key = $options['modelClass'] . '.' . $key;
         }
-        $attrs = empty($options['attrs']) ? [] : $options['attrs'];
+        unset($options['modelClass']);
+
+        $attrs = $options['attrs'] ?? [];
 
         $help = '';
         if (!empty($options['help'])) {
