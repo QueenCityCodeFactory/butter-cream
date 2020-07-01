@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use Cake\I18n\Time;
@@ -24,7 +26,7 @@ class TimeHelper extends Helper
      * @throws \Exception When the date cannot be parsed
      * @see \Cake\I18n\Time::i18nFormat()
      */
-    public function userFormat($date, $format = null, $invalid = false, $timezone = null)
+    public function userFormat($date, ?string $format = null, $invalid = false, $timezone = null)
     {
         if (empty($date)) {
             return $invalid;
