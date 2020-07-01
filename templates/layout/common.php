@@ -28,7 +28,7 @@ if (!$this->fetch('footer')) {
     $this->assign('footer', $this->element('footer', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
 ?>
-<div class="container-fluid">
+<div class="main-wrapper container-fluid">
     <div class="row">
         <main role="main" class="col-12" spellcheck="true">
             <?= $this->fetch('flash') ?>

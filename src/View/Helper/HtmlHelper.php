@@ -336,7 +336,7 @@ class HtmlHelper extends Helper
     }
 
     /**
-     * Add Button for Panels
+     * Add Button for Cards
      *
      * @param array $options The options
      * @return string|bool Html Link

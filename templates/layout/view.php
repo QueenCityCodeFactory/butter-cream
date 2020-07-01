@@ -9,9 +9,9 @@
                     <small><?= $this->fetch('page_description') ?></small>
                 <?php endif; ?>
             </div>
-            <?php if ($this->fetch('panel_buttons')) : ?>
+            <?php if ($this->fetch('view.card_buttons')) : ?>
                 <div class="col-3 text-right">
-                    <?= $this->fetch('panel_buttons') ?>
+                    <?= $this->fetch('view.card_buttons') ?>
                 </div>
             <?php endif ?>
         </div>
@@ -19,7 +19,7 @@
     <div class="card-body">
         <?= $this->fetch('content') ?>
     </div>
-    <?= $this->fetch('panel_footer') ?>
+    <?= $this->fetch('view.card_footer') ?>
 </div>
 
 <?= $this->fetch('related_data') ?>

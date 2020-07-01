@@ -13,7 +13,7 @@ if (!$this->fetch('html')) {
  * Default title
  */
 if (!$this->fetch('title')) {
-    $this->assign('title', Configure::read('App.title') . ': ' . Inflector::humanize(Inflector::underscore($this->request->getParam('controller'))));
+    $this->assign('title', Configure::read('App.title') . ': ' . Inflector::humanize(Inflector::underscore($this->getRequest()->getParam('controller'))));
 }
 
 /**
@@ -37,11 +37,11 @@ if (!$this->fetch('google_analytics')) {
 /**
  * Default `body` block.
  */
-$bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action')];
+$bodyClasses = [Configure::read('App.environment'), $this->getRequest()->getParam('controller'), $this->getRequest()->getParam('action')];
 if ($this->get('sessionMonitor') === true) {
     $bodyClasses[] = 'session-monitor';
 }
-$skinClass = $this->request->getSession()->read('Auth.User.theme');
+$skinClass = $this->getRequest()->getSession()->read('Auth.User.theme');
 if (!empty($skinClass)) {
     $bodyClasses[] = $skinClass;
 }
@@ -79,7 +79,7 @@ if (!(isset($noModalScript) && $noModalScript === true)) :
 $this->append('script'); ?>
 <script>
     var sessionTimeout = "<?= Configure::read('Session.timeout') ?>";
-    var lastAccessTime = "<?= $this->request->getSession()->read('SessionTimeoutFilter.lastAccess') ?>";
+    var lastAccessTime = "<?= $this->getRequest()->getSession()->read('SessionTimeoutFilter.lastAccess') ?>";
 </script>
 <script id="modal-template" type="text/x-jsrender">
     {{if id}}
