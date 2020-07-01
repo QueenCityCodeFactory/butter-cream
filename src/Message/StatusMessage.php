@@ -119,6 +119,7 @@ class StatusMessage
 
     /**
      * Get Response Text
+     *
      * @param string $key The array key for the message
      * @return mixed The message response text or false if not found
      */
