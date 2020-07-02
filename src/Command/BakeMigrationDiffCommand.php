@@ -26,6 +26,7 @@ use Migrations\Command\Phinx\Dump;
 use Migrations\Util\UtilTrait;
 use Symfony\Component\Console\Input\ArrayInput;
 use Migrations\Command\SnapshotTrait;
+use Migrations\Command\BakeMigrationSnapshotCommand;
 
 /**
  * Task class for generating migration diff files.
