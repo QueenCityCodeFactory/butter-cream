@@ -30,6 +30,7 @@ if (!$this->fetch('footer')) {
 ?>
 <div class="main-wrapper container-fluid">
     <div class="row">
+        <?= $this->fetch('common.main.before') ?>
         <main role="main" class="col-12" spellcheck="true">
             <?= $this->fetch('flash') ?>
             <noscript>
@@ -41,5 +42,6 @@ if (!$this->fetch('footer')) {
             <?= $this->fetch('callout') ?>
             <?= $this->fetch('content') ?>
         </main>
+        <?= $this->fetch('common.main.after') ?>
     </div>
 </div>
