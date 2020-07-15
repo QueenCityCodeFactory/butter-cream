@@ -4,7 +4,7 @@
 {% set groupedFields = fieldsData.groupedFields %}
 {% set pK = '$' ~ singularVar ~ '->' ~ primaryKey[0] %}
 <?php
-    $this->extend('ButterCream./Layout/view');
+    $this->extend('ButterCream./layout/view');
     $this->assign('page_heading', '{{ singularHumanName }}');
     $this->start('view.card_buttons');
 ?>
