@@ -80,6 +80,8 @@ $this->append('script'); ?>
 <script>
     var sessionTimeout = "<?= Configure::read('Session.timeout') ?>";
     var lastAccessTime = "<?= $this->getRequest()->getSession()->read('SessionTimeoutFilter.lastAccess') ?>";
+    var sessionUserName = "<?= $this->getRequest()->getSession()->read('Auth.username') ?>";
+    var sessionUserEmail = "<?= $this->getRequest()->getSession()->read('Auth.email') ?>";
 </script>
 <script id="modal-template" type="text/x-jsrender">
     {{if id}}
