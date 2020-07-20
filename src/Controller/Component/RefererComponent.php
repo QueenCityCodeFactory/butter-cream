@@ -93,7 +93,7 @@ class RefererComponent extends Component
 
         $referer = $this->normalizeUrl($referer);
 
-        return $referer;
+        return $referer ?? '';
     }
 
     /**
