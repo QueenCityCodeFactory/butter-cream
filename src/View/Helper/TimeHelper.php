@@ -31,8 +31,8 @@ class TimeHelper extends Helper
         if (empty($date)) {
             return $invalid;
         }
-        if (empty($timezone) && $this->getView()->getRequest()->getSession()->check('Auth.User.timezone')) {
-            $timezone = $this->getView()->getRequest()->getSession()->read('Auth.User.timezone');
+        if (empty($timezone) && $this->getView()->getRequest()->getSession()->check('Auth.timezone')) {
+            $timezone = $this->getView()->getRequest()->getSession()->read('Auth.timezone');
         }
         try {
             if ($date instanceof DateTimeInterface) {

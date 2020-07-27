@@ -72,7 +72,7 @@ $bodyClasses = [Configure::read('App.environment'), $this->request->getParam('co
 if ($this->get('sessionMonitor') === true) {
     $bodyClasses[] = 'session-monitor';
 }
-$skinClass = $this->request->getSession()->read('Auth.User.theme');
+$skinClass = $this->request->getSession()->read('Auth.theme');
 if (!empty($skinClass)) {
     $bodyClasses[] = $skinClass;
 }
