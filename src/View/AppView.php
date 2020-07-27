@@ -40,6 +40,9 @@ class AppView extends View
                 ',
             ]
         ]);
+        $this->loadHelper('Format', [
+            'className' => 'ButterCream.Format'
+        ]);
         $this->loadHelper('Html', [
             'className' => 'ButterCream.Html'
         ]);
