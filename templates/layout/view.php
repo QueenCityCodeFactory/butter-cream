@@ -1,4 +1,9 @@
-<?php $this->set('sessionMonitor', true); ?>
+<?php
+    $sessionMonitor = $this->get('sessionMonitor', false);
+    if ($sessionMonitor !== false) {
+        $this->set('sessionMonitor', $sessionMonitor);
+    }
+?>
 <?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./layout/common'); ?>
 <div class="card">
     <div class="card-header">

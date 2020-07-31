@@ -1,4 +1,9 @@
-<?php $this->set('sessionMonitor', true); ?>
+<?php
+    $sessionMonitor = $this->get('sessionMonitor', false);
+    if ($sessionMonitor !== false) {
+        $this->set('sessionMonitor', $sessionMonitor);
+    }
+?>
 <?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./layout/common'); ?>
 <?php if (!$this->fetch('index.card_footer') && $this->get('index.noCardFooter', false) !== true) : ?>
     <?php $this->start('index.card_footer'); ?>
