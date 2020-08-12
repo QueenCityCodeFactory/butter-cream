@@ -10,12 +10,14 @@ if (Configure::read('debug') === true) {
 } else {
     $this->prepend('css', $this->Html->css(['app.min.css?cb=' . Configure::read('CacheBuster.cssCB')], ['fullBase' => true]));
 }
-
+$sanitize = function($strIn) {
+    return preg_replace('/[\`\$]/i','', $strIn);
+};
 if ($this instanceof \CakePdf\View\PdfView) {
     $this->renderer()->header([
         'left' => $this->fetch('pageNumbers') ? 'Page [page] of [toPage]' : '',
-        'center' => $this->fetch('name') ? $this->fetch('name') : '',
-        'right' => $this->fetch('header') ? $this->fetch('header') : ''
+        'center' => $this->fetch('name') ? $sanitize($this->fetch('name')) : '',
+        'right' => $this->fetch('header') ? $sanitize($this->fetch('header')) : ''
     ]);
 }
 
