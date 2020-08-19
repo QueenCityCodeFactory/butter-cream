@@ -10,15 +10,15 @@
 ?>
 <div class="btn-group btn-group-xs pull-right">
     <?= $this->Html->actionDropdownMenu([
-        $this->Html->tagLink('Edit {{ singularHumanName }}', ['action' => 'edit', {{ pK|raw }}]),
-        $this->Html->tagLink('List {{ pluralHumanName }}', ['action' => 'index']),
-        $this->Html->tagLink('New {{ singularHumanName }}', ['action' => 'add']),
+        $this->Html->link('Edit {{ singularHumanName }}', ['action' => 'edit', {{ pK|raw }}], ['class' => 'dropdown-item']),
+        $this->Html->link('List {{ pluralHumanName }}', ['action' => 'index'], ['class' => 'dropdown-item']),
+        $this->Html->link('New {{ singularHumanName }}', ['action' => 'add'], ['class' => 'dropdown-item']),
 {% set done = [] %}
 {% for type, data in associations %}
 {% for alias, details in data %}
 {% if details.controller is not same as(_view.name) and details.controller not in done %}
-        $this->Html->tagLink('List {{ alias|underscore|humanize }}', ['controller' => '{{ details.controller }}', 'action' => 'index']),
-        $this->Html->tagLink('New {{ alias|underscore|singularize|humanize }}', ['controller' => '{{ details.controller }}', 'action' => 'add']),
+        $this->Html->link('List {{ alias|underscore|humanize }}', ['controller' => '{{ details.controller }}', 'action' => 'index'], ['class' => 'dropdown-item']),
+        $this->Html->link('New {{ alias|underscore|singularize|humanize }}', ['controller' => '{{ details.controller }}', 'action' => 'add'], ['class' => 'dropdown-item']),
 {% set done = done|merge(['controller']) %}
 {% endif %}
 {% endfor %}
