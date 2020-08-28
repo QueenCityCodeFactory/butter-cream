@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ButterCream\Message\Exception;
 
 use ButterCream\Message\StatusMessage;
-use Cake\Network\Exception\HttpException;
+use Cake\Http\Exception\HttpException;
 
 /**
  * Represents an HTTP 400 error
