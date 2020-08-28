@@ -17,7 +17,7 @@ class TrustProxyMiddleware implements MiddlewareInterface
     /**
      * Constructor
      *
-     * @param array $config Config options. See $_config for valid keys.
+     * @param bool $trust True or False
      */
     public function __construct(bool $trust = true)
     {
