@@ -1,7 +1,5 @@
 <?php
 use Cake\Core\Configure;
-use Cake\Utility\Inflector;
-use Cake\Utility\Text;
 
 /**
  * Default `html` block.
@@ -27,7 +25,6 @@ if (!$this->fetch('meta')) {
 if (!$this->fetch('google_analytics')) {
     $this->assign('google_analytics', $this->element('google_analytics', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
-
 
 /**
  * Flash Messages
@@ -197,7 +194,7 @@ $this->append('script'); ?>
                                         <?= $this->element('exception_stack_trace_nav') ?>
                                     </div>
                                     <div class="col-md-8 error-contents">
-                                        <?php if ($this->fetch('subheading')): ?>
+                                        <?php if ($this->fetch('subheading')) : ?>
                                         <div class="alert alert-info error-subheading">
                                             <?= $this->fetch('subheading') ?>
                                         </div>
@@ -209,7 +206,7 @@ $this->append('script'); ?>
                                             <?= $this->fetch('file') ?>
                                         </div>
 
-                                        <?php if ($this->fetch('templateName')): ?>
+                                        <?php if ($this->fetch('templateName')) : ?>
                                         <p class="customize">
                                             If you want to customize this error message, create
                                             <em><?= APP_DIR . DIRECTORY_SEPARATOR . 'Template' . DIRECTORY_SEPARATOR . 'Error' . DIRECTORY_SEPARATOR . $this->fetch('templateName') ?></em>

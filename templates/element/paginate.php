@@ -6,10 +6,10 @@
             40 => 40,
             60 => 60,
             80 => 80,
-            100 => 100
+            100 => 100,
         ],
-        'default' => 20
-    ]
+        'default' => 20,
+    ],
 ]); ?>
 
 <div class="row">
@@ -26,7 +26,7 @@
                     'templates' => [
                         'select' => '<select class="input-xs ' . ($this->layout == 'ajax' ? 'ajax-set-pagination-limit' : 'set-pagination-limit') . '"{{attrs}}>{{content}}</select>',
                         'inputContainer' => 'Show: {{content}}',
-                    ]
+                    ],
                 ]) ?>
             <?php endif; ?>
             <?= $this->Paginator->counter('Showing {{start}}-{{end}} of {{count}} records') ?>

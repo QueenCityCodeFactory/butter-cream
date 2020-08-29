@@ -1,6 +1,5 @@
 <?php
 use Cake\Core\Configure;
-use Cake\Utility\Inflector;
 
 /**
  * Load assets - These assets need provided by the application.
@@ -10,14 +9,14 @@ if (Configure::read('debug') === true) {
 } else {
     $this->prepend('css', $this->Html->css(['app.min.css?cb=' . Configure::read('CacheBuster.cssCB')], ['fullBase' => true]));
 }
-$sanitize = function($strIn) {
-    return preg_replace('/[\`\$]/i','', $strIn);
+$sanitize = function ($strIn) {
+    return preg_replace('/[\`\$]/i', '', $strIn);
 };
 if ($this instanceof \CakePdf\View\PdfView) {
     $this->renderer()->header([
         'left' => $this->fetch('pageNumbers') ? 'Page [page] of [toPage]' : '',
         'center' => $this->fetch('name') ? $sanitize($this->fetch('name')) : '',
-        'right' => $this->fetch('header') ? $sanitize($this->fetch('header')) : ''
+        'right' => $this->fetch('header') ? $sanitize($this->fetch('header')) : '',
     ]);
 }
 

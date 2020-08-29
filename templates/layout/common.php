@@ -1,7 +1,4 @@
 <?php
-use Cake\Core\Configure;
-use Cake\Utility\Inflector;
-use Cake\Utility\Text;
 
 /**
  * Flash Messages
