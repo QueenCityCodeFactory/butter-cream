@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Model\Entity;
 
 use Cake\Core\Configure;
@@ -10,7 +12,6 @@ use Cake\ORM\Entity;
  */
 class File extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be

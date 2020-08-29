@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 namespace ButterCream\Message;
 
-use Cake\Core\Configure;
-
 /**
  * Status Message Class - Library of application status messages.
  */
 class StatusMessage
 {
-
     /**
      * Application Status Messages
      *
@@ -51,37 +48,37 @@ class StatusMessage
             'status' => 500,
             'responseText' => 'Missing or corrupt "tmp" file.',
             'code' => 'FILEAPI-1',
-            'type' => 'error'
+            'type' => 'error',
         ],
         'file_api_missing_metadata' => [
             'status' => 500,
             'responseText' => 'Missing required Meta Data: Category and Tag are required.',
             'code' => 'FILEAPI-2',
-            'type' => 'error'
+            'type' => 'error',
         ],
         'file_api_missing_fileserver' => [
             'status' => 500,
             'responseText' => 'Problem creating or locating uploads directory.',
             'code' => 'FILEAPI-3',
-            'type' => 'error'
+            'type' => 'error',
         ],
         'file_api_can_not_copy_file' => [
             'status' => 500,
             'responseText' => 'Unable to copy or save tmp file to final destination.',
             'code' => 'FILEAPI-4',
-            'type' => 'error'
+            'type' => 'error',
         ],
         'file_api_resize_missing_file' => [
             'status' => 500,
             'responseText' => 'Missing or corrupt file, the resizing can not be completed.',
             'code' => 'FILEAPI-5',
-            'type' => 'error'
+            'type' => 'error',
         ],
         'file_api_resize_invalid_type' => [
             'status' => 500,
             'responseText' => 'The selected file is not an image, therefore can not be resized.',
             'code' => 'FILEAPI-6',
-            'type' => 'error'
+            'type' => 'error',
         ],
     ];
 
@@ -92,7 +89,7 @@ class StatusMessage
      */
     public static function getMessages()
     {
-        return isset(static::$_messages) ? static::$_messages : false;
+        return static::$_messages ?? false;
     }
 
     /**
@@ -103,7 +100,7 @@ class StatusMessage
      */
     public static function getMessage(string $key)
     {
-        return isset(static::$_messages[$key]) ? static::$_messages[$key] : false;
+        return static::$_messages[$key] ?? false;
     }
 
     /**
@@ -114,7 +111,7 @@ class StatusMessage
      */
     public static function getStatus(string $key)
     {
-        return isset(static::$_messages[$key]['status']) ? static::$_messages[$key]['status'] : false;
+        return static::$_messages[$key]['status'] ?? false;
     }
 
     /**
@@ -125,7 +122,7 @@ class StatusMessage
      */
     public static function getResponseText(string $key)
     {
-        return isset(static::$_messages[$key]['responseText']) ? static::$_messages[$key]['responseText'] : false;
+        return static::$_messages[$key]['responseText'] ?? false;
     }
 
     /**
@@ -136,7 +133,7 @@ class StatusMessage
      */
     public static function getCode(string $key)
     {
-        return isset(static::$_messages[$key]['code']) ? static::$_messages[$key]['code'] : false;
+        return static::$_messages[$key]['code'] ?? false;
     }
 
     /**
@@ -147,7 +144,7 @@ class StatusMessage
      */
     public static function getType(string $key)
     {
-        return isset(static::$_messages[$key]['type']) ? static::$_messages[$key]['type'] : false;
+        return static::$_messages[$key]['type'] ?? false;
     }
 
     /**
@@ -158,9 +155,9 @@ class StatusMessage
      */
     public static function toString(string $key)
     {
-        $code = isset(static::$_messages[$key]['code']) ? static::$_messages[$key]['code'] : '';
-        $message = isset(static::$_messages[$key]['responseText']) ? static::$_messages[$key]['responseText'] : '';
-        $type = isset(static::$_messages[$key]['type']) ? static::$_messages[$key]['type'] : 'notice';
+        $code = static::$_messages[$key]['code'] ?? '';
+        $message = static::$_messages[$key]['responseText'] ?? '';
+        $type = static::$_messages[$key]['type'] ?? 'notice';
 
         return trim($message . ' ' . strtoupper($type) . ': ' . $code);
     }

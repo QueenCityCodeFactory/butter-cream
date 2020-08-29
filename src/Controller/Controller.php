@@ -9,11 +9,10 @@ use Cake\Http\Exception\NotFoundException;
 
 class Controller extends CakeController
 {
-
     /**
      * Ajax Pagination Limit
      *
-     * @var boolean
+     * @var bool
      */
     public $ajaxPaginationLimit = 5;
 
@@ -34,15 +33,15 @@ class Controller extends CakeController
             'viewClassMap' => [
                 'xlsx' => 'CakeSpreadsheet.Excel',
                 'pdf' => 'CakePdf.Pdf',
-            ]
+            ],
         ]);
         $this->loadComponent('Paginator');
         $this->loadComponent('ButterCream.Flash');
         $this->loadComponent('ButterCream.Referer', [
             'ignored' => [
                 '/login',
-                '/logout'
-            ]
+                '/logout',
+            ],
         ]);
     }
 
@@ -77,7 +76,7 @@ class Controller extends CakeController
         }
     }
 
-   /**
+    /**
      * Handles pagination of records in Table objects.
      *
      * Will load the referenced Table object, and have the PaginatorComponent
@@ -129,7 +128,7 @@ class Controller extends CakeController
                 'prefix' => $request->getParam('prefix'),
                 'controller' => $request->getParam('controller'),
                 'action' => $request->getParam('action'),
-                '?' => $queryString
+                '?' => $queryString,
             ]);
         }
     }

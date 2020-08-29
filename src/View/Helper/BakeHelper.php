@@ -10,7 +10,6 @@ use Bake\View\Helper\BakeHelper as Helper;
  */
 class BakeHelper extends Helper
 {
-
     /**
      * Get field accessibility data.
      *

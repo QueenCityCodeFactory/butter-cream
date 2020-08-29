@@ -15,7 +15,6 @@ use Cake\Controller\Component\FlashComponent as Component;
  */
 class FlashComponent extends Component
 {
-
     /**
      * Used to set a session variable that can be used to output messages in the view.
      * If you make consecutive calls to this method, the messages will stack (if they are
@@ -40,7 +39,7 @@ class FlashComponent extends Component
     public function set($message, array $options = []): void
     {
         $options += [
-            'escape' => false
+            'escape' => false,
         ];
 
         parent::set($message, $options);

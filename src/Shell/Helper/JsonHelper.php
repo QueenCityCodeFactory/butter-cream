@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Shell\Helper;
 
 use Cake\Console\Helper;
@@ -8,13 +10,11 @@ use Cake\Console\Helper;
  */
 class JsonHelper extends Helper
 {
-
     /**
      * Output method - Generate the output for this shell helper.
      *
      * @param mixed $data Array or Object
      * @param bool $pretty Pretty Output
-     *
      * @return string|bool - The JSON data | false if invalid
      */
     public function output($data, $pretty = true)

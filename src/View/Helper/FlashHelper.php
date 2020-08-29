@@ -10,5 +10,4 @@ use BootstrapUI\View\Helper\FlashHelper as Helper;
  */
 class FlashHelper extends Helper
 {
-
 }

@@ -16,13 +16,13 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class SessionTimeoutMiddleware implements MiddlewareInterface
 {
-
     /**
      * Default Config
+     *
      * @var [type]
      */
     protected $_config = [
-        'timeout' => 15
+        'timeout' => 15,
     ];
 
     /**

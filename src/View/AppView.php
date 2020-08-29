@@ -10,7 +10,6 @@ use Cake\View\View;
  */
 class AppView extends View
 {
-
     /**
      * Initialization hook method.
      *
@@ -19,10 +18,10 @@ class AppView extends View
     public function initialize(): void
     {
         $this->loadHelper('Ajax', [
-            'className' => 'ButterCream.Ajax'
+            'className' => 'ButterCream.Ajax',
         ]);
         $this->loadHelper('Flash', [
-            'className' => 'ButterCream.Flash'
+            'className' => 'ButterCream.Flash',
         ]);
         $this->loadHelper('Form', [
             'className' => 'ButterCream.Form',
@@ -38,25 +37,25 @@ class AppView extends View
                         <li class="meridian">{{meridian}}</li>
                     </ul>
                 ',
-            ]
+            ],
         ]);
         $this->loadHelper('Format', [
-            'className' => 'ButterCream.Format'
+            'className' => 'ButterCream.Format',
         ]);
         $this->loadHelper('Html', [
-            'className' => 'ButterCream.Html'
+            'className' => 'ButterCream.Html',
         ]);
         $this->loadHelper('Paginator', [
-            'className' => 'ButterCream.Paginator'
+            'className' => 'ButterCream.Paginator',
         ]);
         $this->loadHelper('Table', [
-            'className' => 'ButterCream.Table'
+            'className' => 'ButterCream.Table',
         ]);
         $this->loadHelper('Time', [
-            'className' => 'ButterCream.Time'
+            'className' => 'ButterCream.Time',
         ]);
         $this->loadHelper('Url', [
-            'className' => 'ButterCream.Url'
+            'className' => 'ButterCream.Url',
         ]);
     }
 }

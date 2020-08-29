@@ -7,14 +7,12 @@ use BootstrapUI\View\Helper\OptionsAwareTrait;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
-use Cake\View\View;
 
 /**
  * Table Helper
  */
 class TableHelper extends Helper
 {
-
     use OptionsAwareTrait;
     use StringTemplateTrait;
 
@@ -33,7 +31,7 @@ class TableHelper extends Helper
     protected $_defaultConfig = [
         'templates' => [
             'tableheader' => '<th{{attrs}}>{{content}}{{help}}</th>',
-        ]
+        ],
     ];
 
     /**
@@ -47,7 +45,7 @@ class TableHelper extends Helper
     public function header(string $key, $title = null, array $options = []): string
     {
         $options += [
-            'modelClass' => $this->getView()->getRequest()->getParam('controller')
+            'modelClass' => $this->getView()->getRequest()->getParam('controller'),
         ];
 
         if (isset($options['modelClass'])) {
@@ -105,7 +103,7 @@ class TableHelper extends Helper
         return $this->formatTemplate('tableheader', [
             'attrs' => $this->templater()->formatAttributes($attrs),
             'content' => $content,
-            'help' => $help
+            'help' => $help,
         ]);
     }
 }

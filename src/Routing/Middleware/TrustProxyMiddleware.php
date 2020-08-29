@@ -13,7 +13,6 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class TrustProxyMiddleware implements MiddlewareInterface
 {
-
     /**
      * Constructor
      *

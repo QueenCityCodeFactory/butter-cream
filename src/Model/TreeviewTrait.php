@@ -14,7 +14,6 @@ use Cake\ORM\Query;
  */
 trait TreeviewTrait
 {
-
     use ExtractTrait;
 
     /**
@@ -46,7 +45,7 @@ trait TreeviewTrait
         $options += [
             'keyField' => $this->primaryKey(),
             'parentField' => 'parent_id',
-            'nestingKey' => 'nodes'
+            'nestingKey' => 'nodes',
         ];
 
         $options = $this->_setFieldMatchers($options, ['keyField', 'parentField', 'nestingKey']);

@@ -4,18 +4,13 @@ declare(strict_types=1);
 namespace ButterCream\View\Helper;
 
 use BootstrapUI\View\Helper\FormHelper as Helper;
-use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
-use Cake\Utility\Text;
-use Cake\View\View;
 
 /**
  * Form Helper
  */
 class FormHelper extends Helper
 {
-
     /**
      * Returns an HTML FORM element.
      *
@@ -101,15 +96,15 @@ class FormHelper extends Helper
 
         $action = $templater->formatAttributes([
             'action' => $this->Url->build($url),
-            'escape' => false
+            'escape' => false,
         ]);
 
         $out = $this->formatTemplate('formStart', [
-            'attrs' => $templater->formatAttributes($formOptions) . $action
+            'attrs' => $templater->formatAttributes($formOptions) . $action,
         ]);
         $out .= $this->hidden('_method', [
             'value' => $requestMethod,
-            'secure' => static::SECURE_SKIP
+            'secure' => static::SECURE_SKIP,
         ]);
         $out .= $this->_csrfField();
 
@@ -172,7 +167,7 @@ class FormHelper extends Helper
         $options += [
             'escape' => false,
             'title' => 'Delete',
-            'class' => 'btn btn-outline-danger btn-sq-xs btn-xs'
+            'class' => 'btn btn-outline-danger btn-sq-xs btn-xs',
         ];
 
         return $this->postLink($this->Html->icon('trash'), ['action' => 'delete', $primaryKey], $options);
@@ -193,7 +188,7 @@ class FormHelper extends Helper
         }
         $options += [
             'escapeTitle' => false,
-            'class' => 'btn btn-success'
+            'class' => 'btn btn-success',
         ];
 
         return parent::button($title, $options);
@@ -215,7 +210,7 @@ class FormHelper extends Helper
         $options += [
             'class' => 'btn btn-danger',
             'escape' => false,
-            'confirm' => 'Are you sure you want to cancel?'
+            'confirm' => 'Are you sure you want to cancel?',
         ];
 
         return $this->Html->link($title, $this->_View->get('referer'), $options);
@@ -237,7 +232,7 @@ class FormHelper extends Helper
         $options += [
             'class' => 'btn btn-info',
             'escape' => false,
-            'confirm' => 'Are you sure you want go back to the previous page? Your changes on the current page will not be saved!'
+            'confirm' => 'Are you sure you want go back to the previous page? Your changes on the current page will not be saved!',
         ];
 
         return $this->Html->link($title, $this->_View->get('referer'), $options);
@@ -273,14 +268,14 @@ class FormHelper extends Helper
     {
         $options += [
             'class' => 'btn btn-primary confirm-button',
-            'confirm' => null
+            'confirm' => null,
         ];
 
         $confirmTitle = null;
         $confirmText = null;
         if (is_array($options['confirm'])) {
-            $confirmTitle = isset($options['confirm']['title']) ? $options['confirm']['title'] : null;
-            $confirmText = isset($options['confirm']['text']) ? $options['confirm']['text'] : null;
+            $confirmTitle = $options['confirm']['title'] ?? null;
+            $confirmText = $options['confirm']['text'] ?? null;
         } else {
             $confirmText = $options['confirm'];
         }
@@ -290,7 +285,7 @@ class FormHelper extends Helper
         if ($confirmText && isset($options['data-form-name'])) {
             $options += [
                 'data-modal' => 1,
-                'data-modal-message' => $confirmText
+                'data-modal-message' => $confirmText,
             ];
             if ($confirmTitle) {
                 $options['data-original-title'] = $confirmTitle;
@@ -361,10 +356,10 @@ class FormHelper extends Helper
                 'options' => [
                     'timezone: moment.tz.guess()',
                     'format: "MM/DD/YYYY hh:mm a z"',
-                    'icons: { time: "fas fa-clock" }'
-                ]
+                    'icons: { time: "fas fa-clock" }',
+                ],
             ],
-            'class' => ['datetimepicker-input']
+            'class' => ['datetimepicker-input'],
         ];
 
         $target = $options['target'];
@@ -381,10 +376,10 @@ class FormHelper extends Helper
         $options += [
             'templates' => [
                 'inputGroupAddon' => '<div class="{{class}}" data-target="#' . $target . '" data-toggle="datetimepicker">{{content}}</div>',
-                'inputGroupContainer' => '<div{{attrs}} id="' . $target . '" data-target-input="nearest">{{prepend}}{{content}}{{append}}</div>'
+                'inputGroupContainer' => '<div{{attrs}} id="' . $target . '" data-target-input="nearest">{{prepend}}{{content}}{{append}}</div>',
             ],
             'data-target' => '#' . $target,
-            'data-toggle' => 'datetimepicker'
+            'data-toggle' => 'datetimepicker',
         ];
 
         $placeholderJs = '';
@@ -396,7 +391,7 @@ class FormHelper extends Helper
         $conversionJs = '';
         if ($frontEndTimezoneConversion === true) {
             $timezone = '\'UTC\'';
-            $conversionJs = "\tif ($(\"#" . $domId . "\").val()) {";
+            $conversionJs = "\tif ($(\"#" . $domId . '").val()) {';
             $conversionJs .= "\n\t\t$(\"#" . $target . "\").datetimepicker('date', $(\"#" . $target . "\").datetimepicker('viewDate').tz(moment.tz.guess()));";
             $conversionJs .= "\n\t}";
             $conversionJs .= "\n\tmoment.tz.setDefault(moment.tz.guess());\n";
@@ -451,7 +446,7 @@ class FormHelper extends Helper
     {
         $options += [
             'type' => null,
-            'select2' => true
+            'select2' => true,
         ];
 
         if ($options['select2'] !== false && isset($options['options']) && is_array($options)) {
@@ -461,7 +456,7 @@ class FormHelper extends Helper
 
             if ($options['type'] == 'select') {
                 $options += [
-                    'class' => ['select2-input-field']
+                    'class' => ['select2-input-field'],
                 ];
             }
         }

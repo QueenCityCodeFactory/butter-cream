@@ -22,11 +22,11 @@ use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Migrations\Command\BakeMigrationSnapshotCommand;
 use Migrations\Command\Phinx\Dump;
+use Migrations\Command\SnapshotTrait;
 use Migrations\Util\UtilTrait;
 use Symfony\Component\Console\Input\ArrayInput;
-use Migrations\Command\SnapshotTrait;
-use Migrations\Command\BakeMigrationSnapshotCommand;
 
 /**
  * Task class for generating migration diff files.
@@ -549,7 +549,7 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
         }
         $collection = $connection->getSchemaCollection();
         foreach ($this->tables as $table) {
-            if (preg_match("/^.*phinxlog$/", $table) === 1) {
+            if (preg_match('/^.*phinxlog$/', $table) === 1) {
                 continue;
             }
 

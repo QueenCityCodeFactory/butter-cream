@@ -5,7 +5,6 @@ namespace ButterCream\View\Helper;
 
 use Cake\I18n\Time;
 use Cake\View\Helper\TimeHelper as Helper;
-use Cake\View\View;
 use DateTimeInterface;
 
 /**
@@ -13,7 +12,6 @@ use DateTimeInterface;
  */
 class TimeHelper extends Helper
 {
-
     /**
      * Returns a formatted date string, given either a Datetime instance,
      * UNIX timestamp or a valid strtotime() date string.

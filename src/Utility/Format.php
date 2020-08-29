@@ -5,8 +5,6 @@ namespace ButterCream\Utility;
 
 /**
  * Formatting Class
- *
- *
  */
 class Format
 {
@@ -33,7 +31,7 @@ class Format
     {
         $formats += [
             5 => '00000',
-            9 => '00000-0000'
+            9 => '00000-0000',
         ];
 
         $zip = self::_stripNonAlphaNumeric($zip);
@@ -57,7 +55,7 @@ class Format
     {
         $formats += [
             7 => '000-0000',
-            10 => '(000) 000-0000'
+            10 => '(000) 000-0000',
         ];
 
         $phone = self::parsePhone($phone, true);
@@ -89,7 +87,7 @@ class Format
             $parts = [
                 'area' => !empty($matches[1]) ? $matches[1] : '',
                 'exchange' => !empty($matches[2]) ? $matches[2] : '',
-                'number' => !empty($matches[3]) ? $matches[3] : ''
+                'number' => !empty($matches[3]) ? $matches[3] : '',
             ];
             $partsString = implode('', $parts);
             $parts['ext'] = !empty($matches[4]) ? $matches[4] : '';
@@ -98,7 +96,7 @@ class Format
         if ($returnBoth) {
             return [
                 'parts' => $parts,
-                'string' => $partsString
+                'string' => $partsString,
             ];
         }
 

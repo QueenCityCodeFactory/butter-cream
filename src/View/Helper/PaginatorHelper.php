@@ -7,7 +7,6 @@ use BootstrapUI\View\Helper\PaginatorHelper as Helper;
 
 class PaginatorHelper extends Helper
 {
-
     /**
      * Set Ajax Link templates
      *
@@ -34,7 +33,7 @@ class PaginatorHelper extends Helper
         $this->templater()->add($templates);
     }
 
-   /**
+    /**
      * Generates a "previous" link for a set of paged records
      *
      * ### Options:

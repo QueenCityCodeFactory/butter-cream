@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Shell\Helper;
 
 use Cake\Shell\Helper\ProgressHelper as CakeProgressHelper;
 
 class ProgressHelper extends CakeProgressHelper
 {
-
     /**
      * Getter method to expose progress and total
      *
@@ -40,7 +41,7 @@ class ProgressHelper extends CakeProgressHelper
         $numberLen = strlen(' 100%');
 
         $complete = $this->complete;
-        $barLen = ($this->_width - $numberLen) * ($this->_progress / $this->_total);
+        $barLen = ($this->_width - $numberLen) * $this->_progress / $this->_total;
         $bar = '';
         if ($barLen > 1) {
             $bar = str_repeat('=', $barLen - 1) . '>';

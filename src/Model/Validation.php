@@ -9,11 +9,9 @@ use Cake\I18n\Time;
  * Validation Class. Used for validation of model data
  *
  * Offers different validation methods.
- *
  */
 class Validation
 {
-
     /**
      * Checks a phone number for The United States
      *
@@ -58,6 +56,7 @@ class Validation
 
     /**
      * Checks to make sure the birthdate is not in the future (but can be today's date)
+     *
      * @param  string $check The value to check.
      * @return bool Success
      */

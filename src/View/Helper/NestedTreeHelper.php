@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\View\Helper;
 
 use Cake\View\Helper;
@@ -9,7 +11,6 @@ use Cake\View\StringTemplateTrait;
  */
 class NestedTreeHelper extends Helper
 {
-
     use StringTemplateTrait;
 
     /**
@@ -28,8 +29,8 @@ class NestedTreeHelper extends Helper
         'templates' => [
             'container' => '<div{{attrs}}>{{content}}</div>',
             'list' => '<ul{{attrs}}>{{content}}</ul>',
-            'listItem' => '<li{{attrs}}><div class="list-group-item">{{title}}</div>{{content}}</li>'
-        ]
+            'listItem' => '<li{{attrs}}><div class="list-group-item">{{title}}</div>{{content}}</li>',
+        ],
     ];
 
     /**
@@ -50,7 +51,7 @@ class NestedTreeHelper extends Helper
             $container = !empty($options['container']) ? $options['container'] : [];
             $sortable = !empty($options['sortable']) ? $options['sortable'] : [];
             $items = !empty($options['items']) ? $options['items'] : [];
-            $nestingKey = isset($options['nestingKey']) ? $options['nestingKey'] : 'children';
+            $nestingKey = $options['nestingKey'] ?? 'children';
 
             if (!isset($container['class'])) {
                 $container['class'] = 'nested-sortable';
@@ -91,7 +92,7 @@ class NestedTreeHelper extends Helper
         }
         unset($options['root']);
 
-        $nestingKey = isset($options['nestingKey']) ? $options['nestingKey'] : 'children';
+        $nestingKey = $options['nestingKey'] ?? 'children';
         unset($options['nestingKey']);
 
         if (!empty($options['items'])) {
@@ -110,7 +111,7 @@ class NestedTreeHelper extends Helper
 
         return $this->formatTemplate('list', [
             'attrs' => $this->templater()->formatAttributes($root),
-            'content' => join('', $listItems)
+            'content' => join('', $listItems),
         ]);
     }
 }

@@ -11,7 +11,6 @@ use Cake\View\Helper\UrlHelper as Helper;
  */
 class UrlHelper extends Helper
 {
-
     /**
      * Returns a URL based on provided parameters.
      *
@@ -51,17 +50,17 @@ class UrlHelper extends Helper
         $url2 = Router::parse(Router::url($url2));
 
         $urlParts = [
-            'prefix' => isset($url['prefix']) ? $url['prefix'] : null,
-            'plugin' => isset($url['plugin']) ? $url['plugin'] : null,
-            'controller' => isset($url['controller']) ? $url['controller'] : null,
-            'action' => isset($url['action']) ? $url['action'] : null,
+            'prefix' => $url['prefix'] ?? null,
+            'plugin' => $url['plugin'] ?? null,
+            'controller' => $url['controller'] ?? null,
+            'action' => $url['action'] ?? null,
         ];
 
         $url2Parts = [
-            'prefix' => isset($url2['prefix']) ? $url2['prefix'] : null,
-            'plugin' => isset($url2['plugin']) ? $url2['plugin'] : null,
-            'controller' => isset($url2['controller']) ? $url2['controller'] : null,
-            'action' => isset($url2['action']) ? $url2['action'] : null,
+            'prefix' => $url2['prefix'] ?? null,
+            'plugin' => $url2['plugin'] ?? null,
+            'controller' => $url2['controller'] ?? null,
+            'action' => $url2['action'] ?? null,
         ];
 
         return $urlParts === $url2Parts;

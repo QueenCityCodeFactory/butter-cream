@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace ButterCream\Utility;
 
+use Bake\Utility\TemplateRenderer as BakeTemplateRenderer;
 use Bake\View\BakeView;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
-use Bake\Utility\TemplateRenderer as BakeTemplateRenderer;
 
 /**
  * Used by other tasks to generate templated output, Acts as an interface to BakeView

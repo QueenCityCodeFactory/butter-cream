@@ -11,7 +11,6 @@ use Cake\Http\Exception\HttpException;
  */
 class StatusMessageException extends HttpException
 {
-
     /**
      * Constructor
      *

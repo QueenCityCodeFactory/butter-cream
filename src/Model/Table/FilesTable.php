@@ -3,27 +3,21 @@ declare(strict_types=1);
 
 namespace ButterCream\Model\Table;
 
-use ButterCream\Message\Exception\StatusMessageException;
-use ButterCream\Model\Entity\File;
 use ArrayObject;
+use ButterCream\Message\Exception\StatusMessageException;
 use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Filesystem\File as CakeFile;
 use Cake\Filesystem\Folder;
-use Cake\ORM\Entity;
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 
 /**
  * Files Model
- *
  */
 class FilesTable extends AppTable
 {
-
     /**
      * Searchable Filter Args
      *
@@ -34,12 +28,14 @@ class FilesTable extends AppTable
 
     /**
      * Skip afterSave
+     *
      * @var bool
      */
     private $skipAfterSave = false;
 
     /**
      * Set Skip After Save
+     *
      * @param bool $skip True/False
      */
     public function setSkipAfterSave($skip)
@@ -50,8 +46,8 @@ class FilesTable extends AppTable
     /**
      * Initialize Schema
      *
-     * @param TableSchema $schema Schema Settings
-     * @return TableSchema The initialized schema
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema Schema Settings
+     * @return \Cake\Database\Schema\TableSchemaInterface The initialized schema
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {

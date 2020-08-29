@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ButterCream\Model\Table;
 
 use ArrayObject;
@@ -8,13 +10,12 @@ use Cake\ORM\Table;
 
 /**
  * App Table
- *
  */
 class AppTable extends Table
 {
-
     /**
      * Weird Encoding from Word or Other Applications that need replaced
+     *
      * @var array
      */
     protected $encodingsToReplace = [
@@ -32,16 +33,17 @@ class AppTable extends Table
         "\xE2\x80\xBA", // › (U+203A) in UTF-8
         "\xE2\x80\x93", // – (U+2013) in UTF-8
         "\xE2\x80\x94", // — (U+2014) in UTF-8
-        "\xE2\x80\xA6" // … (U+2026) in UTF-8
+        "\xE2\x80\xA6", // … (U+2026) in UTF-8
     ];
 
     /**
      * List of Replacements for Weird encodings
+     *
      * @var array
      */
     protected $encodingReplacements = [
-        "<<",
-        ">>",
+        '<<',
+        '>>',
         "'",
         "'",
         "'",
@@ -50,11 +52,11 @@ class AppTable extends Table
         '"',
         '"',
         '"',
-        "<",
-        ">",
-        "-",
-        "-",
-        "..."
+        '<',
+        '>',
+        '-',
+        '-',
+        '...',
     ];
 
     /**
@@ -73,8 +75,8 @@ class AppTable extends Table
     /**
      * Recursive Function to Clean Up submitted form Fields
      *
-     * @param ArrayObject $data The data being marshalled
-     * @return ArrayObject The cleaned up data
+     * @param \ArrayObject $data The data being marshalled
+     * @return \ArrayObject The cleaned up data
      */
     protected function cleanData($data)
     {

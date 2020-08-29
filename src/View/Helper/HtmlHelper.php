@@ -23,7 +23,7 @@ class HtmlHelper extends Helper
         'templates' => [
             'actionDropdown' => '<a class="btn btn-outline-secondary btn-sq-xs dropdown-toggle action-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{content}}</a>',
             'tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>',
-        ]
+        ],
     ];
 
     /**
@@ -63,13 +63,12 @@ class HtmlHelper extends Helper
      *
      * You can use `iconDefaults` option for the helper to set default values
      * for above options.
-     *
      * @return string HTML icon markup.
      */
     public function icon(string $name, array $options = []): string
     {
         $options += [
-            'tag' => 'em'
+            'tag' => 'em',
         ];
 
         return parent::icon($name, $options);
@@ -89,7 +88,7 @@ class HtmlHelper extends Helper
             'class' => 'text-primary',
             'title' => $text,
             'data-toggle' => 'tooltip',
-            'data-placement' => 'auto'
+            'data-placement' => 'auto',
         ];
 
         $icon = $options['icon'];
@@ -114,7 +113,7 @@ class HtmlHelper extends Helper
             'title' => $title,
             'data-toggle' => 'popover',
             'data-content' => $text,
-            'data-placement' => 'top'
+            'data-placement' => 'top',
         ];
 
         $icon = $options['icon'];
@@ -155,7 +154,7 @@ class HtmlHelper extends Helper
         if (isset($options['title']) && $options['tooltip'] === true) {
             $options += [
                 'data-toggle' => 'tooltip',
-                'data-placement' => 'auto'
+                'data-placement' => 'auto',
             ];
         }
         unset($options['tooltip']);
@@ -170,7 +169,7 @@ class HtmlHelper extends Helper
             $options += [
                 'data-modal' => 1,
                 'data-modal-link' => 1,
-                'data-modal-message' => $options['confirm']
+                'data-modal-message' => $options['confirm'],
             ];
         }
         unset($options['confirm']);
@@ -234,7 +233,6 @@ class HtmlHelper extends Helper
      *  - `type` The emphasis class to be placed on the button
      *  - `size` The size of button to produce
      *  - `tooltip` Whether or not to place a tooltip on the button. Optionally can contain the text to be used as the tooltip.
-     *
      * @return string HTML button markup using either `<button>` OR `<A>`
      */
     public function button(string $title, array $options = []): string
@@ -248,7 +246,7 @@ class HtmlHelper extends Helper
             'text' => '',
             'tooltip' => false,
             'disabled' => false,
-            'class' => []
+            'class' => [],
         ];
 
         $tag = $options['tag'];
@@ -261,7 +259,7 @@ class HtmlHelper extends Helper
             if (!empty($options['title'])) {
                 $options += [
                     'data-toggle' => 'tooltip',
-                    'data-placement' => 'auto'
+                    'data-placement' => 'auto',
                 ];
             }
         }
@@ -311,7 +309,7 @@ class HtmlHelper extends Helper
         $options += [
             'escape' => false,
             'title' => 'View/Info',
-            'class' => 'btn btn-outline-primary btn-xs btn-sq-xs'
+            'class' => 'btn btn-outline-primary btn-xs btn-sq-xs',
         ];
 
         return $this->link($this->icon('info'), ['action' => 'view', $primaryKey], $options);
@@ -329,7 +327,7 @@ class HtmlHelper extends Helper
         $options += [
             'escape' => false,
             'title' => 'Edit',
-            'class' => 'btn btn-outline-light-orange btn-xs btn-sq-xs'
+            'class' => 'btn btn-outline-light-orange btn-xs btn-sq-xs',
         ];
 
         return $this->link($this->icon('edit'), ['action' => 'edit', $primaryKey], $options);
@@ -380,9 +378,9 @@ class HtmlHelper extends Helper
             return $button . $this->formatTemplate('tag', [
                 'tag' => 'div',
                 'attrs' => $this->templater()->formatAttributes([
-                    'class' => 'dropdown-menu dropdown-menu-right'
+                    'class' => 'dropdown-menu dropdown-menu-right',
                 ]),
-                'content' => join('', $menuItems)
+                'content' => join('', $menuItems),
             ]);
         }
 

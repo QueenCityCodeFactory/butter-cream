@@ -46,7 +46,7 @@ class AjaxHelper extends Helper
             'content' => null,
             'class' => 'ajax-pagination',
             'id' => $domId,
-            'data-url' => Router::url($url, true)
+            'data-url' => Router::url($url, true),
         ];
         $name = $options['tag'];
         unset($options['tag']);

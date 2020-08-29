@@ -72,7 +72,7 @@ class ModelCommand extends BakeModelCommand
     public function bakeTable(Table $model, array $data, Arguments $args, ConsoleIo $io): void
     {
         $data += [
-            'noCallbacks' => !empty($args->getOption('no-callbacks'))
+            'noCallbacks' => !empty($args->getOption('no-callbacks')),
         ];
 
         parent::bakeTable($model, $data, $args, $io);
@@ -94,6 +94,5 @@ class ModelCommand extends BakeModelCommand
         ]);
 
         return $parser;
-
     }
 }

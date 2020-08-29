@@ -1,4 +1,4 @@
- <?php
+<?php
 declare(strict_types=1);
 
 namespace ButterCream\View\Helper;
@@ -10,7 +10,6 @@ use Cake\View\Helper;
  */
 class GravatarHelper extends Helper
 {
-
     /**
      * List of helpers used by this helper
      *

@@ -25,18 +25,17 @@ use Cake\Routing\Router;
  * Referer Component Class
  *
  * Helps get the user back to where the want to be
- *
  */
 class RefererComponent extends Component
 {
-
     /**
      * Default config
      * - `ignored` - Array of URLs to ignore
+     *
      * @var array
      */
     protected $_defaultConfig = [
-        'ignored' => []
+        'ignored' => [],
     ];
 
     /**
@@ -53,7 +52,7 @@ class RefererComponent extends Component
     /**
      * Store referer data in view referer variable
      *
-     * @param sting $default default referer
+     * @param string|array $default default referer
      * @return void
      */
     public function setReferer($default = null): void
@@ -80,6 +79,7 @@ class RefererComponent extends Component
 
     /**
      * Get the current referer
+     *
      * @return string referring URL
      */
     public function getReferer(): string

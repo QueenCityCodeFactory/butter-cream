@@ -11,7 +11,6 @@ use Cake\Database\JsonType;
  */
 class JsonArrayType extends JsonType
 {
-
     /**
      * Convert string values to PHP arrays.
      *
