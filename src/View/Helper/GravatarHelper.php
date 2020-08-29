@@ -35,10 +35,10 @@ class GravatarHelper extends Helper
         $options += [
             'size' => 150,
             'default' => 'mm',
-            'class' => 'rounded gravatar'
+            'class' => 'rounded gravatar',
         ];
 
-        $gravatar = "https://www.gravatar.com/avatar/%s?s=%s&d=%s";
+        $gravatar = 'https://www.gravatar.com/avatar/%s?s=%s&d=%s';
         $email = md5(strtolower(trim($email)));
         $url = sprintf($gravatar, $email, $options['size'], $options['default']);
         unset($options['size']);

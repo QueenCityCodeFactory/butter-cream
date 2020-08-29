@@ -5,11 +5,12 @@ namespace ButterCream\Database\Type;
 
 use Cake\Database\DriverInterface;
 use Cake\Database\JsonType;
+use Cake\Database\Type\BatchCastingInterface;
 
 /**
  * Provides behavior for the JSON type
  */
-class JsonArrayType extends JsonType
+class JsonArrayType extends JsonType implements BatchCastingInterface
 {
     /**
      * Convert string values to PHP arrays.
@@ -28,8 +29,12 @@ class JsonArrayType extends JsonType
     }
 
     /**
-     * {@inheritDoc}
+     * Returns an array of the values converted to the PHP representation of
+     * this type.
      *
+     * @param array $values The original array of values containing the fields to be casted
+     * @param string[] $fields The field keys to cast
+     * @param \Cake\Database\DriverInterface $driver Object from which database preferences and configuration will be extracted.
      * @return array
      */
     public function manyToPHP(array $values, array $fields, DriverInterface $driver): array

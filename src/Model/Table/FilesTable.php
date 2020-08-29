@@ -37,8 +37,9 @@ class FilesTable extends AppTable
      * Set Skip After Save
      *
      * @param bool $skip True/False
+     * @return void
      */
-    public function setSkipAfterSave($skip)
+    public function setSkipAfterSave(bool $skip)
     {
         $this->skipAfterSave = $skip;
     }
@@ -130,7 +131,11 @@ class FilesTable extends AppTable
                 $entity->original_filename = $tmpFile->name;
             }
 
-            $folder = new Folder(Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag, true, 0755);
+            $folder = new Folder(
+                Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag,
+                true,
+                0755
+            );
             $destFile = new CakeFile($folder->path . DS . $entity->filename);
             if (!$tmpFile->copy($destFile->path)) {
                 throw new StatusMessageException('file_api_can_not_copy_file');
@@ -152,7 +157,9 @@ class FilesTable extends AppTable
      */
     public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        $file = new CakeFile(Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag . DS . $entity->filename);
+        $file = new CakeFile(
+            Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag . DS . $entity->filename
+        );
         $file->delete();
 
         $folder = new Folder(Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag);

@@ -62,7 +62,11 @@ class NestedTreeHelper extends Helper
 
             return $this->formatTemplate('container', [
                 'attrs' => $this->templater()->formatAttributes($container),
-                'content' => $this->_sorter($tree, ['root' => $sortable, 'items' => $items, 'nestingKey' => $nestingKey]),
+                'content' => $this->_sorter($tree, [
+                    'root' => $sortable,
+                    'items' => $items,
+                    'nestingKey' => $nestingKey,
+                ]),
             ]);
         } else {
             return false;
@@ -105,7 +109,10 @@ class NestedTreeHelper extends Helper
             $listItems[] = $this->formatTemplate('listItem', [
                 'attrs' => $this->templater()->formatAttributes($options),
                 'title' => $treeItem->name,
-                'content' => $this->_sorter(!empty($treeItem->$nestingKey) ? $treeItem->$nestingKey : [], $options + ['nestingKey' => $nestingKey]),
+                'content' => $this->_sorter(
+                    !empty($treeItem->$nestingKey) ? $treeItem->$nestingKey : [],
+                    $options + ['nestingKey' => $nestingKey]
+                ),
             ]);
         }
 

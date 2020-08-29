@@ -82,7 +82,11 @@ class AppTable extends Table
     {
         foreach ($data as $key => $value) {
             if (is_string($value)) {
-                $data[$key] = str_replace($this->encodingsToReplace, $this->encodingReplacements, trim($value, " \t\0\x0B")); // Don't remove \n or \r
+                $data[$key] = str_replace(
+                    $this->encodingsToReplace,
+                    $this->encodingReplacements,
+                    trim($value, " \t\0\x0B") // Don't remove \n or \r
+                );
             } elseif (is_array($value)) {
                 $data[$key] = $this->cleanData($value);
             }

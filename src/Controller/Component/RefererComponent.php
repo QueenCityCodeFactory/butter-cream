@@ -136,7 +136,9 @@ class RefererComponent extends Component
         $uri = isset($url) ? parse_url($url) : null;
 
         if (isset($uri['host']) && isset($baseUri['host']) && $baseUri['host'] == $uri['host']) {
-            $url = urldecode((!empty($uri['path']) ? $uri['path'] : '') . (!empty($uri['query']) ? '?' . $uri['query'] : ''));
+            $url = urldecode(
+                (!empty($uri['path']) ? $uri['path'] : '') . (!empty($uri['query']) ? '?' . $uri['query'] : '')
+            );
         }
 
         return $url;
@@ -147,7 +149,6 @@ class RefererComponent extends Component
      *
      * @param mixed $url the url to redirect to
      * @param int $status http status code, default is null
-     * @param bool $exit calling php exit or not after redirect, default is true
      * @return mixed
      */
     public function redirect($url, int $status = 302): ?Response

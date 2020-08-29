@@ -71,7 +71,9 @@ class FileApi
         $file = static::data($id);
         $file->path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
         if ($contents !== false) {
-            $file->contents = file_get_contents(Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename);
+            $file->contents = file_get_contents(
+                Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename
+            );
         }
 
         return $file;
@@ -130,7 +132,9 @@ class FileApi
     public static function fetchMime(string $id)
     {
         $file = static::data($id);
-        $fileObj = new File(Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename);
+        $fileObj = new File(
+            Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename
+        );
 
         return $fileObj->mime();
     }
@@ -211,13 +215,15 @@ class FileApi
      */
     public static function resize(string $id, array $options = [])
     {
-        $fileRecord = static::data($id);
-        if (empty($fileRecord)) {
+        $record = static::data($id);
+        if (empty($record)) {
             return false;
         }
 
         // Create the file object from the file info
-        $file = new File(Configure::read('FileApi.basePath') . $fileRecord->category . DS . $fileRecord->tag . DS . $fileRecord->filename);
+        $file = new File(
+            Configure::read('FileApi.basePath') . $record->category . DS . $record->tag . DS . $record->filename
+        );
 
         // Make sure the file exists, otherwise we're done!
         if (!$file->exists()) {

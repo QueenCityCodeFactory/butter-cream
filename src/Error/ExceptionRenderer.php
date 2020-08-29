@@ -25,7 +25,12 @@ class ExceptionRenderer extends CakeExceptionRenderer
     {
         $message = $exception->getMessage();
 
-        if (Configure::read('debug') !== true && !($exception instanceof HttpException) && !($exception instanceof CakeHttpException) && !($exception instanceof InvalidArgumentException)) {
+        if (
+            Configure::read('debug') !== true &&
+            !($exception instanceof HttpException) &&
+            !($exception instanceof CakeHttpException) &&
+            !($exception instanceof InvalidArgumentException)
+        ) {
             if ($exception instanceof RecordNotFoundException) {
                 $message = __d('cake', 'Record Not Found');
             } elseif ($code < 500) {
