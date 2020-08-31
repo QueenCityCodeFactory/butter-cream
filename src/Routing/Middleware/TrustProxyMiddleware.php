@@ -14,6 +14,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 class TrustProxyMiddleware implements MiddlewareInterface
 {
     /**
+     * Trust Proxy
+     *
+     * @var bool
+     */
+    public $trust = true;
+
+    /**
      * Constructor
      *
      * @param bool $trust True or False
@@ -32,6 +39,7 @@ class TrustProxyMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        // @phpstan-ignore-next-line
         $request->trustProxy = $this->trust;
 
         return $handler->handle($request);

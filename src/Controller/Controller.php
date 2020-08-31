@@ -6,13 +6,14 @@ namespace ButterCream\Controller;
 use Cake\Controller\Controller as CakeController;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use RuntimeException;
 
 class Controller extends CakeController
 {
     /**
      * Ajax Pagination Limit
      *
-     * @var bool
+     * @var int
      */
     public $ajaxPaginationLimit = 5;
 
@@ -87,7 +88,7 @@ class Controller extends CakeController
      * @param \Cake\ORM\Table|string|\Cake\ORM\Query|null $object Table to paginate
      * (e.g: Table instance, 'TableName' or a Query object)
      * @param array $settings The settings/configuration used for pagination.
-     * @return \Cake\ORM\ResultSet|\Cake\Datasource\ResultSetInterface Query results
+     * @return \Cake\ORM\ResultSet|\Cake\Datasource\ResultSetInterface|\Cake\Http\Response|null Query results
      * @link https://book.cakephp.org/4/en/controllers.html#paginating-a-model
      * @throws \RuntimeException When no compatible table object can be found.
      */

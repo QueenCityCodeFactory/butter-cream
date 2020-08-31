@@ -10,6 +10,9 @@ use Cake\View\StringTemplateTrait;
 
 /**
  * Table Helper
+ *
+ * @property \ButterCream\View\Helper\HtmlHelper $Html
+ * @property \ButterCream\View\Helper\PaginatorHelper $Paginator
  */
 class TableHelper extends Helper
 {

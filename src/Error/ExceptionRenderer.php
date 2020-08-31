@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace ButterCream\Error;
 
-use ButterCream\Network\Exception\HttpException;
+use ButterCream\Http\Exception\HttpException;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Error\ExceptionRenderer as CakeExceptionRenderer;
+use Cake\Http\Exception\HttpException as CakeHttpException;
 use Cake\Http\Response;
-use Cake\Network\Exception\HttpException as CakeHttpException;
 use InvalidArgumentException;
 use Throwable;
 

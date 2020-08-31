@@ -265,6 +265,7 @@ class HtmlHelper extends Helper
         }
         unset($options['tooltip']);
 
+        $classes = [];
         if (empty($options['class'])) {
             $classes = ['btn'];
             if (!empty($options['type'])) {
@@ -339,7 +340,7 @@ class HtmlHelper extends Helper
      * @param array $options The options
      * @return string|bool Html Link
      */
-    public function addBtn(array $options = []): string
+    public function addBtn(array $options = [])
     {
         $url = ['action' => 'add'];
         $options['default'] = false;
@@ -362,7 +363,7 @@ class HtmlHelper extends Helper
      * @param string $menuButton The Menu button to use
      * @return string|bool Menu HTML otherwise false
      */
-    public function actionDropdownMenu(array $tagLinks = [], string $menuButton = '<em class="fa fa-bars"></em>'): string
+    public function actionDropdownMenu(array $tagLinks = [], string $menuButton = '<em class="fa fa-bars"></em>')
     {
         $menuItems = [];
         foreach ($tagLinks as $tagLink) {

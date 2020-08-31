@@ -19,7 +19,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
     /**
      * Default Config
      *
-     * @var [type]
+     * @var array
      */
     protected $_config = [
         'timeout' => 15,
@@ -51,6 +51,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
             $session->destroy();
         }
 
+        /** @var \Cake\Http\ServerRequest $request */
         if ((!$request->is('ajax') || ($request->getQuery('session_timeout') && strtolower($request->getQuery('session_timeout')) === 'extend')) && $request->getParam('plugin') !== 'DebugKit') {
             $session->write('SessionTimeoutFilter.lastAccess', time());
         }

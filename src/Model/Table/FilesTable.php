@@ -5,18 +5,25 @@ namespace ButterCream\Model\Table;
 
 use ArrayObject;
 use ButterCream\Message\Exception\StatusMessageException;
+use ButterCream\Model\Table\AppTable as Table;
 use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\File as CakeFile;
 use Cake\Filesystem\Folder;
 use Cake\Validation\Validator;
 
 /**
  * Files Model
+ *
+ * @property \App\Model\Table\OrganizationsTable&\Cake\ORM\Association\BelongsTo $Organizations
+ * @property \App\Model\Table\PhotosTable&\Cake\ORM\Association\BelongsTo $Photos
+ * @property \App\Model\Table\SexesTable&\Cake\ORM\Association\BelongsTo $Sexes
+ * @property \App\Model\Table\OrganizationsTable&\Cake\ORM\Association\BelongsTo $Organizations
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class FilesTable extends AppTable
+class FilesTable extends Table
 {
     /**
      * Searchable Filter Args
@@ -83,23 +90,23 @@ class FilesTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->add('id', 'valid', ['rule' => 'uuid'])
-            ->allowEmpty('id', 'create');
+            ->uuid('id')
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->requirePresence('category', 'create')
-            ->notEmpty('category');
+            ->notEmptyString('category');
 
         $validator
             ->requirePresence('filename', 'create')
-            ->notEmpty('filename');
+            ->notEmptyString('filename');
 
         $validator
-            ->allowEmpty('original_filename');
+            ->allowEmptyString('original_filename');
 
         $validator
             ->add('size', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('size');
+            ->allowEmptyString('size');
 
         return $validator;
     }
@@ -107,13 +114,14 @@ class FilesTable extends AppTable
     /**
      * AfterSave Callback
      *
-     * @param \Cake\Event\Event $event The event object
+     * @param \Cake\Event\EventInterface $event The event object
      * @param \Cake\Datasource\EntityInterface $entity The entity
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
+        /** @var \ButterCream\Model\Entity\File $entity */
         parent::afterSave($event, $entity, $options);
 
         if ($this->skipAfterSave !== true && $entity->isNew()) {
@@ -150,26 +158,27 @@ class FilesTable extends AppTable
     /**
      * Event fired after the record has been deleted
      *
-     * @param \Cake\Event\Event $event The event object
+     * @param \Cake\Event\EventInterface $event The event object
      * @param \Cake\Datasource\EntityInterface $entity The entity
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
-        $file = new CakeFile(
-            Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag . DS . $entity->filename
-        );
+        /** @var \ButterCream\Model\Entity\File $entity */
+        $basePath = Configure::read('FileApi.basePath');
+
+        $file = new CakeFile($basePath . $entity->category . DS . $entity->tag . DS . $entity->filename);
         $file->delete();
 
-        $folder = new Folder(Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag);
+        $folder = new Folder($basePath . $entity->category . DS . $entity->tag);
         $folderContents = $folder->read();
         if (empty($folderContents[0]) && empty($folderContents[1])) {
             // if the folder is empty of files and folders (0 and 1), delete it
             $folder->delete();
         }
 
-        $folder = new Folder(Configure::read('FileApi.basePath') . $entity->category);
+        $folder = new Folder($basePath . $entity->category);
         $folderContents = $folder->read();
         if (empty($folderContents[0]) && empty($folderContents[1])) {
             // if the folder is empty of files and folders (0 and 1), delete it

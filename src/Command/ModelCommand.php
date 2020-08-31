@@ -54,7 +54,8 @@ class ModelCommand extends BakeModelCommand
         $path = $this->getPath($args);
         $filename = $path . 'Entity' . DS . $name . '.php';
         $io->out("\n" . sprintf('Baking entity class for %s...', $name), 1, ConsoleIo::QUIET);
-        $io->createFile($filename, $out, $args->getOption('force'));
+        $force = !empty($args->getOption('force'));
+        $io->createFile($filename, $out, $force);
 
         $emptyFile = $path . 'Entity' . DS . '.gitkeep';
         $this->deleteEmptyFile($emptyFile, $io);

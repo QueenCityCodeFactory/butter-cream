@@ -8,6 +8,8 @@ use Cake\Utility\Hash;
 
 /**
  * Form Helper
+ *
+ * @property \ButterCream\View\Helper\HtmlHelper $Html
  */
 class FormHelper extends Helper
 {

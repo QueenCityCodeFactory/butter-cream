@@ -6,6 +6,7 @@ namespace ButterCream\View\Helper;
 use Cake\I18n\Time;
 use Cake\View\Helper\TimeHelper as Helper;
 use DateTimeInterface;
+use Exception;
 
 /**
  * TimeHelper Class

@@ -7,6 +7,8 @@ use Cake\View\Helper;
 
 /**
  * Gravatar Helper
+ *
+ * @property \ButterCream\View\Helper\HtmlHelper $Html
  */
 class GravatarHelper extends Helper
 {

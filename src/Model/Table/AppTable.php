@@ -5,7 +5,7 @@ namespace ButterCream\Model\Table;
 
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Table;
 
 /**
@@ -62,12 +62,12 @@ class AppTable extends Table
     /**
      * Before Marshal Callback
      *
-     * @param \Cake\Event\Event $event Event instance.
+     * @param \Cake\Event\EventInterface $event The beforeMarshal event that was fired
      * @param \ArrayObject $data ArrayObject instance.
      * @param \ArrayObject $options ArrayObject instance.
      * @return void
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
     {
         $data = $this->cleanData($data);
     }
@@ -88,7 +88,7 @@ class AppTable extends Table
                     trim($value, " \t\0\x0B") // Don't remove \n or \r
                 );
             } elseif (is_array($value)) {
-                $data[$key] = $this->cleanData($value);
+                $data[$key] = $this->cleanData(new ArrayObject($value));
             }
         }
 
@@ -99,12 +99,12 @@ class AppTable extends Table
      * Modifies the entity before it is saved so that translated fields are persisted
      * in the database too.
      *
-     * @param \Cake\Event\Event $event The beforeSave event that was fired
+     * @param \Cake\Event\EventInterface $event The beforeSave event that was fired
      * @param \Cake\Datasource\EntityInterface $entity The entity that is going to be saved
      * @param \ArrayObject $options the options passed to the save method
      * @return void
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         // place global before save here
     }
@@ -112,12 +112,12 @@ class AppTable extends Table
     /**
      * AfterSave Callback
      *
-     * @param \Cake\Event\Event $event The event object
+     * @param \Cake\Event\EventInterface $event The afterDelete event that was fired.
      * @param \Cake\Datasource\EntityInterface $entity The entity
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // place global after save here
     }
@@ -125,12 +125,12 @@ class AppTable extends Table
     /**
      * Event fired after the record has been deleted
      *
-     * @param \Cake\Event\Event $event The event object
+     * @param \Cake\Event\EventInterface $event The beforeDelete event that was fired.
      * @param \Cake\ORM\Entity $entity The entity
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         // place global before delete here
     }

@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace ButterCream\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 
@@ -41,10 +41,10 @@ class RefererComponent extends Component
     /**
      * Main execution method. Handles setting the referer
      *
-     * @param \Cake\Event\Event $event The startup event.
+     * @param \Cake\Event\EventInterface $event The startup event.
      * @return void
      */
-    public function startup(Event $event): void
+    public function startup(EventInterface $event): void
     {
         $this->setReferer();
     }
@@ -131,9 +131,10 @@ class RefererComponent extends Component
             $url = Router::url($url);
         }
         $baseUrl = Router::url('/', true);
+        /** @var array $baseUri */
         $baseUri = parse_url($baseUrl);
-
-        $uri = isset($url) ? parse_url($url) : null;
+        /** @var array $uri */
+        $uri = isset($url) ? parse_url($url) : [];
 
         if (isset($uri['host']) && isset($baseUri['host']) && $baseUri['host'] == $uri['host']) {
             $url = urldecode(
@@ -149,7 +150,7 @@ class RefererComponent extends Component
      *
      * @param mixed $url the url to redirect to
      * @param int $status http status code, default is null
-     * @return mixed
+     * @return \Cake\Http\Response|null
      */
     public function redirect($url, int $status = 302): ?Response
     {

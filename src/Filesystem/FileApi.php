@@ -7,9 +7,10 @@ use ButterCream\Message\Exception\StatusMessageException;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+use Exception;
 use Imagick;
 
 /**
@@ -20,17 +21,21 @@ class FileApi
     /**
      * The TableRegistry object for the files database table
      *
-     * @var null
+     * @var \Cake\ORM\Table|null
      */
-    protected static $_filesTable;
+    protected static $_filesTable = null;
 
     /**
      * A default image width if none is specified for resizing
+     *
+     * @var int
      */
     public static $defaultImageWidth = 300;
 
     /**
      * A default image height if none is specified for resizing
+     *
+     * @var int
      */
     public static $defaultImageHeight = 300;
 
@@ -48,7 +53,7 @@ class FileApi
     /**
      * Sets up the _filesTable object if not already instantiated and then returns it
      *
-     * @return \Cake\ORM\TableRegistry a TableRegistry object for the files database table
+     * @return \Cake\ORM\Table|null a Table object for the files database table
      */
     protected static function _setupFilesTable()
     {
@@ -64,7 +69,7 @@ class FileApi
      *
      * @param string $id The id of the file to get
      * @param bool $contents Do you want the file content?
-     * @return \App\Model\Entity\File The file object, patched with the file contents
+     * @return \ButterCream\Model\Entity\File The file object, patched with the file contents
      */
     public static function get(string $id, bool $contents = false)
     {
@@ -83,11 +88,12 @@ class FileApi
      * Get the Base file data
      *
      * @param string $id The id of the file
-     * @return \App\Model\Entity\File
+     * @return \ButterCream\Model\Entity\File
      */
     public static function data(string $id)
     {
         $filesTable = static::_setupFilesTable();
+        /** @var \ButterCream\Model\Entity\File $file */
         $file = $filesTable->get($id);
         if (!empty($file) && is_object($file)) {
             return $file;
@@ -99,7 +105,7 @@ class FileApi
      * Gets the Local File Path to a File
      *
      * @param string $id The id of the file
-     * @return string The Local File Path
+     * @return string|false The Local File Path
      */
     public static function getLocalPath(string $id)
     {
@@ -113,7 +119,7 @@ class FileApi
      * Get a file from the file server/database
      *
      * @param string $id The id of the file to get
-     * @return \App\Model\Entity\File The file object, patched with the file contents
+     * @return string|false The file object, patched with the file contents
      */
     public static function fetchContent(string $id)
     {
@@ -127,7 +133,7 @@ class FileApi
      * Returns the MIME type of the file
      *
      * @param string $id The file ID
-     * @return string the mime type of the file
+     * @return string|false the mime type of the file
      */
     public static function fetchMime(string $id)
     {
@@ -172,9 +178,11 @@ class FileApi
             $metaData['original_filename'] = $tmpFile->name;
         }
 
+        /** @var \Cake\ORM\Table|null $filesTable */
         $filesTable = static::_setupFilesTable();
 
-        $file = $filesTable->newEntity();
+        /** @var \ButterCream\Model\Entity\File $file */
+        $file = $filesTable->newEntity([]);
         $file->category = $metaData['category'];
         $file->tag = $metaData['tag'];
         $file->size = $tmpFile->size();
@@ -182,8 +190,9 @@ class FileApi
         if (isset($metaData['meta']) && is_array($metaData['meta'])) {
             $file->meta = $metaData['meta'];
         }
+        /** @var array $pathInfo */
         $pathInfo = pathinfo($metaData['original_filename']);
-        $file->filename = Text::uuid() . '.' . $pathInfo['extension'];
+        $file->filename = Text::uuid() . isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : null;
 
         $folder = new Folder(Configure::read('FileApi.basePath') . $file->category . DS . $file->tag, true, 0755);
         if (empty($folder->path) || (!empty($folder->path) && file_exists($folder->path) !== true)) {
@@ -198,7 +207,7 @@ class FileApi
         $tmpFile->close();
         $destFile->close();
 
-        $filesTable->eventManager()->off('Model.afterSave');
+        $filesTable->getEventManager()->off('Model.afterSave');
         if ($filesTable->save($file)) {
             return $file->id;
         }
@@ -237,7 +246,7 @@ class FileApi
             $imageInfo = [];
         }
 
-        if (!in_array($imageInfo['mime'], self::$validImageMimeTypes)) {
+        if ($imageInfo !== false && !in_array($imageInfo['mime'], self::$validImageMimeTypes)) {
             throw new StatusMessageException('file_api_resize_invalid_type');
         }
 

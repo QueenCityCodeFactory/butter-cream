@@ -55,7 +55,7 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
     /**
      * Migration files that are stored in the self::migrationsPath
      *
-     * @var array
+     * @var mixed
      */
     protected $migrationsFiles = [];
 
@@ -526,7 +526,13 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
             $this->io->abort($msg);
         }
 
-        return unserialize(file_get_contents($path));
+        $contents = file_get_contents($path);
+
+        if (!empty($contents)) {
+            return unserialize($contents);
+        }
+
+        return [];
     }
 
     /**

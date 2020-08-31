@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace ButterCream\Database\Type;
 
 use Cake\Database\DriverInterface;
-use Cake\Database\JsonType;
 use Cake\Database\Type\BatchCastingInterface;
+use Cake\Database\Type\JsonType;
 
 /**
  * Provides behavior for the JSON type

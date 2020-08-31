@@ -40,14 +40,14 @@ class UrlHelper extends Helper
     /**
      * Normalizes two url/routes and returns if they are considered equal
      *
-     * @param  array|string $url The first url
-     * @param  array|string $url2 The second url
+     * @param array|string $url The first url
+     * @param array|string $url2 The second url
      * @return bool Are they the same URL???
      */
     public function isEqual($url, $url2): bool
     {
-        $url = Router::parse(Router::url($url));
-        $url2 = Router::parse(Router::url($url2));
+        $url = Router::parseRoutePath(Router::url($url));
+        $url2 = Router::parseRoutePath(Router::url($url2));
 
         $urlParts = [
             'prefix' => $url['prefix'] ?? null,

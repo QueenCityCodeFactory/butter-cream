@@ -8,7 +8,20 @@ use Cake\Filesystem\File as CakeFile;
 use Cake\ORM\Entity;
 
 /**
- * File Entity.
+ * File Entity
+ *
+ * @property string $id
+ * @property string $category
+ * @property string $tag
+ * @property string $filename
+ * @property string|null $original_filename
+ * @property int|null|false $size
+ * @property string $path
+ * @property string|false $contents
+ * @property string $base64
+ * @property \Cake\ORM\Entity\text|array|null $meta
+ * @property \Cake\I18n\FrozenTime|null $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  */
 class File extends Entity
 {
@@ -43,8 +56,13 @@ class File extends Entity
      */
     protected function _getBase64()
     {
-        $file = new CakeFile($this->path);
+        $file = new CakeFile($this->_getPath());
 
-        return 'data:' . $file->mime() . ';base64,' . base64_encode($file->read());
+        $contents = $file->read();
+        if (!$contents) {
+            $contents = '';
+        }
+
+        return 'data:' . $file->mime() . ';base64,' . base64_encode($contents);
     }
 }
