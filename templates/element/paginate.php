@@ -22,7 +22,7 @@
                     'data-url' => Cake\Routing\Router::url(['?' => $this->getRequest()->getQuery()]),
                     'data-update' => $this->fetch('ajax_update_element'),
                     'options' => !empty($paginatorOptions['limit']['options']) && is_array($paginatorOptions['limit']['options']) ? $paginatorOptions['limit']['options'] : [20 => 20, 40 => 40, 60 => 60, 80 => 80, 100 => 100],
-                    'default' => $this->getRequest()->getQuery('limit') ? $this->getRequest()->getQuery('limit') : $paginatorOptions['limit']['options'] ?? 20,
+                    'default' => $this->getRequest()->getQuery('limit') ? $this->getRequest()->getQuery('limit') : $paginatorOptions['limit']['options'][20] ?? 20,
                     'templates' => [
                         'select' => '<select class="input-xs ' . ($this->layout == 'ajax' ? 'ajax-set-pagination-limit' : 'set-pagination-limit') . '"{{attrs}}>{{content}}</select>',
                         'inputContainer' => 'Show: {{content}}',
