@@ -6,7 +6,7 @@ namespace {{ namespace }}\Model\Table;
 
 {% set uses = ['use Cake\\ORM\\Query;', 'use Cake\\ORM\\RulesChecker;', 'use ButterCream\\Model\\Table\\AppTable as Table;', 'use Cake\\Validation\\Validator;', 'use ' ~ namespace ~ '\\Model\\Entity\\' ~ entity ~ ';'] %}
 {% if not noCallbacks %}
-    {%- set uses = uses|merge(['use ArrayObject;', 'use Cake\\Datasource\\EntityInterface;', 'use Cake\\Event\\Event;']) %}
+    {%- set uses = uses|merge(['use ArrayObject;', 'use Cake\\Datasource\\EntityInterface;', 'use Cake\\Event\\EventInterface;']) %}
 {% endif %}
 {{ uses|sort|join('\n')|raw }}
 
@@ -129,7 +129,7 @@ class {{ name }}Table extends Table
     /**
      * Before Marshal Callback
      *
-     * @param \Cake\Event\Event $event Event instance.
+     * @param \Cake\Event\EventInterface $event Event instance.
      * @param \ArrayObject $data ArrayObject instance.
      * @param \ArrayObject $options ArrayObject instance.
      * @return void
@@ -143,7 +143,7 @@ class {{ name }}Table extends Table
      * Modifies the entity before it is saved so that translated fields are persisted
      * in the database too.
      *
-     * @param \Cake\Event\Event $event The beforeSave event that was fired
+     * @param \Cake\Event\EventInterface $event The beforeSave event that was fired
      * @param \Cake\Datasource\EntityInterface $entity The entity that is going to be saved
      * @param \ArrayObject $options the options passed to the save method
      * @return void
