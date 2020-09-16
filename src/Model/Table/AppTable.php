@@ -117,7 +117,7 @@ class AppTable extends Table
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         // place global after save here
     }
