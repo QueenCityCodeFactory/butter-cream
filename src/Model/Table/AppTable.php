@@ -75,8 +75,8 @@ class AppTable extends Table
     /**
      * Recursive Function to Clean Up submitted form Fields
      *
-     * @param \ArrayObject $data The data being marshalled
-     * @return \ArrayObject The cleaned up data
+     * @param \ArrayObject|array $data The data being marshalled
+     * @return \ArrayObject|array The cleaned up data
      */
     protected function cleanData($data)
     {
@@ -88,7 +88,7 @@ class AppTable extends Table
                     trim($value, " \t\0\x0B") // Don't remove \n or \r
                 );
             } elseif (is_array($value)) {
-                $data[$key] = $this->cleanData(new ArrayObject($value));
+                $data[$key] = $this->cleanData($value);
             }
         }
 
