@@ -8,7 +8,7 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\TableLocator;
 use Cake\Utility\Text;
 use Exception;
 use Imagick;
@@ -19,7 +19,7 @@ use Imagick;
 class FileApi
 {
     /**
-     * The TableRegistry object for the files database table
+     * The Table object for the files database table
      *
      * @var \Cake\ORM\Table|null
      */
@@ -58,7 +58,8 @@ class FileApi
     protected static function _setupFilesTable()
     {
         if (!isset(static::$_filesTable)) {
-            static::$_filesTable = TableRegistry::get('files');
+            $locator = new TableLocator();
+            static::$_filesTable = $locator->get('Files');
         }
 
         return static::$_filesTable;

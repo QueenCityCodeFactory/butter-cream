@@ -94,19 +94,35 @@ class FilesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
+            ->scalar('category')
+            ->maxLength('category', 45)
             ->requirePresence('category', 'create')
             ->notEmptyString('category');
 
         $validator
+            ->scalar('tag')
+            ->maxLength('tag', 36)
+            ->requirePresence('tag', 'create')
+            ->notEmptyString('tag');
+
+        $validator
+            ->scalar('filename')
+            ->maxLength('filename', 255)
             ->requirePresence('filename', 'create')
             ->notEmptyString('filename');
 
         $validator
+            ->scalar('original_filename')
+            ->maxLength('original_filename', 255)
             ->allowEmptyString('original_filename');
 
         $validator
-            ->add('size', 'valid', ['rule' => 'numeric'])
+            ->integer('size')
             ->allowEmptyString('size');
+
+        $validator
+            ->scalar('meta')
+            ->allowEmptyString('meta');
 
         return $validator;
     }
@@ -167,6 +183,8 @@ class FilesTable extends Table
     {
         /** @var \ButterCream\Model\Entity\File $entity */
         $basePath = Configure::read('FileApi.basePath');
+
+        parent::beforeDelete($event, $entity, $options);
 
         $file = new CakeFile($basePath . $entity->category . DS . $entity->tag . DS . $entity->filename);
         $file->delete();
