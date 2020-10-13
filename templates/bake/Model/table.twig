@@ -134,7 +134,7 @@ class {{ name }}Table extends Table
      * @param \ArrayObject $options ArrayObject instance.
      * @return void
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
     {
         parent::beforeMarshal($event, $data, $options);
     }
@@ -148,7 +148,7 @@ class {{ name }}Table extends Table
      * @param \ArrayObject $options the options passed to the save method
      * @return void
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         parent::beforeSave($event, $entity, $options);
     }
