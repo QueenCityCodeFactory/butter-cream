@@ -36,8 +36,8 @@ class {{ name }}Controller extends AppController
 
         $this->loadComponent('Search.Search', [
             'actions' => [
-                'index'
-            ]
+                'index',
+            ],
         ]);
 {% if components or helpers %}
 {% for component in components %}
