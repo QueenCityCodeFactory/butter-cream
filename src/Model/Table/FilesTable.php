@@ -120,10 +120,6 @@ class FilesTable extends Table
             ->integer('size')
             ->allowEmptyString('size');
 
-        $validator
-            ->scalar('meta')
-            ->allowEmptyString('meta');
-
         return $validator;
     }
 
