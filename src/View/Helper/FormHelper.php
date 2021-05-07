@@ -215,7 +215,9 @@ class FormHelper extends Helper
             'confirm' => 'Are you sure you want to cancel?',
         ];
 
-        return $this->Html->link($title, $this->_View->get('referer'), $options);
+        $url = empty($this->_View->get('referer')) ? 'javascript:void((function() { window.history.go(-1); })());' : $this->_View->get('referer');
+
+        return $this->Html->link($title, $url, $options);
     }
 
     /**
