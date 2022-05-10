@@ -55,7 +55,7 @@ class ExceptionRenderer extends CakeExceptionRenderer
         $helpers = ['ButterCream.Form', 'ButterCream.Html', 'ButterCream.Time'];
         $builder = $this->controller->viewBuilder();
         $builder
-            ->setHelpers($helpers, false)
+            ->setHelpers($helpers)
             ->setLayoutPath('')
             ->setTemplatePath('Error')
             ->setTheme('ButterCream');

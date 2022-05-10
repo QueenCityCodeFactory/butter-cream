@@ -104,7 +104,7 @@ class Controller extends CakeController
                 if (empty($tableName)) {
                     continue;
                 }
-                $table = $this->loadModel($tableName);
+                $table = $this->fetchTable($tableName);
                 break;
             }
         }

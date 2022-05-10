@@ -27,7 +27,7 @@ class TemplateRenderer extends BakeTemplateRenderer
         }
 
         $this->viewBuilder()
-            ->setHelpers(['ButterCream.Bake', 'Bake.DocBlock'])
+            ->addHelpers(['ButterCream.Bake', 'Bake.DocBlock'])
             ->setTheme($this->theme);
 
         $view = $this->createView(BakeView::class);

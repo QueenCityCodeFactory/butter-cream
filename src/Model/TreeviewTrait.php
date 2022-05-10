@@ -43,7 +43,7 @@ trait TreeviewTrait
     public function findTreeview(Query $query, array $options): Query
     {
         $options += [
-            'keyField' => $this->primaryKey(),
+            'keyField' => $this->getPrimaryKey(),
             'parentField' => 'parent_id',
             'nestingKey' => 'nodes',
         ];

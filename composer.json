@@ -14,7 +14,7 @@
     "require": {
         "cakephp/cakephp": "^4.0",
         "friendsofcake/search": "^6.0.0",
-        "friendsofcake/bootstrap-ui" : "dev-master",
+        "friendsofcake/bootstrap-ui" : "3.x-dev",
         "friendsofcake/cakepdf": "^4.0.0",
         "queencitycodefactory/cakespreadsheet": "dev-cake-4.x"
     },
