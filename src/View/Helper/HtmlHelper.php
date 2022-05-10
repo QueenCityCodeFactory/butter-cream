@@ -31,14 +31,12 @@ class HtmlHelper extends Helper
      *
      * ### Settings
      *
-     * - `useGlyphicons` Bool True to use Glyphicons OR False to use FontAwesome icons (default: false)
-     * - `templates` Either a filename to a config containing templates.
-     *   Or an array of templates to load. See Cake\View\StringTemplate for
-     *   template formatting.
-     *
-     * ### Customizing tag sets
-     *
-     * Using the `templates` option you can redefine the tag HtmlHelper will use.
+     * - `iconDefaults`: Default options for icons. Accepts the following options:
+     *      - `tag`: The HTML tag to use for the icon. Default `i`.
+     *      - `namespace`: Common class name for the icon set. Default `bi`.
+     *      - `prefix`: Prefix for class names. Default `bi`.
+     *      - `size`: Size class will be generated based of this. For e.g. if you use
+     *        size `lg` class '<prefix>-lg` will be added. Default null.
      *
      * @param \Cake\View\View $View The View this helper is being attached to.
      * @param array $config Configuration settings for the helper.
@@ -46,6 +44,13 @@ class HtmlHelper extends Helper
     public function __construct(View $View, array $config = [])
     {
         $this->_defaultConfig['templates'] = $this->_templates['templates'] += $this->_defaultConfig['templates'];
+        $this->_defaultConfig['iconDefaults'] = [
+            'tag' => 'em',
+            'namespace' => 'fas',
+            'prefix' => 'fa',
+            'size' => null,
+        ];
+
         parent::__construct($View, $config);
     }
 
@@ -69,6 +74,9 @@ class HtmlHelper extends Helper
     {
         $options += [
             'tag' => 'em',
+            'namespace' => 'fas',
+            'prefix' => 'fa',
+            'size' => null,
         ];
 
         return parent::icon($name, $options);
