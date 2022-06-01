@@ -47,21 +47,14 @@ class TableHelper extends Helper
      */
     public function header(string $key, $title = null, array $options = []): string
     {
-        $options += [
-            'modelClass' => $this->getView()->getRequest()->getParam('controller'),
-        ];
-
-        if (isset($options['modelClass'])) {
-            $key = $options['modelClass'] . '.' . $key;
-        }
-        unset($options['modelClass']);
-
         $attrs = $options['attrs'] ?? [];
+        unset($options['attrs']);
 
         $help = '';
         if (!empty($options['help'])) {
             $help = ' ' . $options['help'];
         }
+        unset($options['help']);
 
         if (empty($attrs['class'])) {
             $attrs['class'] = [];
