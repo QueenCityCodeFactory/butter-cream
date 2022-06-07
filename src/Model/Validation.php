@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ButterCream\Model;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * Validation Class. Used for validation of model data
@@ -62,7 +62,7 @@ class Validation
      */
     public static function birthdate(Time $check): bool
     {
-        $today = new Time('00:00:00');
+        $today = new FrozenTime('00:00:00');
         if ($check->toUnixString() > $today->toUnixString()) {
             return false;
         }

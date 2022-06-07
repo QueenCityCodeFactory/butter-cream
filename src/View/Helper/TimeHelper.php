@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ButterCream\View\Helper;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\View\Helper\TimeHelper as Helper;
 use DateTimeInterface;
 use Exception;
@@ -35,7 +35,7 @@ class TimeHelper extends Helper
         }
         try {
             if ($date instanceof DateTimeInterface) {
-                $date = new Time($date);
+                $date = new FrozenTime($date);
             }
             $date->timezone = $timezone;
 
