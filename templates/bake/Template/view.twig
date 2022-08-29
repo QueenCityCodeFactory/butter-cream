@@ -32,7 +32,7 @@
 <?php $this->start('related_data');
 {% for alias, details in relations %}
 {% set otherSingularVar = alias|variable %}
-{% set domId = details.controller|lower|underscore|humanize|slug %}
+{% set domId = details.controller|underscore|humanize|lower|slug %}
     echo $this->Ajax->relatedData('{{ domId }}-pagination', ['controller' => '{{ details.controller }}', 'action' => 'index', '?' => ['{{ details.foreignKey }}' => {{ pK|raw }}]]);
 {% endfor %}
 $this->end(); ?>
