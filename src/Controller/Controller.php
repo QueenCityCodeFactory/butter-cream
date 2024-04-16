@@ -4,9 +4,13 @@ declare(strict_types=1);
 namespace ButterCream\Controller;
 
 use Cake\Controller\Controller as CakeController;
+use Cake\Core\App;
+use Cake\Datasource\Paging\Exception\PageOutOfBoundsException;
+use Cake\Datasource\Paging\NumericPaginator;
+use Cake\Datasource\Paging\PaginatedInterface;
+use Cake\Datasource\QueryInterface;
+use Cake\Datasource\RepositoryInterface;
 use Cake\Event\EventInterface;
-use Cake\Http\Exception\NotFoundException;
-use RuntimeException;
 
 class Controller extends CakeController
 {
@@ -80,44 +84,44 @@ class Controller extends CakeController
     /**
      * Handles pagination of records in Table objects.
      *
-     * Will load the referenced Table object, and have the PaginatorComponent
+     * Will load the referenced Table object, and have the paginator
      * paginate the query using the request date and settings defined in `$this->paginate`.
      *
      * This method will also make the PaginatorHelper available in the view.
      *
-     * @param \Cake\ORM\Table|string|\Cake\ORM\Query|null $object Table to paginate
+     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\QueryInterface|string|null $object Table to paginate
      * (e.g: Table instance, 'TableName' or a Query object)
-     * @param array $settings The settings/configuration used for pagination.
-     * @return \Cake\ORM\ResultSet|\Cake\Datasource\ResultSetInterface|\Cake\Http\Response|null Query results
-     * @link https://book.cakephp.org/4/en/controllers.html#paginating-a-model
-     * @throws \RuntimeException When no compatible table object can be found.
+     * @param array<string, mixed> $settings The settings/configuration used for pagination. See {@link \Cake\Controller\Controller::$paginate}.
+     * @return \Cake\Datasource\Paging\PaginatedInterface
+     * @link https://book.cakephp.org/5/en/controllers.html#paginating-a-model
+     * @throws \Cake\Http\Exception\NotFoundException When a page out of bounds is requested.
      */
-    public function paginate($object = null, array $settings = [])
-    {
-        if (is_object($object)) {
-            $table = $object;
+    public function paginate(
+        RepositoryInterface|QueryInterface|string|null $object = null,
+        array $settings = []
+    ): PaginatedInterface {
+        if (!is_object($object)) {
+            $object = $this->fetchTable($object);
         }
 
-        if (is_string($object) || $object === null) {
-            $try = [$object, $this->modelClass];
-            foreach ($try as $tableName) {
-                if (empty($tableName)) {
-                    continue;
-                }
-                $table = $this->fetchTable($tableName);
-                break;
-            }
-        }
-
-        $this->loadComponent('Paginator');
-        if (empty($table)) {
-            throw new RuntimeException('Unable to locate an object compatible with paginate.');
-        }
         $settings += $this->paginate;
 
+        /** @var class-string<\Cake\Datasource\Paging\PaginatorInterface> $paginator */
+        $paginator = App::className(
+            $settings['className'] ?? NumericPaginator::class,
+            'Datasource/Paging',
+            'Paginator'
+        );
+        $paginator = new $paginator();
+        unset($settings['className']);
+
         try {
-            return $this->Paginator->paginate($table, $settings);
-        } catch (NotFoundException) {
+            $results = $paginator->paginate(
+                $object,
+                $this->request->getQueryParams(),
+                $settings
+            );
+        } catch (PageOutOfBoundsException $exception) {
             $request = $this->getRequest();
             $queryString = $request->getQueryParams();
             if (isset($queryString['page'])) {
@@ -131,6 +135,9 @@ class Controller extends CakeController
                 'action' => $request->getParam('action'),
                 '?' => $queryString,
             ]);
+
         }
+
+        return $results;
     }
 }
