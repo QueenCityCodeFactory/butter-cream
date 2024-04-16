@@ -453,7 +453,7 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
             $lastVersion = $this->migratedItems[0]['version'];
             $lastFile = end($this->migrationsFiles);
 
-            return (bool)strpos($lastFile, (string)$lastVersion);
+            return (bool)strpos((string) $lastFile, (string)$lastVersion);
         }
 
         return false;
@@ -555,7 +555,7 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
         }
         $collection = $connection->getSchemaCollection();
         foreach ($this->tables as $table) {
-            if (preg_match('/^.*phinxlog$/', $table) === 1) {
+            if (preg_match('/^.*phinxlog$/', (string) $table) === 1) {
                 continue;
             }
 
@@ -580,7 +580,7 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
      */
     public function getOptionParser(): ConsoleOptionParser
     {
-        $parser = parent::getOptionParser();
+        $parser = null;
 
         $parser->addArgument('name', [
             'help' => 'Name of the migration to bake. Can use Plugin.name to bake migration files into plugins.',

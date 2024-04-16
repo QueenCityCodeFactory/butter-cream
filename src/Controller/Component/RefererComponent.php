@@ -152,7 +152,7 @@ class RefererComponent extends Component
      * @param int $status http status code, default is null
      * @return \Cake\Http\Response|null
      */
-    public function redirect($url, int $status = 302): ?Response
+    public function redirect(mixed $url, int $status = 302): ?Response
     {
         $referer = $this->getReferer();
 
@@ -160,7 +160,7 @@ class RefererComponent extends Component
             $referer = null;
         }
 
-        if (strlen($referer) == 0 || $referer == '/') {
+        if (strlen((string) $referer) == 0 || $referer == '/') {
             return $this->getController()->redirect($url, $status);
         } else {
             return $this->getController()->redirect($referer, $status);

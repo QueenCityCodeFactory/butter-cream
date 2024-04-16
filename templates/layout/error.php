@@ -184,7 +184,7 @@ $this->append('script'); ?>
                                         <?= h($this->fetch('title')) ?>
                                     </div>
                                     <div class="col text-right">
-                                        <small><?= get_class($error) ?></small>
+                                        <small><?= $error::class ?></small>
                                     </div>
                                 </div>
                             </div>

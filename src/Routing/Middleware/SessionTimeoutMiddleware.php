@@ -52,7 +52,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
         }
 
         /** @var \Cake\Http\ServerRequest $request */
-        if ((!$request->is('ajax') || ($request->getQuery('session_timeout') && strtolower($request->getQuery('session_timeout')) === 'extend')) && $request->getParam('plugin') !== 'DebugKit') {
+        if ((!$request->is('ajax') || ($request->getQuery('session_timeout') && strtolower((string) $request->getQuery('session_timeout')) === 'extend')) && $request->getParam('plugin') !== 'DebugKit') {
             $session->write('SessionTimeoutFilter.lastAccess', time());
         }
 

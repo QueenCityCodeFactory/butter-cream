@@ -17,7 +17,7 @@ class Muddle
      * @param string $separator The separator character
      * @return bool True/False did the value get inserted
      */
-    public static function insert(array &$array, $path, $value, string $separator = '.'): bool
+    public static function insert(array &$array, $path, mixed $value, string $separator = '.'): bool
     {
         if (!is_array($path)) {
             $path = explode($separator, $path);

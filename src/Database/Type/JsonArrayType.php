@@ -44,7 +44,7 @@ class JsonArrayType extends JsonType implements BatchCastingInterface
                 continue;
             }
 
-            $values[$field] = json_decode($values[$field], false);
+            $values[$field] = json_decode((string) $values[$field], false);
         }
 
         return $values;

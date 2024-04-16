@@ -59,7 +59,7 @@ class Format
         ];
 
         $phone = self::parsePhone($phone, true);
-        $format = !empty($formats[strlen($phone['string'])]) ? $formats[strlen($phone['string'])] : '';
+        $format = !empty($formats[strlen((string) $phone['string'])]) ? $formats[strlen((string) $phone['string'])] : '';
         $formattedPhone = self::formatString($phone['string'], $format);
 
         if (!empty($phone['parts']['ext'])) {
@@ -160,7 +160,7 @@ class Format
                 $spos++;
             } else {
                 $result .= substr($format, $fpos, 1);
-                if (strpos($ignore, substr($format, $fpos, 1)) === false) {
+                if (!str_contains($ignore, substr($format, $fpos, 1))) {
                     ++$spos;
                 }
             }

@@ -117,7 +117,7 @@ class Controller extends CakeController
 
         try {
             return $this->Paginator->paginate($table, $settings);
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException) {
             $request = $this->getRequest();
             $queryString = $request->getQueryParams();
             if (isset($queryString['page'])) {

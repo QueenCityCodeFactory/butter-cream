@@ -9,9 +9,7 @@ if (Configure::read('debug') === true) {
 } else {
     $this->prepend('css', $this->Html->css(['app.min.css?cb=' . Configure::read('CacheBuster.cssCB')], ['fullBase' => true]));
 }
-$sanitize = function ($strIn) {
-    return preg_replace('/[\`\$]/i', '', $strIn);
-};
+$sanitize = fn($strIn) => preg_replace('/[\`\$]/i', '', (string) $strIn);
 if ($this instanceof \CakePdf\View\PdfView) {
     $this->renderer()->header([
         'left' => $this->fetch('pageNumbers') ? 'Page [page] of [toPage]' : '',

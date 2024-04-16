@@ -125,7 +125,7 @@ class Plugin extends BasePlugin
 
             try {
                 $reflection = new ReflectionClass($class);
-            } catch (ReflectionException $e) {
+            } catch (ReflectionException) {
                 continue;
             }
             if (!$reflection->isInstantiable() || !$reflection->isSubclassOf(BakeCommand::class)) {
@@ -134,7 +134,7 @@ class Plugin extends BasePlugin
 
             // Trim off 'Command' from the name.
             [$ns, $className] = namespaceSplit($class);
-            $name = Inflector::underscore(substr($className, 0, -7));
+            $name = Inflector::underscore(substr((string) $className, 0, -7));
 
             $shortName = $class::defaultName();
 
@@ -142,7 +142,7 @@ class Plugin extends BasePlugin
                 $candidates[$shortName] = $class;
             } else {
                 // Commands ending with `_all` should be ` all` instead.
-                if (substr($name, -4) === '_all') {
+                if (str_ends_with($name, '_all')) {
                     $name = substr($name, 0, -4) . ' all';
                 }
                 $candidates["bake {$name}"] = $class;

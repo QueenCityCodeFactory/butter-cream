@@ -68,7 +68,7 @@ class TableHelper extends Helper
             $keyArr = explode('.', $key); // As Model names are now required for all fields, remove the base model from the title
             $title = array_pop($keyArr);
 
-            if (strpos($title, '.') !== false) {
+            if (str_contains($title, '.')) {
                 $title = str_replace('.', ' ', $title);
             }
 

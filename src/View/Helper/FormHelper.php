@@ -73,7 +73,7 @@ class FormHelper extends Helper
 
         $requestMethod = 'POST';
         if (!empty($options['method'])) {
-            $requestMethod = strtoupper($options['method']);
+            $requestMethod = strtoupper((string) $options['method']);
             unset($options['method']);
         }
 

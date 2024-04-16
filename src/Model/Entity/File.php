@@ -63,6 +63,6 @@ class File extends Entity
             $contents = '';
         }
 
-        return 'data:' . $file->mime() . ';base64,' . base64_encode($contents);
+        return 'data:' . $file->mime() . ';base64,' . base64_encode((string) $contents);
     }
 }

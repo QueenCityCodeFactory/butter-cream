@@ -192,7 +192,7 @@ class FileApi
             $file->meta = $metaData['meta'];
         }
         /** @var array $pathInfo */
-        $pathInfo = pathinfo($metaData['original_filename']);
+        $pathInfo = pathinfo((string) $metaData['original_filename']);
         $file->filename = Text::uuid() . isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : null;
 
         $folder = new Folder(Configure::read('FileApi.basePath') . $file->category . DS . $file->tag, true, 0755);
@@ -243,7 +243,7 @@ class FileApi
         // Get additional image data
         try {
             $imageInfo = getimagesize($file->path);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $imageInfo = [];
         }
 

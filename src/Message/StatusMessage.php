@@ -159,6 +159,6 @@ class StatusMessage
         $message = static::$_messages[$key]['responseText'] ?? '';
         $type = static::$_messages[$key]['type'] ?? 'notice';
 
-        return trim($message . ' ' . strtoupper($type) . ': ' . $code);
+        return trim($message . ' ' . strtoupper((string) $type) . ': ' . $code);
     }
 }
