@@ -20,8 +20,8 @@ use Cake\ORM\Entity;
  * @property string|false $contents
  * @property string $base64
  * @property \Cake\ORM\Entity\text|array|null $meta
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property \Cake\I18n\DateTime|null $created
+ * @property \Cake\I18n\DateTime|null $modified
  */
 class File extends Entity
 {
@@ -33,7 +33,7 @@ class File extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         '*' => true,
         'id' => false,
         'Referer' => false,

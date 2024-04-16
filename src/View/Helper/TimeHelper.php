@@ -35,7 +35,7 @@ class TimeHelper extends Helper
         }
         try {
             if ($date instanceof DateTimeInterface) {
-                $date = new FrozenTime($date);
+                $date = new \Cake\I18n\DateTime($date);
             }
             $date->timezone = $timezone;
 

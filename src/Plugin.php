@@ -24,7 +24,7 @@ class Plugin extends BasePlugin
      *
      * @var string
      */
-    protected $name = 'ButterCream';
+    protected ?string $name = 'ButterCream';
 
     /**
      * Load all the plugin configuration and bootstrap logic.

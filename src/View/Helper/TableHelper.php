@@ -24,14 +24,14 @@ class TableHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Html', 'Paginator'];
+    public array $helpers = ['Html', 'Paginator'];
 
     /**
      * Default config for this class
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'templates' => [
             'tableheader' => '<th{{attrs}}>{{content}}{{help}}</th>',
         ],

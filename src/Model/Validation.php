@@ -62,7 +62,7 @@ class Validation
      */
     public static function birthdate(Time $check): bool
     {
-        $today = new FrozenTime('00:00:00');
+        $today = new \Cake\I18n\DateTime('00:00:00');
         if ($check->toUnixString() > $today->toUnixString()) {
             return false;
         }

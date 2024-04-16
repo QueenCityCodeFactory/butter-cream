@@ -17,7 +17,7 @@ class GravatarHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Html'];
+    public array $helpers = ['Html'];
 
     /**
      * Takes and email address and options and returns a gravatar

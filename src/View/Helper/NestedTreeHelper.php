@@ -18,14 +18,14 @@ class NestedTreeHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Html'];
+    public array $helpers = ['Html'];
 
     /**
      * Default config for this class
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'templates' => [
             'container' => '<div{{attrs}}>{{content}}</div>',
             'list' => '<ul{{attrs}}>{{content}}</ul>',

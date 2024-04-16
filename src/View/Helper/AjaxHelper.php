@@ -19,7 +19,7 @@ class AjaxHelper extends Helper
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'templates' => [
             'tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>',
         ],
