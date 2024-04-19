@@ -21,7 +21,7 @@ if (!$this->fetch('title')) {
  */
 if (!$this->fetch('meta')) {
     $this->start('meta');
-    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
+    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1');
     echo $this->Html->meta('description', '');
     echo $this->Html->meta('author', '');
     $this->end();

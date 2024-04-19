@@ -13,7 +13,7 @@ if (!$this->fetch('html')) {
  */
 if (!$this->fetch('meta')) {
     $this->start('meta');
-    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
+    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1');
     echo $this->Html->meta('description', '');
     echo $this->Html->meta('author', '');
     $this->end();
@@ -183,7 +183,7 @@ $this->append('script'); ?>
                                     <div class="col">
                                         <?= h($this->fetch('title')) ?>
                                     </div>
-                                    <div class="col text-right">
+                                    <div class="col text-end">
                                         <small><?= $error::class ?></small>
                                     </div>
                                 </div>

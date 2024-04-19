@@ -12,6 +12,9 @@ use Cake\ORM\Locator\TableLocator;
 use Cake\Utility\Text;
 use Exception;
 use Imagick;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+use League\Flysystem\UnableToWriteFile;
 
 /**
  * File API
@@ -139,11 +142,18 @@ class FileApi
     public static function fetchMime(string $id)
     {
         $file = static::data($id);
-        $fileObj = new File(
-            Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename
-        );
+        $filePath = $file->category . DS . $file->tag . DS . $file->filename;
 
-        return $fileObj->mime();
+        $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
+        $filesystem = new Filesystem($adapter);
+
+        if ($filesystem->fileExists($filePath)) {
+            $mimeType = $filesystem->mimeType($filePath);
+
+            return $mimeType;
+        }
+
+        return false;
     }
 
     /**
@@ -160,14 +170,19 @@ class FileApi
      */
     public static function put($tmpFilePath, array $metaData = [])
     {
+        $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
+        $filesystem = new Filesystem($adapter);
+
+        $originalFilename = $metaData['original_filename'] ?? null;
+
         if (is_array($tmpFilePath)) {
-            $tmpFile = new File($tmpFilePath['tmp_name']);
-            $metaData['original_filename'] = $tmpFilePath['name'];
+            $path = $tmpFilePath['tmp_name'];
+            $originalFilename = $tmpFilePath['name'];
         } else {
-            $tmpFile = new File($tmpFilePath);
+            $path = $tmpFilePath;
         }
 
-        if (!$tmpFile->exists()) {
+        if (!$filesystem->fileExists($path)) {
             throw new StatusMessageException('file_api_missing_tmp_file');
         }
 
@@ -175,40 +190,37 @@ class FileApi
             throw new StatusMessageException('file_api_missing_metadata');
         }
 
-        if (!isset($metaData['original_filename'])) {
-            $metaData['original_filename'] = $tmpFile->name;
+        if (!$originalFilename) {
+            $originalFilename = basename($path);
         }
 
         /** @var \Cake\ORM\Table|null $filesTable */
         $filesTable = static::_setupFilesTable();
 
         /** @var \ButterCream\Model\Entity\File $file */
-        $file = $filesTable->newEntity([]);
+        $file = $filesTable->newEmptyEntity();
         $file->category = $metaData['category'];
         $file->tag = $metaData['tag'];
-        $file->size = $tmpFile->size();
-        $file->original_filename = $metaData['original_filename'];
-        if (isset($metaData['meta']) && is_array($metaData['meta'])) {
-            $file->meta = $metaData['meta'];
-        }
+        $file->size = $filesystem->fileSize($path);
+        $file->original_filename = $originalFilename;
+        $file->meta = $metaData['meta'] ?? null;
+
         /** @var array $pathInfo */
-        $pathInfo = pathinfo((string) $metaData['original_filename']);
+        $pathInfo = pathinfo((string) $originalFilename);
         $file->filename = Text::uuid() . isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : null;
 
-        $folder = new Folder(Configure::read('FileApi.basePath') . $file->category . DS . $file->tag, true, 0755);
-        if (empty($folder->path) || (!empty($folder->path) && file_exists($folder->path) !== true)) {
-            throw new StatusMessageException('file_api_missing_fileserver');
-        }
-        $destFile = new File($folder->path . DS . $file->filename);
-        if (!$tmpFile->copy($destFile->path)) {
+        $targetPath = $file->category . DS . $file->tag . DS . $file->filename;
+
+        try {
+            $filesystem->copy($path, $targetPath);
+            $filesystem->delete($path);
+        } catch (UnableToWriteFile $exception) {
             throw new StatusMessageException('file_api_can_not_copy_file');
         }
 
-        $tmpFile->delete();
-        $tmpFile->close();
-        $destFile->close();
+        $eventManager = $filesTable->getEventManager();
+        $eventManager->off($eventManager->listeners('Model.afterSave'));
 
-        $filesTable->getEventManager()->off('Model.afterSave');
         if ($filesTable->save($file)) {
             return $file->id;
         }
@@ -230,19 +242,17 @@ class FileApi
             return false;
         }
 
-        // Create the file object from the file info
-        $file = new File(
-            Configure::read('FileApi.basePath') . $record->category . DS . $record->tag . DS . $record->filename
-        );
+        $basePath = Configure::read('FileApi.basePath');
+        $filePath = $basePath . $record->category . DS . $record->tag . DS . $record->filename;
 
         // Make sure the file exists, otherwise we're done!
-        if (!$file->exists()) {
+        if (!file_exists($filePath)) {
             throw new StatusMessageException('file_api_resize_missing_file');
         }
 
         // Get additional image data
         try {
-            $imageInfo = getimagesize($file->path);
+            $imageInfo = getimagesize($filePath);
         } catch (Exception) {
             $imageInfo = [];
         }
@@ -253,8 +263,8 @@ class FileApi
 
         // Make sure the Imagick class is available to use, otherwise just copy it.
         if (class_exists('Imagick')) {
-            // Resize and Save Image
-            $image = new Imagick($file->path);
+            /** @var \Imagick $image */
+            $image = new Imagick($filePath);
             $width = $image->getImageWidth();
             $height = $image->getImageHeight();
 

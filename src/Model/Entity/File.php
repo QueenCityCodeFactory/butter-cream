@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace ButterCream\Model\Entity;
 
 use Cake\Core\Configure;
-use Cake\Filesystem\File as CakeFile;
 use Cake\ORM\Entity;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 /**
  * File Entity
@@ -56,13 +57,16 @@ class File extends Entity
      */
     protected function _getBase64()
     {
-        $file = new CakeFile($this->_getPath());
+        $filePath = $this->category . DS . $this->tag . DS . $this->filename;
 
-        $contents = $file->read();
-        if (!$contents) {
-            $contents = '';
+        $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
+        $filesystem = new Filesystem($adapter);
+
+        $contents = '';
+        if ($filesystem->fileExists($filePath)) {
+            $contents = $filesystem->read($filePath);
         }
 
-        return 'data:' . $file->mime() . ';base64,' . base64_encode((string) $contents);
+        return 'data:' . $filesystem->mimeType($filePath) . ';base64,' . base64_encode((string) $contents);
     }
 }

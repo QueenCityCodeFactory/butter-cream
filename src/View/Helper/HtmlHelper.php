@@ -21,7 +21,7 @@ class HtmlHelper extends Helper
      */
     protected $_templates = [
         'templates' => [
-            'actionDropdown' => '<a class="btn btn-outline-secondary btn-sq-xs dropdown-toggle action-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{content}}</a>',
+            'actionDropdown' => '<a class="btn btn-outline-secondary btn-sq-xs dropdown-toggle action-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{content}}</a>',
             'tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>',
         ],
     ];
@@ -95,8 +95,8 @@ class HtmlHelper extends Helper
             'icon' => 'info-circle',
             'class' => 'text-primary',
             'title' => $text,
-            'data-toggle' => 'tooltip',
-            'data-placement' => 'auto',
+            'data-bs-toggle' => 'tooltip',
+            'data-bs-placement' => 'auto',
         ];
 
         $icon = $options['icon'];
@@ -119,9 +119,9 @@ class HtmlHelper extends Helper
             'icon' => 'question-circle',
             'class' => 'text-primary',
             'title' => $title,
-            'data-toggle' => 'popover',
-            'data-content' => $text,
-            'data-placement' => 'top',
+            'data-bs-toggle' => 'popover',
+            'data-bs-content' => $text,
+            'data-bs-placement' => 'top',
         ];
 
         $icon = $options['icon'];
@@ -161,8 +161,8 @@ class HtmlHelper extends Helper
 
         if (isset($options['title']) && $options['tooltip'] === true) {
             $options += [
-                'data-toggle' => 'tooltip',
-                'data-placement' => 'auto',
+                'data-bs-toggle' => 'tooltip',
+                'data-bs-placement' => 'auto',
             ];
         }
         unset($options['tooltip']);
@@ -266,8 +266,8 @@ class HtmlHelper extends Helper
             }
             if (!empty($options['title'])) {
                 $options += [
-                    'data-toggle' => 'tooltip',
-                    'data-placement' => 'auto',
+                    'data-bs-toggle' => 'tooltip',
+                    'data-bs-placement' => 'auto',
                 ];
             }
         }

@@ -13,6 +13,10 @@ use Cake\Event\EventInterface;
 use Cake\Filesystem\File as CakeFile;
 use Cake\Filesystem\Folder;
 use Cake\Validation\Validator;
+use League\Flysystem\DirectoryAttributes;
+use League\Flysystem\FileAttributes;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 /**
  * Files Model
@@ -137,9 +141,12 @@ class FilesTable extends Table
         parent::afterSave($event, $entity, $options);
 
         if ($this->skipAfterSave !== true && $entity->isNew()) {
-            $tmpFilePath = Configure::read('FileApi.tmpPath') . $entity->filename;
-            $tmpFile = new CakeFile($tmpFilePath);
-            if (!$tmpFile->exists()) {
+            $filePath = $entity->filename;
+
+            $sourceAdapter = new LocalFilesystemAdapter(Configure::read('FileApi.tmpPath'));
+            $sourceFilesystem = new Filesystem($sourceAdapter);
+
+            if (!$sourceFilesystem->fileExists($filePath)) {
                 throw new StatusMessageException('file_api_missing_tmp_file');
             }
 
@@ -148,22 +155,18 @@ class FilesTable extends Table
             }
 
             if (empty($entity->original_filename)) {
-                $entity->original_filename = $tmpFile->name;
+                $entity->original_filename = basename($filePath);
             }
 
-            $folder = new Folder(
-                Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag,
-                true,
-                0755
-            );
-            $destFile = new CakeFile($folder->path . DS . $entity->filename);
-            if (!$tmpFile->copy($destFile->path)) {
+            $destinationAdapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
+            $destinationFilesystem = new Filesystem($destinationAdapter);
+            try {
+                $destinationFilesystem->createDirectory(Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag);
+                $destinationFilesystem->write($entity->category . DS . $entity->tag . DS . $entity->filename, $sourceFilesystem->read($filePath));
+                $sourceFilesystem->delete($filePath);
+            } catch (\Exception) {
                 throw new StatusMessageException('file_api_can_not_copy_file');
             }
-
-            $tmpFile->delete();
-            $tmpFile->close();
-            $destFile->close();
         }
     }
 
@@ -182,21 +185,31 @@ class FilesTable extends Table
 
         parent::beforeDelete($event, $entity, $options);
 
-        $file = new CakeFile($basePath . $entity->category . DS . $entity->tag . DS . $entity->filename);
-        $file->delete();
+        $sourceAdapter = new LocalFilesystemAdapter($basePath);
+        $sourceFilesystem = new Filesystem($sourceAdapter);
 
-        $folder = new Folder($basePath . $entity->category . DS . $entity->tag);
-        $folderContents = $folder->read();
-        if (empty($folderContents[0]) && empty($folderContents[1])) {
-            // if the folder is empty of files and folders (0 and 1), delete it
-            $folder->delete();
-        }
+        $sourceFilesystem->delete($entity->category . DS . $entity->tag . DS . $entity->filename);
 
-        $folder = new Folder($basePath . $entity->category);
-        $folderContents = $folder->read();
-        if (empty($folderContents[0]) && empty($folderContents[1])) {
-            // if the folder is empty of files and folders (0 and 1), delete it
-            $folder->delete();
+        $directories = [
+            $entity->category . DS . $entity->tag,
+            $entity->category,
+        ];
+
+        foreach ($directories as $directory) {
+            $contents = $sourceFilesystem->listContents($directory, false);
+
+            $isEmpty = true;
+
+            foreach ($contents as $item) {
+                if ($item instanceof DirectoryAttributes || $item instanceof FileAttributes) {
+                    $isEmpty = false;
+                    break;
+                }
+            }
+
+            if ($isEmpty) {
+                $sourceFilesystem->deleteDirectory($directory);
+            }
         }
     }
 }

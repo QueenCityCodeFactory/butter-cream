@@ -15,8 +15,8 @@
 
 <div class="card">
     <div class="card-header">
-        <div class="row">
-            <div class="col-auto mr-auto">
+        <div class="row justify-content-between">
+            <div class="col-auto">
                 <?= $this->fetch('page_heading') ?>
                 <?php if ($this->fetch('page_description')) : ?>
                     <small><?= $this->fetch('page_description') ?></small>

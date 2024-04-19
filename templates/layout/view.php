@@ -15,7 +15,7 @@
                 <?php endif; ?>
             </div>
             <?php if ($this->fetch('view.card_buttons')) : ?>
-                <div class="col-3 text-right">
+                <div class="col-3 text-end">
                     <?= $this->fetch('view.card_buttons') ?>
                 </div>
             <?php endif ?>

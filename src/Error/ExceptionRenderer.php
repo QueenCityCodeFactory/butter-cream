@@ -6,13 +6,13 @@ namespace ButterCream\Error;
 use ButterCream\Http\Exception\HttpException;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Error\ExceptionRenderer as CakeExceptionRenderer;
+use Cake\Error\Renderer\WebExceptionRenderer;
 use Cake\Http\Exception\HttpException as CakeHttpException;
 use Cake\Http\Response;
 use InvalidArgumentException;
 use Throwable;
 
-class ExceptionRenderer extends CakeExceptionRenderer
+class ExceptionRenderer extends WebExceptionRenderer
 {
     /**
      * Get error message.

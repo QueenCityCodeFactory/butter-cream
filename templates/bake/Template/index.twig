@@ -1,7 +1,14 @@
-<?php $this->extend('ButterCream./layout/index'); ?>
-<?php $this->assign('page_heading', '{{ pluralHumanName }}'); ?>
-<?php $this->assign('ajax_update_element', '#{{ pluralHumanName|lower|slug }}-pagination'); ?>
-<?php $this->Paginator->ajaxTemplateOptions($this->fetch('ajax_update_element')); ?>
+<?php
+/**
+* @var \{{ namespace }}\View\AppView $this
+* @var iterable<\{{ entityClass }}> ${{ pluralVar }}
+*/
+
+$this->extend('ButterCream./layout/index');
+$this->assign('page_heading', '{{ pluralHumanName }}');
+$this->assign('ajax_update_element', '#{{ pluralHumanName|lower|slug }}-pagination');
+$this->Paginator->ajaxTemplateOptions($this->fetch('ajax_update_element'));
+?>
 
 <?php $this->start('index.card_buttons'); ?>
 <div class="btn-group btn-group-xs" role="group" aria-label="User Navigation">

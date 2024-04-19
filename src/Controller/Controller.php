@@ -11,6 +11,8 @@ use Cake\Datasource\Paging\PaginatedInterface;
 use Cake\Datasource\QueryInterface;
 use Cake\Datasource\RepositoryInterface;
 use Cake\Event\EventInterface;
+use CakePdf\View\PdfView;
+use CakeSpreadsheet\View\SpreadsheetView;
 
 class Controller extends CakeController
 {
@@ -33,14 +35,6 @@ class Controller extends CakeController
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false,
-            'viewClassMap' => [
-                'xlsx' => 'CakeSpreadsheet.Excel',
-                'pdf' => 'CakePdf.Pdf',
-            ],
-        ]);
-        $this->loadComponent('Paginator');
         $this->loadComponent('ButterCream.Flash');
         $this->loadComponent('ButterCream.Referer', [
             'ignored' => [
@@ -48,6 +42,8 @@ class Controller extends CakeController
                 '/logout',
             ],
         ]);
+
+        $this->addViewClasses([PdfView::class, SpreadsheetView::class]);
     }
 
     /**
@@ -135,7 +131,6 @@ class Controller extends CakeController
                 'action' => $request->getParam('action'),
                 '?' => $queryString,
             ]);
-
         }
 
         return $results;

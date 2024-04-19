@@ -15,9 +15,9 @@ use ReflectionClass;
 use ReflectionException;
 
 /**
- * Plugin for Client
+ * Plugin for ButterCream
  */
-class Plugin extends BasePlugin
+class ButterCreamPlugin extends BasePlugin
 {
     /**
      * Plugin name.
@@ -107,46 +107,46 @@ class Plugin extends BasePlugin
      *
      * @param string $namespace The namespace classes are expected to be in.
      * @param string $path The path to look in.
-     * @return array
+     * @return array<string>
+     * @psalm-return array<string, class-string<\Bake\Command\BakeCommand>>
      */
     protected function findInPath(string $namespace, string $path): array
     {
+        $hasSubfolder = false;
         $path .= 'Command/';
-        if (!file_exists($path)) {
+        $namespace .= '\Command\\';
+
+        if (file_exists($path . 'Bake/')) {
+            $hasSubfolder = true;
+            $path .= 'Bake/';
+            $namespace .= 'Bake\\';
+        } elseif (!file_exists($path)) {
             return [];
         }
+
         $iterator = new DirectoryIterator($path);
         $candidates = [];
         foreach ($iterator as $item) {
             if ($item->isDot() || $item->isDir()) {
                 continue;
             }
-            $class = $namespace . '\Command\\' . $item->getBasename('.php');
+            /** @psalm-var class-string<\Bake\Command\BakeCommand> $class */
+            $class = $namespace . $item->getBasename('.php');
 
-            try {
-                $reflection = new ReflectionClass($class);
-            } catch (ReflectionException) {
-                continue;
-            }
-            if (!$reflection->isInstantiable() || !$reflection->isSubclassOf(BakeCommand::class)) {
-                continue;
-            }
-
-            // Trim off 'Command' from the name.
-            [$ns, $className] = namespaceSplit($class);
-            $name = Inflector::underscore(substr((string) $className, 0, -7));
-
-            $shortName = $class::defaultName();
-
-            if (!empty($shortName)) {
-                $candidates[$shortName] = $class;
-            } else {
-                // Commands ending with `_all` should be ` all` instead.
-                if (str_ends_with($name, '_all')) {
-                    $name = substr($name, 0, -4) . ' all';
+            if (!$hasSubfolder) {
+                try {
+                    $reflection = new ReflectionClass($class);
+                /** @phpstan-ignore-next-line */
+                } catch (ReflectionException $e) {
+                    continue;
                 }
-                $candidates["bake {$name}"] = $class;
+                /** @psalm-suppress TypeDoesNotContainType */
+                if (!$reflection->isInstantiable() || !$reflection->isSubclassOf(BakeCommand::class)) {
+                    continue;
+                }
             }
+
+            $candidates[$class::defaultName()] = $class;
         }
 
         return $candidates;

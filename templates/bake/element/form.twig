@@ -31,14 +31,14 @@
     {%- endif %}
 {%- endfor %}
 
-{%- if associations.BelongsToMany %}
+{%- if associations.BelongsToMany is defined %}
     {%- for assocName, assocData in associations.BelongsToMany %}
                 <?= $this->Form->control('{{ assocData.property }}._ids', ['options' => ${{ assocData.variable }}]) ?>
     {{- "\n" }}
     {%- endfor %}
 {% endif %}
             </div>
-            <div class="card-footer text-right">
+            <div class="card-footer text-end">
                 <?= $this->Form->cancelButton() ?>
                 <?= $this->Form->saveButton() ?>
             </div>

@@ -14,8 +14,8 @@ $paginatorOptions = $this->get('paginator.options', [
 ]);
 ?>
 
-<div class="row">
-    <div class="col-auto mr-auto">
+<div class="row justify-content-between">
+    <div class="col-auto">
         <div class="record-counter">
             <?php if (!empty($paginatorOptions['limit']['show'])) : ?>
                 <?= $this->Form->control('limit', [

@@ -1,12 +1,27 @@
-<?php
-declare(strict_types=1);
+{#
+/**
+ * Controller bake template file
+ *
+ * Allows templating of Controllers generated from bake.
+ *
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+{{ element('Bake.file_header', {
+    namespace: "#{namespace}\\Controller#{prefix}",
+    classImports: (plugin or prefix) ? ["#{baseNamespace}\\Controller\\AppController"] : [],
+}) }}
 
-namespace {{ namespace }}\Controller{{ prefix }};
-
-{% if plugin or prefix %}
-use {{ baseNamespace }}\Controller\AppController;
-
-{% endif %}
 /**
  * {{ name }} Controller
  *
@@ -18,10 +33,6 @@ use {{ baseNamespace }}\Controller\AppController;
 {% set classInfo = Bake.classInfo(component, 'Controller/Component', 'Component') %}
  * @property {{ classInfo.fqn }} ${{ classInfo.name }}
 {% endfor %}
-
-{%- if 'index' in actions %}
- * @method \{{ namespace }}\Model\Entity\{{ entityClassName }}[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
-{% endif %}
  */
 class {{ name }}Controller extends AppController
 {
@@ -39,13 +50,11 @@ class {{ name }}Controller extends AppController
                 'index',
             ],
         ]);
-{% if components or helpers %}
 {% for component in components %}
         $this->loadComponent('{{ component }}');
 {% endfor %}
 {% if helpers %}
-        $this->viewBuilder()->setHelpers([{{ Bake.stringifyList(helpers, {'indent': false})|raw }}]);
-{% endif %}
+        $this->viewBuilder()->setHelpers({{ Bake.exportArray(helpers)|raw }});
 {% endif %}
     }
 {% if actions|length %}{{ "\n" }}{% endif %}

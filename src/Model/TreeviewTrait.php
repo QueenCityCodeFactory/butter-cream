@@ -7,7 +7,7 @@ use ArrayIterator;
 use Cake\Collection\Collection;
 use Cake\Collection\ExtractTrait;
 use Cake\Collection\Iterator\MapReduce;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 
 /**
  * Treeview Trait
@@ -36,11 +36,11 @@ trait TreeviewTrait
      * ]);
      * ```
      *
-     * @param \Cake\ORM\Query $query The query to find with
+     * @param \Cake\ORM\Query\SelectQuery $query The query to find with
      * @param array $options The options to find with
-     * @return \Cake\ORM\Query The query builder
+     * @return \Cake\ORM\Query\SelectQuery The query builder
      */
-    public function findTreeview(Query $query, array $options): Query
+    public function findTreeview(SelectQuery $query, array $options): SelectQuery
     {
         $options += [
             'keyField' => $this->getPrimaryKey(),

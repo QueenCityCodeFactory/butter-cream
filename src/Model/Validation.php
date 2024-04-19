@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ButterCream\Model;
 
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 
 /**
  * Validation Class. Used for validation of model data
@@ -57,12 +57,12 @@ class Validation
     /**
      * Checks to make sure the birthdate is not in the future (but can be today's date)
      *
-     * @param \Cake\I18n\Time $check The value to check.
+     * @param \Cake\I18n\DateTime $check The value to check.
      * @return bool Success
      */
-    public static function birthdate(Time $check): bool
+    public static function birthdate(DateTime $check): bool
     {
-        $today = new \Cake\I18n\DateTime('00:00:00');
+        $today = DateTime::now();
         if ($check->toUnixString() > $today->toUnixString()) {
             return false;
         }

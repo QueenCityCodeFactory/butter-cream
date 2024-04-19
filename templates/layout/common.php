@@ -28,7 +28,7 @@ if (!$this->fetch('footer')) {
 <div class="main-wrapper container-fluid">
     <div class="row">
         <?= $this->fetch('common.main.before') ?>
-        <main role="main" class="col-12" spellcheck="true">
+        <main role="main" class="col" spellcheck="true">
             <?= $this->fetch('flash') ?>
             <noscript>
                 <div class="bs-callout bs-callout-danger">

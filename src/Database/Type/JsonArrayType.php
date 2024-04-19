@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ButterCream\Database\Type;
 
-use Cake\Database\DriverInterface;
+use Cake\Database\Driver;
 use Cake\Database\Type\BatchCastingInterface;
 use Cake\Database\Type\JsonType;
 
@@ -13,13 +13,13 @@ use Cake\Database\Type\JsonType;
 class JsonArrayType extends JsonType implements BatchCastingInterface
 {
     /**
-     * Convert string values to PHP arrays.
+     * {@inheritDoc}
      *
      * @param mixed $value The value to convert.
-     * @param \Cake\Database\DriverInterface $driver The driver instance to convert with.
-     * @return string|array|null
+     * @param \Cake\Database\Driver $driver The driver instance to convert with.
+     * @return mixed
      */
-    public function toPHP($value, DriverInterface $driver)
+    public function toPHP(mixed $value, Driver $driver): mixed
     {
         if (!is_string($value)) {
             return null;
@@ -29,22 +29,16 @@ class JsonArrayType extends JsonType implements BatchCastingInterface
     }
 
     /**
-     * Returns an array of the values converted to the PHP representation of
-     * this type.
-     *
-     * @param array $values The original array of values containing the fields to be casted
-     * @param string[] $fields The field keys to cast
-     * @param \Cake\Database\DriverInterface $driver Object from which database preferences and configuration will be extracted.
-     * @return array
+     * @inheritDoc
      */
-    public function manyToPHP(array $values, array $fields, DriverInterface $driver): array
+    public function manyToPHP(array $values, array $fields, Driver $driver): array
     {
         foreach ($fields as $field) {
             if (!isset($values[$field])) {
                 continue;
             }
 
-            $values[$field] = json_decode((string) $values[$field], false);
+            $values[$field] = json_decode($values[$field], false);
         }
 
         return $values;
