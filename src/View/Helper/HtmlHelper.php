@@ -94,7 +94,7 @@ class HtmlHelper extends Helper
         $options += [
             'icon' => 'info-circle',
             'class' => 'text-primary',
-            'title' => $text,
+            'data-bs-title' => $text,
             'data-bs-toggle' => 'tooltip',
             'data-bs-placement' => 'auto',
         ];
@@ -118,7 +118,7 @@ class HtmlHelper extends Helper
         $options += [
             'icon' => 'question-circle',
             'class' => 'text-primary',
-            'title' => $title,
+            'data-bs-title' => $title,
             'data-bs-toggle' => 'popover',
             'data-bs-content' => $text,
             'data-bs-placement' => 'top',
@@ -161,6 +161,7 @@ class HtmlHelper extends Helper
 
         if (isset($options['title']) && $options['tooltip'] === true) {
             $options += [
+                'data-bs-title' => $options['title'],
                 'data-bs-toggle' => 'tooltip',
                 'data-bs-placement' => 'auto',
             ];
@@ -266,6 +267,7 @@ class HtmlHelper extends Helper
             }
             if (!empty($options['title'])) {
                 $options += [
+                    'data-bs-title' => $options['title'],
                     'data-bs-toggle' => 'tooltip',
                     'data-bs-placement' => 'auto',
                 ];
