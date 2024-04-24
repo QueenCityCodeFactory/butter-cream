@@ -12,7 +12,7 @@
         </div>
     <?php $this->end(); ?>
 <?php endif; ?>
-
+<?= $this->fetch('index.before_card') ?>
 <div class="card">
     <div class="card-header">
         <div class="row justify-content-between">
@@ -29,7 +29,7 @@
             <?php endif ?>
         </div>
     </div>
-    <?= $this->fetch('index.card_body'); ?>
+    <?= $this->fetch('index.card_body') ?>
     <div class="table-responsive">
         <?= $this->fetch('content') ?>
     </div>

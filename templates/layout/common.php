@@ -1,11 +1,10 @@
 <?php
-
 /**
  * Flash Messages
  */
 if (!$this->fetch('flash')) {
     $this->start('flash');
-    if (isset($this->Flash)) {
+    if ($this->helpers()->has('Flash')) {
         echo $this->Flash->render();
     }
     $this->end();
@@ -24,6 +23,17 @@ if (!$this->fetch('header')) {
 if (!$this->fetch('footer')) {
     $this->assign('footer', $this->element('footer', [], ['ignoreMissing' => true, 'plugin' => false]));
 }
+
+/**
+ * Breadcrumbs
+ */
+if (!$this->fetch('breadcrumbs')) {
+    $this->start('breadcrumbs');
+    if ($this->helpers()->has('Breadcrumbs')) {
+        echo $this->Breadcrumbs->render();
+    }
+    $this->end();
+}
 ?>
 <div class="main-wrapper container-fluid">
     <div class="row">
@@ -36,8 +46,11 @@ if (!$this->fetch('footer')) {
                     <p>Without JavaScript enabled this web application may not function as intended. Please enable JavaScript before continuing.</p>
                 </div>
             </noscript>
+            <?= $this->fetch('breadcrumbs') ?>
             <?= $this->fetch('callout') ?>
+            <?= $this->fetch('common.content.before') ?>
             <?= $this->fetch('content') ?>
+            <?= $this->fetch('common.content.after') ?>
         </main>
         <?= $this->fetch('common.main.after') ?>
     </div>
