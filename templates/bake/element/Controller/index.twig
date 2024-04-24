@@ -8,10 +8,10 @@
 {% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
 {% if belongsTo %}
         $query = $this->{{ currentModelName }}
-            ->find('search', ['search' => $this->request->getQueryParams()])
+            ->find('search', search: $this->request->getQueryParams())
             ->contain({{ Bake.exportArray(belongsTo)|raw }});
 {% else %}
-        $query = $this->{{ currentModelName }}->find('search', ['search' => $this->request->getQueryParams()]);
+        $query = $this->{{ currentModelName }}->find('search', search: $this->request->getQueryParams());
 {% endif %}
         ${{ pluralName }} = $this->paginate($query);
 
