@@ -46,7 +46,7 @@ class HtmlHelper extends Helper
         $this->_defaultConfig['templates'] = $this->_templates['templates'] += $this->_defaultConfig['templates'];
         $this->_defaultConfig['iconDefaults'] = [
             'tag' => 'em',
-            'namespace' => 'fas',
+            'namespace' => 'fa-solid',
             'prefix' => 'fa',
             'size' => null,
         ];
@@ -61,7 +61,7 @@ class HtmlHelper extends Helper
      * @param array $options Additional options and HTML attributes.
      * ### Options
      *
-     * - `iconSet`: Common class name for the icon set. Default 'fas'.
+     * - `iconSet`: Common class name for the icon set. Default 'fa-solid'.
      * - `prefix`: Prefix for class names. Default 'fa'.
      * - `size`: Size class will be generated based of this. For e.g. if you use
      *   size 'lg' class '<prefix>-lg` will be added. Default null.
@@ -74,7 +74,7 @@ class HtmlHelper extends Helper
     {
         $options += [
             'tag' => 'em',
-            'namespace' => 'fas',
+            'namespace' => 'fa-solid',
             'prefix' => 'fa',
             'size' => null,
         ];

@@ -360,7 +360,7 @@ class FormHelper extends Helper
                 'options' => [
                     'timezone: moment.tz.guess()',
                     'format: "MM/DD/YYYY hh:mm a z"',
-                    'icons: { time: "fas fa-clock" }',
+                    'icons: { time: "fa-solid fa-clock" }',
                 ],
             ],
             'class' => ['datetimepicker-input'],

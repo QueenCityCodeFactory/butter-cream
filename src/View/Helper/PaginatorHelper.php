@@ -53,7 +53,7 @@ class PaginatorHelper extends Helper
      * @return string A "previous" link or a disabled link.
      * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-jump-links
      */
-    public function prev(string $title = '<em class="fas fa-angle-left"></em>', array $options = []): string
+    public function prev(string $title = '<em class="fa-solid fa-angle-left"></em>', array $options = []): string
     {
         $defaults = [
             'escape' => false,
@@ -83,7 +83,7 @@ class PaginatorHelper extends Helper
      * @return string A "next" link or $disabledTitle text if the link is disabled.
      * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-jump-links
      */
-    public function next(string $title = '<em class="fas fa-angle-right"></em>', array $options = []): string
+    public function next(string $title = '<em class="fa-solid fa-angle-right"></em>', array $options = []): string
     {
         $defaults = [
             'escape' => false,
