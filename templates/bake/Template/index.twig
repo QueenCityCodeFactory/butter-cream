@@ -5,12 +5,12 @@
 */
 
 $this->extend('ButterCream./layout/index');
-$this->assign('page_heading', '{{ pluralHumanName }}');
+$this->assign('page.heading', '{{ pluralHumanName }}');
 $this->assign('ajax_update_element', '#{{ pluralHumanName|lower|slug }}-pagination');
 $this->Paginator->ajaxTemplateOptions($this->fetch('ajax_update_element'));
 ?>
 
-<?php $this->start('index.card_buttons'); ?>
+<?php $this->start('index.card.buttons'); ?>
 <div class="btn-group btn-group-xs" role="group" aria-label="User Navigation">
     <?= $this->Html->addBtn() ?>
 {% set done = [] %}

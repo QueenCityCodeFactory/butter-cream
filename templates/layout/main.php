@@ -56,12 +56,12 @@ if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
     $bodyAttributes['class'] = array_unique($bodyAttributes['class']);
 }
 
-if (!$this->fetch('body_start')) {
-    $this->assign('body_start', $this->Html->tag('body', null, $bodyAttributes));
+if (!$this->fetch('body.start')) {
+    $this->assign('body.start', $this->Html->tag('body', null, $bodyAttributes));
 }
 
-if (!$this->fetch('body_end')) {
-    $this->assign('body_end', '</body>');
+if (!$this->fetch('body.end')) {
+    $this->assign('body.end', '</body>');
 }
 
 /**
@@ -153,11 +153,11 @@ endif;
         <?= $this->fetch('css') ?>
         <?= $this->fetch('google_analytics') ?>
     </head>
-    <?= $this->fetch('body_start') ?>
+    <?= $this->fetch('body.start') ?>
         <?= $this->fetch('header') ?>
         <?= $this->fetch('content') ?>
         <?= $this->fetch('footer') ?>
         <?= $this->fetch('script') ?>
         <?= $this->fetch('modal') ?>
-    <?= $this->fetch('body_end') ?>
+    <?= $this->fetch('body.end') ?>
 </html>

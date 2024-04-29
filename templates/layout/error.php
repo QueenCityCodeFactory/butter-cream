@@ -84,12 +84,12 @@ if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
     $bodyAttributes['class'] = array_unique($bodyAttributes['class']);
 }
 
-if (!$this->fetch('body_start')) {
-    $this->assign('body_start', $this->Html->tag('body', null, $bodyAttributes));
+if (!$this->fetch('body.start')) {
+    $this->assign('body.start', $this->Html->tag('body', null, $bodyAttributes));
 }
 
-if (!$this->fetch('body_end')) {
-    $this->assign('body_end', '</body>');
+if (!$this->fetch('body.end')) {
+    $this->assign('body.end', '</body>');
 }
 
 $this->append('script'); ?>
@@ -162,7 +162,7 @@ $this->append('script'); ?>
         <?= $this->fetch('css') ?>
         <?= $this->fetch('google_analytics') ?>
     </head>
-    <?= $this->fetch('body_start') ?>
+    <?= $this->fetch('body.start') ?>
         <?= $this->fetch('header') ?>
         <div class="container-fluid">
             <div class="row">
@@ -222,5 +222,5 @@ $this->append('script'); ?>
         </div>
         <?= $this->fetch('footer') ?>
         <?= $this->fetch('script') ?>
-    <?= $this->fetch('body_end') ?>
+    <?= $this->fetch('body.end') ?>
 </html>
