@@ -39,7 +39,7 @@ class TimeHelper extends Helper
             }
             $date->timezone = $timezone;
 
-            return $date->i18nFormat($format);
+            return $date->i18nFormat($format, $timezone);
         } catch (Exception $e) {
             if ($invalid === false) {
                 throw $e;
