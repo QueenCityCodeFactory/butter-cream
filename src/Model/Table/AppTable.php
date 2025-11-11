@@ -69,7 +69,10 @@ class AppTable extends Table
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
     {
-        $data = $this->cleanData($data);
+        $cleaned = $this->cleanData($data);
+    
+        // Replace the ArrayObject contents with cleaned data
+        $data->exchangeArray($cleaned);
     }
 
     /**
