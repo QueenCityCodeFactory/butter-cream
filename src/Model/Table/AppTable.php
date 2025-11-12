@@ -69,10 +69,7 @@ class AppTable extends Table
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
     {
-        $cleaned = $this->cleanData($data);
-    
-        // Replace the ArrayObject contents with cleaned data
-        $data->exchangeArray($cleaned);
+        $this->cleanData($data);
     }
 
     /**
@@ -90,7 +87,7 @@ class AppTable extends Table
                     $this->encodingReplacements,
                     trim($value, " \t\0\x0B") // Don't remove \n or \r
                 );
-            } elseif (is_array($value)) {
+            } elseif (is_array($value) || $value instanceof ArrayObject) {
                 $data[$key] = $this->cleanData($value);
             }
         }
