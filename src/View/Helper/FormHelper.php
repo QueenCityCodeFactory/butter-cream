@@ -65,7 +65,7 @@ class FormHelper extends Helper
      *   external URL (starts with http://)
      * @param array $options Array of HTML attributes.
      * @return string An `<a />` element.
-     * @link https://book.cakephp.org/4/en/views/helpers/form.html#creating-standalone-buttons-and-post-links
+     * @link https://book.cakephp.org/5/en/views/helpers/form.html#creating-standalone-buttons-and-post-links
      */
     public function postLink(string $title, $url = null, array $options = []): string
     {
@@ -319,7 +319,7 @@ class FormHelper extends Helper
      *   it should be a hash of key names => messages.
      * @param array $options See above.
      * @return string Formatted errors or ''.
-     * @link https://book.cakephp.org/4/en/views/helpers/form.html#displaying-and-checking-errors
+     * @link https://book.cakephp.org/5/en/views/helpers/form.html#displaying-and-checking-errors
      */
     public function error(string $field, $text = null, array $options = []): string
     {
@@ -442,7 +442,7 @@ class FormHelper extends Helper
      * @param string $fieldName This should be "modelname.fieldname"
      * @param array $options Each type of input takes different options.
      * @return string Completed form widget.
-     * @link https://book.cakephp.org/4/en/views/helpers/form.html#creating-form-inputs
+     * @link https://book.cakephp.org/5/en/views/helpers/form.html#creating-form-inputs
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
      */

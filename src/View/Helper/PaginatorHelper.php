@@ -51,7 +51,7 @@ class PaginatorHelper extends Helper
      * @param string $title Title for the link. Defaults to '<< Previous'.
      * @param array $options Options for pagination link. See above for list of keys.
      * @return string A "previous" link or a disabled link.
-     * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-jump-links
+     * @link https://book.cakephp.org/5/en/views/helpers/paginator.html#creating-jump-links
      */
     public function prev(string $title = '<em class="fa-solid fa-angle-left"></em>', array $options = []): string
     {
@@ -81,7 +81,7 @@ class PaginatorHelper extends Helper
      * @param string $title Title for the link. Defaults to 'Next >>'.
      * @param array $options Options for pagination link. See above for list of keys.
      * @return string A "next" link or $disabledTitle text if the link is disabled.
-     * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-jump-links
+     * @link https://book.cakephp.org/5/en/views/helpers/paginator.html#creating-jump-links
      */
     public function next(string $title = '<em class="fa-solid fa-angle-right"></em>', array $options = []): string
     {
@@ -127,7 +127,7 @@ class PaginatorHelper extends Helper
      *
      * @param array $options Options for the numbers.
      * @return string Numbers string.
-     * @link https://book.cakephp.org/4/en/views/helpers/paginator.html#creating-page-number-links
+     * @link https://book.cakephp.org/5/en/views/helpers/paginator.html#creating-page-number-links
      */
     public function numbers(array $options = []): string
     {

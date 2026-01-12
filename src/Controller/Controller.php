@@ -52,7 +52,7 @@ class Controller extends CakeController
      *
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
-     * @link https://book.cakephp.org/4/en/controllers.html#request-life-cycle-callbacks
+     * @link https://book.cakephp.org/5/en/controllers.html#request-life-cycle-callbacks
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -65,7 +65,7 @@ class Controller extends CakeController
      *
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
-     * @link https://book.cakephp.org/4/en/controllers.html#request-life-cycle-callbacks
+     * @link https://book.cakephp.org/5/en/controllers.html#request-life-cycle-callbacks
      */
     public function beforeRender(EventInterface $event)
     {
