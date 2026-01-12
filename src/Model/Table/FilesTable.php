@@ -7,11 +7,8 @@ use ArrayObject;
 use ButterCream\Message\Exception\StatusMessageException;
 use ButterCream\Model\Table\AppTable as Table;
 use Cake\Core\Configure;
-use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
-use Cake\Filesystem\File as CakeFile;
-use Cake\Filesystem\Folder;
 use Cake\Validation\Validator;
 use League\Flysystem\DirectoryAttributes;
 use League\Flysystem\FileAttributes;
@@ -56,19 +53,6 @@ class FilesTable extends Table
     }
 
     /**
-     * Initialize Schema
-     *
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema Schema Settings
-     * @return \Cake\Database\Schema\TableSchemaInterface The initialized schema
-     */
-    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
-    {
-        $schema->setColumnType('meta', 'json');
-
-        return $schema;
-    }
-
-    /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
@@ -83,6 +67,9 @@ class FilesTable extends Table
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Search.Search');
+
+        // Configure schema column types
+        $this->getSchema()->setColumnType('meta', 'json');
     }
 
     /**

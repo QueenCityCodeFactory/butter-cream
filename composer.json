@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
-        "cakephp/cakephp": "^5.1",
+        "php": ">=8.4",
+        "cakephp/cakephp": "^5.3",
         "friendsofcake/search": "^7.0.0",
         "friendsofcake/bootstrap-ui" : "^5.0.0",
         "friendsofcake/cakepdf": "^5.0.0",

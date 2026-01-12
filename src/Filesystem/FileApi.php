@@ -5,8 +5,6 @@ namespace ButterCream\Filesystem;
 
 use ButterCream\Message\Exception\StatusMessageException;
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Utility\Text;
