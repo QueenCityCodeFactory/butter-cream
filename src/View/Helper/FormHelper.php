@@ -22,7 +22,7 @@ class FormHelper extends Helper
      * @param array $options An array of html attributes and options.
      * @return string An formatted opening FORM tag.
      */
-    public function create($context = null, array $options = []): string
+    public function create(mixed $context = null, array $options = []): string
     {
         $options += ['novalidate' => true];
 
@@ -61,19 +61,19 @@ class FormHelper extends Helper
      * - The option `onclick` will be replaced.
      *
      * @param string $title The content to be wrapped by <a> tags.
-     * @param string|array|null $url Cake-relative URL or array of URL parameters, or
+     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
      * @param array $options Array of HTML attributes.
      * @return string An `<a />` element.
      * @link https://book.cakephp.org/5/en/views/helpers/form.html#creating-standalone-buttons-and-post-links
      */
-    public function postLink(string $title, $url = null, array $options = []): string
+    public function postLink(string $title, string|array|null $url = null, array $options = []): string
     {
         $options += ['block' => null, 'confirm' => null];
 
         $requestMethod = 'POST';
         if (!empty($options['method'])) {
-            $requestMethod = strtoupper((string) $options['method']);
+            $requestMethod = strtoupper((string)$options['method']);
             unset($options['method']);
         }
 
@@ -164,7 +164,7 @@ class FormHelper extends Helper
      * @param array $options The standard options for links
      * @return string HTML Link wrapped in a form
      */
-    public function deleteBtn($primaryKey, array $options = []): string
+    public function deleteBtn(string|int $primaryKey, array $options = []): string
     {
         $options += [
             'escape' => false,
@@ -183,7 +183,7 @@ class FormHelper extends Helper
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
-    public function saveButton($title = null, array $options = []): string
+    public function saveButton(?string $title = null, array $options = []): string
     {
         if (empty($title)) {
             $title = $this->Html->icon('save') . ' Save';
@@ -204,7 +204,7 @@ class FormHelper extends Helper
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
-    public function cancelButton($title = null, array $options = []): string
+    public function cancelButton(?string $title = null, array $options = []): string
     {
         if (empty($title)) {
             $title = $this->Html->icon('arrow-circle-left') . ' Cancel';
@@ -215,7 +215,9 @@ class FormHelper extends Helper
             'confirm' => 'Are you sure you want to cancel?',
         ];
 
-        $url = empty($this->_View->get('referer')) ? 'javascript:void((function() { window.history.go(-1); })());' : $this->_View->get('referer');
+        $url = empty($this->_View->get('referer'))
+            ? 'javascript:void((function() { window.history.go(-1); })());'
+            : $this->_View->get('referer');
 
         return $this->Html->link($title, $url, $options);
     }
@@ -228,15 +230,18 @@ class FormHelper extends Helper
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
-    public function backButton(string $title = '<em class="fa fa-arrow-circle-left"></em> Back', array $options = []): string
-    {
+    public function backButton(
+        string $title = '<em class="fa fa-arrow-circle-left"></em> Back',
+        array $options = [],
+    ): string {
         if (empty($title)) {
             $title = $this->Html->icon('arrow-circle-left') . ' Back';
         }
         $options += [
             'class' => 'btn btn-info',
             'escape' => false,
-            'confirm' => 'Are you sure you want go back to the previous page? Your changes on the current page will not be saved!',
+            'confirm' => 'Are you sure you want go back to the previous page? ' .
+                'Your changes on the current page will not be saved!',
         ];
 
         return $this->Html->link($title, $this->_View->get('referer'), $options);
@@ -250,12 +255,16 @@ class FormHelper extends Helper
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
-    public function continueButton(string $title = 'Continue <em class="fa fa-arrow-circle-right"></em>', array $options = []): string
-    {
+    public function continueButton(
+        string $title = 'Continue <em class="fa fa-arrow-circle-right"></em>',
+        array $options = [],
+    ): string {
         if (empty($title)) {
             $title = 'Continue ' . $this->Html->icon('arrow-circle-right');
         }
-        $options += ['class' => 'btn btn-primary continue-button'];
+        $options += [
+            'class' => 'btn btn-primary continue-button',
+        ];
 
         return parent::button($title, $options);
     }
@@ -268,7 +277,7 @@ class FormHelper extends Helper
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
-    public function confirmButton($title = null, array $options = []): string
+    public function confirmButton(?string $title = null, array $options = []): string
     {
         $options += [
             'class' => 'btn btn-primary confirm-button',
@@ -315,13 +324,13 @@ class FormHelper extends Helper
      * - `escape` boolean - Whether or not to html escape the contents of the error.
      *
      * @param string $field A field name, like "modelname.fieldname"
-     * @param string|array|null $text Error message as string or array of messages. If an array,
+     * @param array|string|null $text Error message as string or array of messages. If an array,
      *   it should be a hash of key names => messages.
      * @param array $options See above.
      * @return string Formatted errors or ''.
      * @link https://book.cakephp.org/5/en/views/helpers/form.html#displaying-and-checking-errors
      */
-    public function error(string $field, $text = null, array $options = []): string
+    public function error(string $field, string|array|null $text = null, array $options = []): string
     {
         if (isset($text['escape']) && $text['escape'] === false) {
             $options['escape'] = false;
@@ -332,14 +341,17 @@ class FormHelper extends Helper
 
     /**
      * Creates a Tempus Dominus Bootstrap 4 DateTimePicker. Using this helper requires Bootstrap 4,
-     * the tempusdominus datetimepicker javascript, and a fetch for the 'script' block i.e. <?= $this->fetch('script') ?>
-     * somewhere in your view. If using another view block called 'script' ->start('script') will clear the contents inserted
-     * by this helper. To override the JS this helper outputs, set options['script'] false and add your JS to the view your picker
-     * is on. If you only intend to override the datetimepicker's object literal parameters, just pass your options into
-     * options['datetimepicker']['options']. If a placeholder is passed, any value will be wiped out - the datetimepicker will not have
-     * a value and show a placeholder. If frontEndTimezoneConversion is not used, you're responsible for adjusting the time
-     * read from the database before it gets to this helper. The helper will still give the guessed timezone abbreviation based on
-     * the timezone given by the browser. If you'd like to override this, add that functionality to this helper.
+     * the tempusdominus datetimepicker javascript, and a fetch for the 'script' block
+     * i.e. <?= $this->fetch('script') ?> somewhere in your view. If using another view block called
+     * 'script' ->start('script') will clear the contents inserted by this helper. To override the JS
+     * this helper outputs, set options['script'] false and add your JS to the view your picker is on.
+     * If you only intend to override the datetimepicker's object literal parameters, just pass your
+     * options into options['datetimepicker']['options']. If a placeholder is passed, any value will
+     * be wiped out - the datetimepicker will not have a value and show a placeholder. If
+     * frontEndTimezoneConversion is not used, you're responsible for adjusting the time read from
+     * the database before it gets to this helper. The helper will still give the guessed timezone
+     * abbreviation based on the timezone given by the browser. If you'd like to override this, add
+     * that functionality to this helper.
      *
      * @param string $fieldName A field name, like "modelname.fieldname"
      * @param array $options Array of options and HTML attributes
@@ -379,8 +391,10 @@ class FormHelper extends Helper
 
         $options += [
             'templates' => [
-                'inputGroupAddon' => '<div class="{{class}}" data-target="#' . $target . '" data-toggle="datetimepicker">{{content}}</div>',
-                'inputGroupContainer' => '<div{{attrs}} id="' . $target . '" data-target-input="nearest">{{prepend}}{{content}}{{append}}</div>',
+                'inputGroupAddon' => '<div class="{{class}}" data-target="#' . $target .
+                    '" data-toggle="datetimepicker">{{content}}</div>',
+                'inputGroupContainer' => '<div{{attrs}} id="' . $target .
+                    '" data-target-input="nearest">{{prepend}}{{content}}{{append}}</div>',
             ],
             'data-target' => '#' . $target,
             'data-toggle' => 'datetimepicker',
@@ -396,7 +410,8 @@ class FormHelper extends Helper
         if ($frontEndTimezoneConversion === true) {
             $timezone = '\'UTC\'';
             $conversionJs = "\tif ($(\"#" . $domId . '").val()) {';
-            $conversionJs .= "\n\t\t$(\"#" . $target . "\").datetimepicker('date', $(\"#" . $target . "\").datetimepicker('viewDate').tz(moment.tz.guess()));";
+            $conversionJs .= "\n\t\t$(\"#" . $target . "\").datetimepicker('date', $(\"#" . $target .
+                "\").datetimepicker('viewDate').tz(moment.tz.guess()));";
             $conversionJs .= "\n\t}";
             $conversionJs .= "\n\tmoment.tz.setDefault(moment.tz.guess());\n";
         }
@@ -404,8 +419,11 @@ class FormHelper extends Helper
         if ($script === true) {
             // This will load into a block called 'script' by default
             $this->Html->scriptBlock(
-                "$(function() {\n\tmoment.tz.setDefault(" . $timezone . ");\n\t$(\"#" . $target . "\").datetimepicker({\n\t\t" . join(",\n\t\t", $datetimepicker['options']) . "\n\t});\n" . $conversionJs . $placeholderJs . '});',
-                ['block' => true]
+                "$(function() {\n\tmoment.tz.setDefault(" . $timezone .
+                    ");\n\t$(\"#" . $target . "\").datetimepicker({\n\t\t" .
+                    join(",\n\t\t", $datetimepicker['options']) .
+                    "\n\t});\n" . $conversionJs . $placeholderJs . '});',
+                ['block' => true],
             );
         }
 

@@ -13,7 +13,7 @@ class StatusMessage
      *
      * @var array
      */
-    protected static $_messages = [
+    protected static array $messages = [
         'missing_field' => [
             'status' => 400,
             'responseText' => 'Missing Field!',
@@ -87,9 +87,9 @@ class StatusMessage
      *
      * @return mixed The all the messages or false if no messages
      */
-    public static function getMessages()
+    public static function getMessages(): mixed
     {
-        return static::$_messages ?? false;
+        return static::$messages ?? false;
     }
 
     /**
@@ -98,9 +98,9 @@ class StatusMessage
      * @param string $key The array key for the message
      * @return mixed The message array or false if not found
      */
-    public static function getMessage(string $key)
+    public static function getMessage(string $key): mixed
     {
-        return static::$_messages[$key] ?? false;
+        return static::$messages[$key] ?? false;
     }
 
     /**
@@ -109,9 +109,9 @@ class StatusMessage
      * @param string $key The array key for the message
      * @return mixed The message status or false if not found
      */
-    public static function getStatus(string $key)
+    public static function getStatus(string $key): mixed
     {
-        return static::$_messages[$key]['status'] ?? false;
+        return static::$messages[$key]['status'] ?? false;
     }
 
     /**
@@ -120,9 +120,9 @@ class StatusMessage
      * @param string $key The array key for the message
      * @return mixed The message response text or false if not found
      */
-    public static function getResponseText(string $key)
+    public static function getResponseText(string $key): mixed
     {
-        return static::$_messages[$key]['responseText'] ?? false;
+        return static::$messages[$key]['responseText'] ?? false;
     }
 
     /**
@@ -131,9 +131,9 @@ class StatusMessage
      * @param string $key The array key for the message
      * @return mixed The message code or false if not found
      */
-    public static function getCode(string $key)
+    public static function getCode(string $key): mixed
     {
-        return static::$_messages[$key]['code'] ?? false;
+        return static::$messages[$key]['code'] ?? false;
     }
 
     /**
@@ -142,9 +142,9 @@ class StatusMessage
      * @param string $key The array key for the message
      * @return mixed The message type or false if not found
      */
-    public static function getType(string $key)
+    public static function getType(string $key): mixed
     {
-        return static::$_messages[$key]['type'] ?? false;
+        return static::$messages[$key]['type'] ?? false;
     }
 
     /**
@@ -153,12 +153,12 @@ class StatusMessage
      * @param string $key The array key for the message
      * @return mixed The message string with type and code or false if not found
      */
-    public static function toString(string $key)
+    public static function toString(string $key): mixed
     {
-        $code = static::$_messages[$key]['code'] ?? '';
-        $message = static::$_messages[$key]['responseText'] ?? '';
-        $type = static::$_messages[$key]['type'] ?? 'notice';
+        $code = static::$messages[$key]['code'] ?? '';
+        $message = static::$messages[$key]['responseText'] ?? '';
+        $type = static::$messages[$key]['type'] ?? 'notice';
 
-        return trim($message . ' ' . strtoupper((string) $type) . ': ' . $code);
+        return trim($message . ' ' . strtoupper((string)$type) . ': ' . $code);
     }
 }

@@ -21,7 +21,7 @@ class Controller extends CakeController
      *
      * @var int
      */
-    public $ajaxPaginationLimit = 5;
+    public int $ajaxPaginationLimit = 5;
 
     /**
      * Initialization hook method.
@@ -87,14 +87,15 @@ class Controller extends CakeController
      *
      * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\QueryInterface|string|null $object Table to paginate
      * (e.g: Table instance, 'TableName' or a Query object)
-     * @param array<string, mixed> $settings The settings/configuration used for pagination. See {@link \Cake\Controller\Controller::$paginate}.
+     * @param array<string, mixed> $settings The settings/configuration used for pagination.
+     * See {@link \Cake\Controller\Controller::$paginate}.
      * @return \Cake\Datasource\Paging\PaginatedInterface
      * @link https://book.cakephp.org/5/en/controllers.html#paginating-a-model
      * @throws \Cake\Http\Exception\NotFoundException When a page out of bounds is requested.
      */
     public function paginate(
         RepositoryInterface|QueryInterface|string|null $object = null,
-        array $settings = []
+        array $settings = [],
     ): PaginatedInterface {
         if (!is_object($object)) {
             $object = $this->fetchTable($object);
@@ -106,7 +107,7 @@ class Controller extends CakeController
         $paginator = App::className(
             $settings['className'] ?? NumericPaginator::class,
             'Datasource/Paging',
-            'Paginator'
+            'Paginator',
         );
         $paginator = new $paginator();
         unset($settings['className']);
@@ -115,7 +116,7 @@ class Controller extends CakeController
             $results = $paginator->paginate(
                 $object,
                 $this->request->getQueryParams(),
-                $settings
+                $settings,
             );
         } catch (PageOutOfBoundsException $exception) {
             $request = $this->getRequest();

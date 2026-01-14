@@ -25,7 +25,7 @@ class Validation
         $regex .= '(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)';
         $regex .= '?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/';
 
-        return static::_check($check, $regex);
+        return static::check($check, $regex);
     }
 
     /**
@@ -38,7 +38,7 @@ class Validation
     {
         $regex = '/\\A\\b[0-9]{5}(?:-?[0-9]{4})?\\b\\z/i';
 
-        return static::_check($check, $regex);
+        return static::check($check, $regex);
     }
 
     /**
@@ -51,7 +51,7 @@ class Validation
     {
         $regex = '/\\A\\b[0-9]{3}-?[0-9]{2}-?[0-9]{4}\\b\\z/i';
 
-        return static::_check($check, $regex);
+        return static::check($check, $regex);
     }
 
     /**
@@ -77,7 +77,7 @@ class Validation
      * @param string $regex Regular expression
      * @return bool Success of match
      */
-    protected static function _check(string $check, string $regex): bool
+    protected static function check(string $check, string $regex): bool
     {
         if (is_string($regex) && preg_match($regex, $check)) {
             return true;

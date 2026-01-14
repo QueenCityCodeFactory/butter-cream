@@ -21,18 +21,18 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
      *
      * @var array
      */
-    protected $_config = [
+    protected array $config = [
         'timeout' => 15,
     ];
 
     /**
      * Constructor
      *
-     * @param array $config Config options. See $_config for valid keys.
+     * @param array $config Config options. See $config for valid keys.
      */
     public function __construct(array $config = [])
     {
-        $this->_config = $config + $this->_config;
+        $this->config = $config + $this->config;
     }
 
     /**
@@ -47,12 +47,17 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
         $session = $request->getAttribute('session');
         $lastAccess = $session->read('SessionTimeoutFilter.lastAccess');
 
-        if ($lastAccess !== null && time() - $lastAccess > $this->_config['timeout'] * 60) {
+        if ($lastAccess !== null && time() - $lastAccess > $this->config['timeout'] * 60) {
             $session->destroy();
         }
 
         /** @var \Cake\Http\ServerRequest $request */
-        if ((!$request->is('ajax') || ($request->getQuery('session_timeout') && strtolower((string) $request->getQuery('session_timeout')) === 'extend')) && $request->getParam('plugin') !== 'DebugKit') {
+        if (
+            (!$request->is('ajax') ||
+                ($request->getQuery('session_timeout') &&
+                    strtolower((string)$request->getQuery('session_timeout')) === 'extend')) &&
+            $request->getParam('plugin') !== 'DebugKit'
+        ) {
             $session->write('SessionTimeoutFilter.lastAccess', time());
         }
 

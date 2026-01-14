@@ -43,9 +43,9 @@ class NestedTreeHelper extends Helper
      *
      * @param array $tree The tree data - needs to be tree structure
      * @param array $options The options
-     * @return bool|string The HTML for the sorter
+     * @return string|bool The HTML for the sorter
      */
-    public function sorter($tree = [], $options = [])
+    public function sorter(array $tree = [], array $options = []): bool|string
     {
         if (!empty($tree)) {
             $container = !empty($options['container']) ? $options['container'] : [];
@@ -62,7 +62,7 @@ class NestedTreeHelper extends Helper
 
             return $this->formatTemplate('container', [
                 'attrs' => $this->templater()->formatAttributes($container),
-                'content' => $this->_sorter($tree, [
+                'content' => $this->sorter($tree, [
                     'root' => $sortable,
                     'items' => $items,
                     'nestingKey' => $nestingKey,
@@ -83,9 +83,9 @@ class NestedTreeHelper extends Helper
      *
      * @param array $tree The tree data - needs to be tree structure
      * @param array $options The Options
-     * @return bool|string HTML for the sorter
+     * @return string|bool HTML for the sorter
      */
-    protected function _sorter($tree = [], $options = [])
+    protected function sorter(array $tree = [], array $options = []): bool|string
     {
         if (empty($tree)) {
             return '';
@@ -104,14 +104,14 @@ class NestedTreeHelper extends Helper
             $options = $itemsOptions;
         }
         $listItems = [];
-        foreach ($tree as $treeKey => $treeItem) {
+        foreach ($tree as $treeItem) {
             $options['data-id'] = $treeItem->id;
             $listItems[] = $this->formatTemplate('listItem', [
                 'attrs' => $this->templater()->formatAttributes($options),
                 'title' => $treeItem->name,
-                'content' => $this->_sorter(
+                'content' => $this->sorter(
                     !empty($treeItem->$nestingKey) ? $treeItem->$nestingKey : [],
-                    $options + ['nestingKey' => $nestingKey]
+                    $options + ['nestingKey' => $nestingKey],
                 ),
             ]);
         }

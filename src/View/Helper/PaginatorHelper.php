@@ -14,21 +14,33 @@ class PaginatorHelper extends Helper
      * @param array $options list of options
      * @return void
      */
-    public function ajaxTemplateOptions(string $domId, array $options = [])
+    public function ajaxTemplateOptions(string $domId, array $options = []): void
     {
         $options += ['class' => 'ajax-pagination-link'];
 
         $templates = [
-            'nextActive' => '<li class="page-item next"><a class="page-link ' . $options['class'] . '" data-update="' . $domId . '" rel="next" aria-label="Next" href="{{url}}"><span aria-hidden="true">{{text}}</span></a></li>',
-            'prevActive' => '<li class="page-item prev"><a class="page-link ' . $options['class'] . '" data-update="' . $domId . '" rel="prev" aria-label="Previous" href="{{url}}"><span aria-hidden="true">{{text}}</span></a></li>',
-            'first' => '<li class="page-item first"><a class="page-link ' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a></li>',
-            'last' => '<li class="page-item last"><a class="page-link ' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a></li>',
-            'number' => '<li class="page-item"><a class="page-link ' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a></li>',
-            'sort' => '<a class="' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a>',
-            'sortAsc' => '<a class="asc ' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a>',
-            'sortDesc' => '<a class="desc ' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a>',
-            'sortAscLocked' => '<a class="asc locked ' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a>',
-            'sortDescLocked' => '<a class="desc locked' . $options['class'] . '" data-update="' . $domId . '" href="{{url}}">{{text}}</a>',
+            'nextActive' => '<li class="page-item next"><a class="page-link ' . $options['class'] .
+                '" data-update="' . $domId . '" rel="next" aria-label="Next" href="{{url}}">' .
+                '<span aria-hidden="true">{{text}}</span></a></li>',
+            'prevActive' => '<li class="page-item prev"><a class="page-link ' . $options['class'] .
+                '" data-update="' . $domId . '" rel="prev" aria-label="Previous" href="{{url}}">' .
+                '<span aria-hidden="true">{{text}}</span></a></li>',
+            'first' => '<li class="page-item first"><a class="page-link ' . $options['class'] .
+                '" data-update="' . $domId . '" href="{{url}}">{{text}}</a></li>',
+            'last' => '<li class="page-item last"><a class="page-link ' . $options['class'] .
+                '" data-update="' . $domId . '" href="{{url}}">{{text}}</a></li>',
+            'number' => '<li class="page-item"><a class="page-link ' . $options['class'] .
+                '" data-update="' . $domId . '" href="{{url}}">{{text}}</a></li>',
+            'sort' => '<a class="' . $options['class'] . '" data-update="' . $domId .
+                '" href="{{url}}">{{text}}</a>',
+            'sortAsc' => '<a class="asc ' . $options['class'] . '" data-update="' . $domId .
+                '" href="{{url}}">{{text}}</a>',
+            'sortDesc' => '<a class="desc ' . $options['class'] . '" data-update="' . $domId .
+                '" href="{{url}}">{{text}}</a>',
+            'sortAscLocked' => '<a class="asc locked ' . $options['class'] . '" data-update="' . $domId .
+                '" href="{{url}}">{{text}}</a>',
+            'sortDescLocked' => '<a class="desc locked' . $options['class'] . '" data-update="' . $domId .
+                '" href="{{url}}">{{text}}</a>',
         ];
         $this->templater()->add($templates);
     }

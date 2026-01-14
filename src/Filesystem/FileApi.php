@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace ButterCream\Filesystem;
 
 use ButterCream\Message\Exception\StatusMessageException;
+use ButterCream\Model\Entity\File;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Locator\TableLocator;
+use Cake\ORM\Table;
 use Cake\Utility\Text;
 use Exception;
 use Imagick;
@@ -24,46 +26,46 @@ class FileApi
      *
      * @var \Cake\ORM\Table|null
      */
-    protected static $_filesTable = null;
+    protected static ?Table $filesTable = null;
 
     /**
      * A default image width if none is specified for resizing
      *
      * @var int
      */
-    public static $defaultImageWidth = 300;
+    public static int $defaultImageWidth = 300;
 
     /**
      * A default image height if none is specified for resizing
      *
      * @var int
      */
-    public static $defaultImageHeight = 300;
+    public static int $defaultImageHeight = 300;
 
     /**
      * Allowed Mime Types for image processing & conversion
      *
      * @var array mime types
      */
-    public static $validImageMimeTypes = [
+    public static array $validImageMimeTypes = [
         'image/gif',
         'image/jpeg',
         'image/png',
     ];
 
     /**
-     * Sets up the _filesTable object if not already instantiated and then returns it
+     * Sets up the filesTable object if not already instantiated and then returns it
      *
      * @return \Cake\ORM\Table|null a Table object for the files database table
      */
-    protected static function _setupFilesTable()
+    protected static function setupFilesTable(): ?Table
     {
-        if (!isset(static::$_filesTable)) {
+        if (!isset(static::$filesTable)) {
             $locator = new TableLocator();
-            static::$_filesTable = $locator->get('Files');
+            static::$filesTable = $locator->get('Files');
         }
 
-        return static::$_filesTable;
+        return static::$filesTable;
     }
 
     /**
@@ -73,13 +75,13 @@ class FileApi
      * @param bool $contents Do you want the file content?
      * @return \ButterCream\Model\Entity\File The file object, patched with the file contents
      */
-    public static function get(string $id, bool $contents = false)
+    public static function get(string $id, bool $contents = false): File
     {
         $file = static::data($id);
         $file->path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
         if ($contents !== false) {
             $file->contents = file_get_contents(
-                Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename
+                Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename,
             );
         }
 
@@ -92,9 +94,9 @@ class FileApi
      * @param string $id The id of the file
      * @return \ButterCream\Model\Entity\File
      */
-    public static function data(string $id)
+    public static function data(string $id): File
     {
-        $filesTable = static::_setupFilesTable();
+        $filesTable = static::setupFilesTable();
         /** @var \ButterCream\Model\Entity\File $file */
         $file = $filesTable->get($id);
         if (!empty($file) && is_object($file)) {
@@ -109,7 +111,7 @@ class FileApi
      * @param string $id The id of the file
      * @return string|false The Local File Path
      */
-    public static function getLocalPath(string $id)
+    public static function getLocalPath(string $id): string|false
     {
         $file = static::data($id);
         $path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
@@ -123,7 +125,7 @@ class FileApi
      * @param string $id The id of the file to get
      * @return string|false The file object, patched with the file contents
      */
-    public static function fetchContent(string $id)
+    public static function fetchContent(string $id): string|false
     {
         $file = static::data($id);
         $path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
@@ -137,7 +139,7 @@ class FileApi
      * @param string $id The file ID
      * @return string|false the mime type of the file
      */
-    public static function fetchMime(string $id)
+    public static function fetchMime(string $id): string|false
     {
         $file = static::data($id);
         $filePath = $file->category . DS . $file->tag . DS . $file->filename;
@@ -166,7 +168,7 @@ class FileApi
      *  - original_filename - the original uploaded filename
      * @return string|bool the file id if successfully added, otherwise false
      */
-    public static function put($tmpFilePath, array $metaData = [])
+    public static function put(array|string $tmpFilePath, array $metaData = []): string|bool
     {
         $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
         $filesystem = new Filesystem($adapter);
@@ -193,7 +195,7 @@ class FileApi
         }
 
         /** @var \Cake\ORM\Table|null $filesTable */
-        $filesTable = static::_setupFilesTable();
+        $filesTable = static::setupFilesTable();
 
         /** @var \ButterCream\Model\Entity\File $file */
         $file = $filesTable->newEmptyEntity();
@@ -204,7 +206,7 @@ class FileApi
         $file->meta = $metaData['meta'] ?? null;
 
         /** @var array $pathInfo */
-        $pathInfo = pathinfo((string) $originalFilename);
+        $pathInfo = pathinfo((string)$originalFilename);
         $file->filename = Text::uuid() . isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : null;
 
         $targetPath = $file->category . DS . $file->tag . DS . $file->filename;
@@ -233,7 +235,7 @@ class FileApi
      * @param array $options The array of options for the resize
      * @return bool true if the image was properly resized, false otherwise
      */
-    public static function resize(string $id, array $options = [])
+    public static function resize(string $id, array $options = []): bool
     {
         $record = static::data($id);
         if (empty($record)) {
@@ -306,9 +308,9 @@ class FileApi
      * @param string $id id of the file to delete
      * @return bool true if the file was deleted, false otherwise
      */
-    public static function delete(string $id)
+    public static function delete(string $id): bool
     {
-        $filesTable = static::_setupFilesTable();
+        $filesTable = static::setupFilesTable();
         $file = $filesTable->get($id);
         if ($filesTable->delete($file)) {
             return true;

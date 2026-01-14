@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace ButterCream\Test\TestCase\View\Helper;
 
 use ButterCream\View\Helper\FormatHelper;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
@@ -25,8 +27,8 @@ class FormatHelperTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $request = new \Cake\Http\ServerRequest(['url' => '/']);
-        $response = new \Cake\Http\Response(['charset' => 'UTF-8']);
+        $request = new ServerRequest(['url' => '/']);
+        $response = new Response(['charset' => 'UTF-8']);
         $view = new View($request, $response);
         $this->Format = new FormatHelper($view);
     }

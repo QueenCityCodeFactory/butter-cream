@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Test fixture for Categories
  */
+
 return [
     'table' => 'categories',
     'columns' => [

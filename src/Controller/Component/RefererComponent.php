@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * QueenCityCodeFactory(tm) : Web application developers (http://queencitycodefactory.com)
@@ -14,6 +13,8 @@ declare(strict_types=1);
  * @since         0.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+declare(strict_types=1);
+
 namespace ButterCream\Controller\Component;
 
 use Cake\Controller\Component;
@@ -52,10 +53,10 @@ class RefererComponent extends Component
     /**
      * Store referer data in view referer variable
      *
-     * @param string|array $default default referer
+     * @param array|string $default default referer
      * @return void
      */
-    public function setReferer($default = null): void
+    public function setReferer(string|array|null $default = null): void
     {
         $request = $this->_registry->getController()->getRequest();
         if ($request->getData('Referer.url') === null) {
@@ -125,7 +126,7 @@ class RefererComponent extends Component
      * @param string|null $url url to normalize
      * @return string normalized $url
      */
-    public function normalizeUrl($url = null): ?string
+    public function normalizeUrl(?string $url = null): ?string
     {
         if (is_array($url)) {
             $url = Router::url($url);
@@ -138,7 +139,7 @@ class RefererComponent extends Component
 
         if (isset($uri['host']) && isset($baseUri['host']) && $baseUri['host'] == $uri['host']) {
             $url = urldecode(
-                (!empty($uri['path']) ? $uri['path'] : '') . (!empty($uri['query']) ? '?' . $uri['query'] : '')
+                (!empty($uri['path']) ? $uri['path'] : '') . (!empty($uri['query']) ? '?' . $uri['query'] : ''),
             );
         }
 
@@ -160,7 +161,7 @@ class RefererComponent extends Component
             $referer = null;
         }
 
-        if (strlen((string) $referer) == 0 || $referer == '/') {
+        if (strlen((string)$referer) == 0 || $referer == '/') {
             return $this->getController()->redirect($url, $status);
         } else {
             return $this->getController()->redirect($referer, $status);

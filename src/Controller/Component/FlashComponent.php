@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ButterCream\Controller\Component;
 
 use Cake\Controller\Component\FlashComponent as Component;
+use Throwable;
 
 /**
  * The CakePHP FlashComponent provides a way for you to write a flash variable
@@ -30,13 +31,13 @@ class FlashComponent extends Component
      * - `clear` A bool stating if the current stack should be cleared to start a new one
      * - `escape` Set to false to allow templates to print out HTML content
      *
-     * @param string|\Exception $message Message to be flashed. If an instance
-     *   of \Exception the exception message will be used and code will be set
+     * @param \Throwable|string $message Message to be flashed. If an instance
+     *   of \Throwable the exception message will be used and code will be set
      *   in params.
      * @param array $options An array of options
      * @return void
      */
-    public function set($message, array $options = []): void
+    public function set(string|Throwable $message, array $options = []): void
     {
         $options += [
             'escape' => false,

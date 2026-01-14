@@ -18,7 +18,7 @@ class TrustProxyMiddleware implements MiddlewareInterface
      *
      * @var bool
      */
-    public $trust = true;
+    public bool $trust = true;
 
     /**
      * Constructor

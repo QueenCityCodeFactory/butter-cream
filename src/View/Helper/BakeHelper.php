@@ -13,11 +13,11 @@ class BakeHelper extends Helper
     /**
      * Get field accessibility data.
      *
-     * @param string[]|false|null $fields Fields list.
-     * @param string[]|null $primaryKey Primary key.
-     * @return string[]
+     * @param array<string>|false|null $fields Fields list.
+     * @param array<string>|null $primaryKey Primary key.
+     * @return array<string>
      */
-    public function getFieldAccessibility($fields = null, $primaryKey = null): array
+    public function getFieldAccessibility(array|false|null $fields = null, ?array $primaryKey = null): array
     {
         $accessible = [];
 

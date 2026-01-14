@@ -45,7 +45,7 @@ class File extends Entity
      *
      * @return string File Path
      */
-    protected function _getPath()
+    protected function _getPath(): string
     {
         return Configure::read('FileApi.basePath') . $this->category . DS . $this->tag . DS . $this->filename;
     }
@@ -55,7 +55,7 @@ class File extends Entity
      *
      * @return string File base64 contents
      */
-    protected function _getBase64()
+    protected function _getBase64(): string
     {
         $filePath = $this->category . DS . $this->tag . DS . $this->filename;
 
@@ -67,6 +67,6 @@ class File extends Entity
             $contents = $filesystem->read($filePath);
         }
 
-        return 'data:' . $filesystem->mimeType($filePath) . ';base64,' . base64_encode((string) $contents);
+        return 'data:' . $filesystem->mimeType($filePath) . ';base64,' . base64_encode((string)$contents);
     }
 }

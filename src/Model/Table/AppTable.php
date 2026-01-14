@@ -18,7 +18,7 @@ class AppTable extends Table
      *
      * @var array
      */
-    protected $encodingsToReplace = [
+    protected array $encodingsToReplace = [
         "\xC2\xAB", // « (U+00AB) in UTF-8
         "\xC2\xBB", // » (U+00BB) in UTF-8
         "\xE2\x80\x98", // ‘ (U+2018) in UTF-8
@@ -41,7 +41,7 @@ class AppTable extends Table
      *
      * @var array
      */
-    protected $encodingReplacements = [
+    protected array $encodingReplacements = [
         '<<',
         '>>',
         "'",
@@ -67,7 +67,7 @@ class AppTable extends Table
      * @param \ArrayObject $options ArrayObject instance.
      * @return void
      */
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         $this->cleanData($data);
     }
@@ -78,14 +78,14 @@ class AppTable extends Table
      * @param \ArrayObject|array $data The data being marshalled
      * @return \ArrayObject|array The cleaned up data
      */
-    protected function cleanData($data)
+    protected function cleanData(ArrayObject|array $data): ArrayObject|array
     {
         foreach ($data as $key => $value) {
             if (is_string($value)) {
                 $data[$key] = str_replace(
                     $this->encodingsToReplace,
                     $this->encodingReplacements,
-                    trim($value, " \t\0\x0B") // Don't remove \n or \r
+                    trim($value, " \t\0\x0B"), // Don't remove \n or \r
                 );
             } elseif (is_array($value) || $value instanceof ArrayObject) {
                 $data[$key] = $this->cleanData($value);
@@ -104,7 +104,7 @@ class AppTable extends Table
      * @param \ArrayObject $options the options passed to the save method
      * @return void
      */
-    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // place global before save here
     }
@@ -117,7 +117,7 @@ class AppTable extends Table
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // place global after save here
     }
@@ -130,7 +130,7 @@ class AppTable extends Table
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // place global before delete here
     }

@@ -8,7 +8,6 @@ use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\Http\Session;
 use Cake\TestSuite\TestCase;
-use Laminas\Diactoros\Uri;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**

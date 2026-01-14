@@ -12,12 +12,12 @@ class Muddle
      * Insert into an array using a path
      *
      * @param array $array The array data
-     * @param string|array $path The Path
+     * @param array|string $path The Path
      * @param mixed $value The value to set
      * @param string $separator The separator character
      * @return bool True/False did the value get inserted
      */
-    public static function insert(array &$array, $path, mixed $value, string $separator = '.'): bool
+    public static function insert(array &$array, string|array $path, mixed $value, string $separator = '.'): bool
     {
         if (!is_array($path)) {
             $path = explode($separator, $path);
@@ -40,13 +40,17 @@ class Muddle
      * Build dot Notation Path
      *
      * @param array $path The array path
-     * @param string|array|null $prefix The prefix if it has one
-     * @param string|array|null $suffix The suffix if it has one
+     * @param array|string|false|null $prefix The prefix if it has one
+     * @param array|string|false|null $suffix The suffix if it has one
      * @param string $separator The separator character
      * @return string The separator separated string path
      */
-    public static function buildDotNotationPath(array $path, $prefix = null, $suffix = null, string $separator = '.'): string
-    {
+    public static function buildDotNotationPath(
+        array $path,
+        string|array|false|null $prefix = null,
+        string|array|false|null $suffix = null,
+        string $separator = '.',
+    ): string {
         if ($prefix !== null && $prefix !== false) {
             if (!is_array($prefix)) {
                 $prefix = [$prefix];

@@ -4,11 +4,9 @@ declare(strict_types=1);
 namespace ButterCream\Command;
 
 use Bake\Command\ModelCommand as BakeModelCommand;
-use ButterCream\Utility\TemplateRenderer;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Core\Configure;
 use Cake\ORM\Table;
 
 /**

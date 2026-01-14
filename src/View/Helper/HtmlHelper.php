@@ -19,9 +19,11 @@ class HtmlHelper extends Helper
      *
      * @var array
      */
-    protected $_templates = [
+    protected array $_templates = [
         'templates' => [
-            'actionDropdown' => '<a class="btn btn-outline-secondary btn-sq-xs dropdown-toggle action-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{content}}</a>',
+            'actionDropdown' => '<a class="btn btn-outline-secondary btn-sq-xs dropdown-toggle ' .
+                'action-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" ' .
+                'aria-expanded="false">{{content}}</a>',
             'tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>',
         ],
     ];
@@ -149,13 +151,13 @@ class HtmlHelper extends Helper
      * - `title` - set title attribute activates tooltip
      *
      * @param string $title The content to be wrapped by <a> tags.
-     * @param string|array|null $url Cake-relative URL or array of URL parameters, or
+     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
-    public function link($title, $url = null, array $options = []): string
+    public function link(string $title, string|array|null $url = null, array $options = []): string
     {
         $options += ['tooltip' => true];
 
@@ -203,13 +205,13 @@ class HtmlHelper extends Helper
      * - `confirm` JavaScript confirmation message.
      *
      * @param string $title The content to be wrapped by <a> tags.
-     * @param string|array|null $url Cake-relative URL or array of URL parameters, or
+     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
-    public function tagLink($title, $url = null, array $options = []): string
+    public function tagLink(string $title, string|array|null $url = null, array $options = []): string
     {
         $options += ['tag' => ['name' => 'li', 'options' => []]];
 
@@ -241,7 +243,8 @@ class HtmlHelper extends Helper
      *  - `tag` The type of tag to use for the button (BUTTON|A)
      *  - `type` The emphasis class to be placed on the button
      *  - `size` The size of button to produce
-     *  - `tooltip` Whether or not to place a tooltip on the button. Optionally can contain the text to be used as the tooltip.
+     *  - `tooltip` Whether or not to place a tooltip on the button.
+     *    Optionally can contain the text to be used as the tooltip.
      * @return string HTML button markup using either `<button>` OR `<A>`
      */
     public function button(string $title, array $options = []): string
@@ -315,7 +318,7 @@ class HtmlHelper extends Helper
      * @param array $options The standard options for links
      * @return string HTML Link
      */
-    public function viewBtn($primaryKey, array $options = []): string
+    public function viewBtn(string|int $primaryKey, array $options = []): string
     {
         $options += [
             'escape' => false,
@@ -333,7 +336,7 @@ class HtmlHelper extends Helper
      * @param array $options The standard options for links
      * @return string HTML Link
      */
-    public function editBtn($primaryKey, array $options = []): string
+    public function editBtn(string|int $primaryKey, array $options = []): string
     {
         $options += [
             'escape' => false,
@@ -350,7 +353,7 @@ class HtmlHelper extends Helper
      * @param array $options The options
      * @return string|bool Html Link
      */
-    public function addBtn(array $options = [])
+    public function addBtn(array $options = []): string|bool
     {
         $url = ['action' => 'add'];
         $options['default'] = false;
@@ -373,8 +376,10 @@ class HtmlHelper extends Helper
      * @param string $menuButton The Menu button to use
      * @return string|bool Menu HTML otherwise false
      */
-    public function actionDropdownMenu(array $tagLinks = [], string $menuButton = '<em class="fa fa-bars"></em>')
-    {
+    public function actionDropdownMenu(
+        array $tagLinks = [],
+        string $menuButton = '<em class="fa fa-bars"></em>',
+    ): string|bool {
         $menuItems = [];
         foreach ($tagLinks as $tagLink) {
             if (!empty($tagLink)) {

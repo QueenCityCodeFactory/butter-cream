@@ -57,7 +57,7 @@ trait TreeviewTrait
             $nestingKey = $options['nestingKey'];
             $isObject = true;
 
-            $mapper = function ($row, $key, $mapReduce) use (&$parents, $idPath, $parentPath, $nestingKey) {
+            $mapper = function ($row, $key, $mapReduce) use (&$parents, $idPath, $parentPath, $nestingKey): void {
                 $row[$nestingKey] = [];
                 $id = $idPath($row, $key);
                 $parentId = $parentPath($row, $key);

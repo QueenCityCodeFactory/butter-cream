@@ -45,7 +45,7 @@ class TableHelper extends Helper
      * @param array $options - options
      * @return string
      */
-    public function header(string $key, $title = null, array $options = []): string
+    public function header(string $key, ?string $title = null, array $options = []): string
     {
         $attrs = $options['attrs'] ?? [];
         unset($options['attrs']);
@@ -65,7 +65,9 @@ class TableHelper extends Helper
         }
 
         if (empty($title)) {
-            $keyArr = explode('.', $key); // As Model names are now required for all fields, remove the base model from the title
+            // As Model names are now required for all fields,
+            // remove the base model from the title
+            $keyArr = explode('.', $key);
             $title = array_pop($keyArr);
 
             if (str_contains($title, '.')) {

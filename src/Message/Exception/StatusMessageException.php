@@ -16,7 +16,7 @@ class StatusMessageException extends HttpException
      *
      * @param string $key The Status Message Key
      */
-    public function __construct($key = null)
+    public function __construct(?string $key = null)
     {
         $message = StatusMessage::getResponseText($key);
         $code = StatusMessage::getStatus($key);

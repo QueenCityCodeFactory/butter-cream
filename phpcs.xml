@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ruleset name="ButterCream">
+    <description>Coding standard for ButterCream plugin</description>
+
+    <!-- Use CakePHP coding standard -->
+    <rule ref="CakePHP"/>
+
+    <!-- Allow $_defaultConfig property in Components, Helpers, Behaviors (CakePHP convention) -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>*/src/Controller/Component/*\.php</exclude-pattern>
+        <exclude-pattern>*/src/View/Helper/*\.php</exclude-pattern>
+        <exclude-pattern>*/src/ORM/Behavior/*\.php</exclude-pattern>
+    </rule>
+    
+    <!-- Allow $_accessible in Entities (CakePHP convention) -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>*/src/Model/Entity/*\.php</exclude-pattern>
+    </rule>
+    
+    <!-- Allow _get* and _set* methods in Entities (CakePHP virtual field accessors) -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <exclude-pattern>*/src/Model/Entity/*\.php</exclude-pattern>
+    </rule>
+    
+    <!-- Allow _message and _outputMessageSafe in ExceptionRenderer (parent class overrides) -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <exclude-pattern>*/src/Error/ExceptionRenderer\.php</exclude-pattern>
+    </rule>
+
+    <!-- What to scan -->
+    <file>src/</file>
+    <file>tests/</file>
+    
+    <!-- Exclude vendor -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+</ruleset>

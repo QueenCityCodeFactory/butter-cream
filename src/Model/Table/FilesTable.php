@@ -10,6 +10,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
+use Exception;
 use League\Flysystem\DirectoryAttributes;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\Filesystem;
@@ -31,7 +32,7 @@ class FilesTable extends Table
      *
      * @var array
      */
-    public $filterArgs = [
+    public array $filterArgs = [
     ];
 
     /**
@@ -39,7 +40,7 @@ class FilesTable extends Table
      *
      * @var bool
      */
-    private $skipAfterSave = false;
+    private bool $skipAfterSave = false;
 
     /**
      * Set Skip After Save
@@ -47,7 +48,7 @@ class FilesTable extends Table
      * @param bool $skip True/False
      * @return void
      */
-    public function setSkipAfterSave(bool $skip)
+    public function setSkipAfterSave(bool $skip): void
     {
         $this->skipAfterSave = $skip;
     }
@@ -148,10 +149,15 @@ class FilesTable extends Table
             $destinationAdapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
             $destinationFilesystem = new Filesystem($destinationAdapter);
             try {
-                $destinationFilesystem->createDirectory(Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag);
-                $destinationFilesystem->write($entity->category . DS . $entity->tag . DS . $entity->filename, $sourceFilesystem->read($filePath));
+                $destinationFilesystem->createDirectory(
+                    Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag,
+                );
+                $destinationFilesystem->write(
+                    $entity->category . DS . $entity->tag . DS . $entity->filename,
+                    $sourceFilesystem->read($filePath),
+                );
                 $sourceFilesystem->delete($filePath);
-            } catch (\Exception) {
+            } catch (Exception) {
                 throw new StatusMessageException('file_api_can_not_copy_file');
             }
         }
@@ -165,7 +171,7 @@ class FilesTable extends Table
      * @param \ArrayObject $options The options
      * @return void
      */
-    public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         /** @var \ButterCream\Model\Entity\File $entity */
         $basePath = Configure::read('FileApi.basePath');

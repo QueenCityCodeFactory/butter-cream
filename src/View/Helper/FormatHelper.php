@@ -56,10 +56,10 @@ class FormatHelper extends Helper
      *
      * @param string $phone The phone number to be parsed apart
      * @param bool $returnBoth Whether or not an array containing both the phone string and phone parts is returned
-     * @return string|array Defaults to returning a string(NO ext included) of an array with both string and parts
+     * @return array|string Defaults to returning a string(NO ext included) of an array with both string and parts
      * @see \App\Utility\Format::parsePhone()
      */
-    public function parsePhone(string $phone, bool $returnBoth = false)
+    public function parsePhone(string $phone, bool $returnBoth = false): string|array
     {
         return Format::parsePhone($phone, $returnBoth);
     }
