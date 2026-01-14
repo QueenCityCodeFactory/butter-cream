@@ -192,7 +192,7 @@ class {{ name }}Table extends Table{{ fileBuilder.classBuilder.implements ? ' im
      * @param \ArrayObject $options ArrayObject instance.
      * @return void
      */
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         parent::beforeMarshal($event, $data, $options);
     }
@@ -206,7 +206,7 @@ class {{ name }}Table extends Table{{ fileBuilder.classBuilder.implements ? ' im
      * @param \ArrayObject $options the options passed to the save method
      * @return void
      */
-    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         parent::beforeSave($event, $entity, $options);
     }

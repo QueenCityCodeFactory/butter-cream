@@ -157,7 +157,7 @@ class HtmlHelper extends Helper
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
-    public function link(string $title, string|array|null $url = null, array $options = []): string
+    public function link(array|string $title, string|array|null $url = null, array $options = []): string
     {
         $options += ['tooltip' => true];
 
