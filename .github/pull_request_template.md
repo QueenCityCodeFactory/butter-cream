@@ -20,9 +20,9 @@ Fixes #(issue number)
 ## Changes Made
 <!-- List the key changes you made -->
 
-- 
-- 
-- 
+-
+-
+-
 
 ## Testing
 <!-- Describe the tests you ran to verify your changes -->

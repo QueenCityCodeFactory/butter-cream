@@ -2,9 +2,9 @@ name: ButterCream CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ cake-5.x ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ cake-5.x ]
 
 jobs:
   testsuite:
@@ -12,11 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2', '8.3', '8.4']
+        php-version: ['8.4']
         prefer: ['lowest', 'stable']
-        exclude:
-          - php-version: '8.4'
-            prefer: 'lowest'
 
     name: PHP ${{ matrix.php-version }} - ${{ matrix.prefer }}
 
@@ -55,14 +52,14 @@ jobs:
 
     - name: Run PHPUnit
       run: |
-        if [[ ${{ matrix.php-version }} == '8.3' ]]; then
+        if [[ ${{ matrix.php-version }} == '8.4' ]]; then
           vendor/bin/phpunit --coverage-clover=coverage.xml
         else
           vendor/bin/phpunit
         fi
 
     - name: Upload coverage to Codecov
-      if: matrix.php-version == '8.3' && matrix.prefer == 'stable'
+      if: matrix.php-version == '8.4' && matrix.prefer == 'stable'
       uses: codecov/codecov-action@v4
       with:
         files: ./coverage.xml
@@ -78,7 +75,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.3'
+        php-version: '8.4'
         extensions: mbstring, intl
         coverage: none
         tools: composer:v2, cs2pr
@@ -110,7 +107,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.3'
+        php-version: '8.4'
         extensions: mbstring, intl
         coverage: none
         tools: composer:v2
@@ -134,4 +131,3 @@ jobs:
 
     - name: Run Psalm
       run: vendor/bin/psalm --output-format=github
-

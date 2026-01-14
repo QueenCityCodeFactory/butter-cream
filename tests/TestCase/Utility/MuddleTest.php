@@ -20,7 +20,7 @@ class MuddleTest extends TestCase
     {
         $array = [];
         $result = Muddle::insert($array, 'key', 'value');
-        
+
         $this->assertTrue($result);
         $this->assertEquals('value', $array['key']);
     }
@@ -34,7 +34,7 @@ class MuddleTest extends TestCase
     {
         $array = [];
         $result = Muddle::insert($array, 'level1.level2.level3', 'deep value');
-        
+
         $this->assertTrue($result);
         $this->assertEquals('deep value', $array['level1']['level2']['level3']);
     }
@@ -48,7 +48,7 @@ class MuddleTest extends TestCase
     {
         $array = [];
         $result = Muddle::insert($array, ['users', '0', 'name'], 'John');
-        
+
         $this->assertTrue($result);
         $this->assertEquals('John', $array['users']['0']['name']);
     }
@@ -62,7 +62,7 @@ class MuddleTest extends TestCase
     {
         $array = [];
         $result = Muddle::insert($array, 'level1/level2/level3', 'value', '/');
-        
+
         $this->assertTrue($result);
         $this->assertEquals('value', $array['level1']['level2']['level3']);
     }
@@ -76,7 +76,7 @@ class MuddleTest extends TestCase
     {
         $array = [];
         $result = Muddle::insert($array, [], 'value');
-        
+
         $this->assertFalse($result);
     }
 
@@ -89,7 +89,7 @@ class MuddleTest extends TestCase
     {
         $array = ['key' => 'old value'];
         Muddle::insert($array, 'key', 'new value');
-        
+
         $this->assertEquals('new value', $array['key']);
     }
 
@@ -101,7 +101,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathSimple(): void
     {
         $result = Muddle::buildDotNotationPath(['level1', 'level2', 'level3']);
-        
+
         $this->assertEquals('level1.level2.level3', $result);
     }
 
@@ -113,7 +113,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathWithPrefix(): void
     {
         $result = Muddle::buildDotNotationPath(['level2', 'level3'], 'level1');
-        
+
         $this->assertEquals('level1.level2.level3', $result);
     }
 
@@ -125,7 +125,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathWithArrayPrefix(): void
     {
         $result = Muddle::buildDotNotationPath(['level3'], ['level1', 'level2']);
-        
+
         $this->assertEquals('level1.level2.level3', $result);
     }
 
@@ -137,7 +137,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathWithSuffix(): void
     {
         $result = Muddle::buildDotNotationPath(['level1', 'level2'], null, 'level3');
-        
+
         $this->assertEquals('level1.level2.level3', $result);
     }
 
@@ -149,7 +149,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathWithArraySuffix(): void
     {
         $result = Muddle::buildDotNotationPath(['level1'], null, ['level2', 'level3']);
-        
+
         $this->assertEquals('level1.level2.level3', $result);
     }
 
@@ -161,7 +161,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathWithPrefixAndSuffix(): void
     {
         $result = Muddle::buildDotNotationPath(['level2'], 'level1', 'level3');
-        
+
         $this->assertEquals('level1.level2.level3', $result);
     }
 
@@ -173,7 +173,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathCustomSeparator(): void
     {
         $result = Muddle::buildDotNotationPath(['level1', 'level2', 'level3'], null, null, '/');
-        
+
         $this->assertEquals('level1/level2/level3', $result);
     }
 
@@ -185,7 +185,7 @@ class MuddleTest extends TestCase
     public function testBuildDotNotationPathIgnoreFalse(): void
     {
         $result = Muddle::buildDotNotationPath(['level1', 'level2'], false, false);
-        
+
         $this->assertEquals('level1.level2', $result);
     }
 }

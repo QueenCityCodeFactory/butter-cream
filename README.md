@@ -234,7 +234,7 @@ public function delete($id)
     if ($this->Articles->delete($article)) {
         $this->Flash->success('Article deleted.');
     }
-    
+
     // Redirect back to where user came from
     return $this->Referer->redirect(['action' => 'index']);
 }
@@ -339,7 +339,7 @@ Butter Cream includes a comprehensive test suite powered by PHPUnit. The current
 
 ### Tested Utilities
 - **Format** - String formatting and masking
-- **Muddle** - Array manipulation utilities  
+- **Muddle** - Array manipulation utilities
 
 ### Tested Model Features
 - **Validation** - US data validation (phone, postal, SSN, birthdate)
@@ -381,7 +381,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for more details on writing tests.
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 
 - Reporting bugs
-- Suggesting enhancements  
+- Suggesting enhancements
 - Submitting pull requests
 - Development setup
 - Coding standards

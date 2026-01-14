@@ -24,7 +24,7 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testMiddlewareDefaultConfig(): void
     {
         $middleware = new SessionTimeoutMiddleware();
-        
+
         $this->assertInstanceOf(SessionTimeoutMiddleware::class, $middleware);
     }
 
@@ -36,7 +36,7 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testMiddlewareCustomTimeout(): void
     {
         $middleware = new SessionTimeoutMiddleware(['timeout' => 30]);
-        
+
         $this->assertInstanceOf(SessionTimeoutMiddleware::class, $middleware);
     }
 
@@ -48,20 +48,20 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testProcessSetsLastAccessOnNonAjax(): void
     {
         $middleware = new SessionTimeoutMiddleware(['timeout' => 15]);
-        
+
         $session = new Session();
         $request = new ServerRequest([
             'url' => '/articles/index',
             'session' => $session,
         ]);
-        
+
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->once())
             ->method('handle')
             ->willReturn(new Response(['type' => 'text/html', 'charset' => 'UTF-8']));
-        
+
         $middleware->process($request, $handler);
-        
+
         $lastAccess = $session->read('SessionTimeoutFilter.lastAccess');
         $this->assertNotNull($lastAccess);
         $this->assertIsInt($lastAccess);
@@ -75,7 +75,7 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testProcessDoesNotSetLastAccessOnAjax(): void
     {
         $middleware = new SessionTimeoutMiddleware(['timeout' => 15]);
-        
+
         $session = new Session();
         $request = new ServerRequest([
             'url' => '/articles/index',
@@ -84,14 +84,14 @@ class SessionTimeoutMiddlewareTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        
+
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->once())
             ->method('handle')
             ->willReturn(new Response(['type' => 'text/html', 'charset' => 'UTF-8']));
-        
+
         $middleware->process($request, $handler);
-        
+
         $lastAccess = $session->read('SessionTimeoutFilter.lastAccess');
         $this->assertNull($lastAccess);
     }
@@ -104,7 +104,7 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testProcessSetsLastAccessOnAjaxWithExtend(): void
     {
         $middleware = new SessionTimeoutMiddleware(['timeout' => 15]);
-        
+
         $session = new Session();
         $request = new ServerRequest([
             'url' => '/articles/index',
@@ -114,14 +114,14 @@ class SessionTimeoutMiddlewareTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        
+
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->once())
             ->method('handle')
             ->willReturn(new Response(['type' => 'text/html', 'charset' => 'UTF-8']));
-        
+
         $middleware->process($request, $handler);
-        
+
         $lastAccess = $session->read('SessionTimeoutFilter.lastAccess');
         $this->assertNotNull($lastAccess);
     }
@@ -134,24 +134,24 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testProcessDestroysExpiredSession(): void
     {
         $middleware = new SessionTimeoutMiddleware(['timeout' => 1]); // 1 minute timeout
-        
+
         $session = new Session();
         // Set last access to 2 minutes ago (expired)
         $session->write('SessionTimeoutFilter.lastAccess', time() - 120);
         $session->write('test.data', 'value');
-        
+
         $request = new ServerRequest([
             'url' => '/articles/index',
             'session' => $session,
         ]);
-        
+
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->once())
             ->method('handle')
             ->willReturn(new Response(['type' => 'text/html', 'charset' => 'UTF-8']));
-        
+
         $middleware->process($request, $handler);
-        
+
         // Session should be destroyed
         $testData = $session->read('test.data');
         $this->assertNull($testData);
@@ -165,24 +165,24 @@ class SessionTimeoutMiddlewareTest extends TestCase
     public function testProcessDoesNotDestroyValidSession(): void
     {
         $middleware = new SessionTimeoutMiddleware(['timeout' => 15]);
-        
+
         $session = new Session();
         // Set last access to 5 minutes ago (still valid)
         $session->write('SessionTimeoutFilter.lastAccess', time() - 300);
         $session->write('test.data', 'value');
-        
+
         $request = new ServerRequest([
             'url' => '/articles/index',
             'session' => $session,
         ]);
-        
+
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->once())
             ->method('handle')
             ->willReturn(new Response(['type' => 'text/html', 'charset' => 'UTF-8']));
-        
+
         $middleware->process($request, $handler);
-        
+
         // Session should still have data
         $testData = $session->read('test.data');
         $this->assertEquals('value', $testData);

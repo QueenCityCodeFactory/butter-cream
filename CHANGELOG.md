@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Referer Component for smart navigation
 - Custom View Helpers:
   - AjaxHelper
-  - FlashHelper  
+  - FlashHelper
   - FormHelper with modal confirmations
   - FormatHelper for US formatting (SSN, phone, ZIP)
   - HtmlHelper

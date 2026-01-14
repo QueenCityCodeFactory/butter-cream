@@ -97,11 +97,11 @@ class FormatTest extends TestCase
     public function testParsePhoneBoth(): void
     {
         $result = Format::parsePhone('(555) 123-4567 x123', true);
-        
+
         $this->assertIsArray($result);
         $this->assertArrayHasKey('parts', $result);
         $this->assertArrayHasKey('string', $result);
-        
+
         $this->assertEquals('555', $result['parts']['area']);
         $this->assertEquals('123', $result['parts']['exchange']);
         $this->assertEquals('4567', $result['parts']['number']);
