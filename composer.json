@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=8.4",
+        "php": ">=8.2",
         "cakephp/cakephp": "^5.3",
         "friendsofcake/search": "^7.0.0",
         "friendsofcake/bootstrap-ui" : "^5.0.0",
@@ -23,7 +23,8 @@
         "phpunit/phpunit": "^10.1",
         "cakephp/bake": "^3.0",
         "cakephp/cakephp-codesniffer": "^5.1",
-        "phpstan/phpstan": "^2.0"
+        "phpstan/phpstan": "^2.0",
+        "vimeo/psalm": "^6.0"
     },
     "support": {
         "issues": "https://github.com/QueenCityCodeFactory/butter-cream/issues",
@@ -50,5 +51,10 @@
         "stan": "phpstan analyse",
         "psalm": "psalm",
         "test": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

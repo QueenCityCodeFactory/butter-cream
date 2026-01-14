@@ -1,5 +1,8 @@
 # Butter Cream
 
+![CI](https://github.com/QueenCityCodeFactory/butter-cream/workflows/ButterCream%20CI/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A CakePHP 5 Plugin with Bootstrap 5 theme, custom helpers, components, and bake templates for rapid application development.
 
 ## Requirements
@@ -323,6 +326,51 @@ $middlewareQueue->add(new \ButterCream\Routing\Middleware\TrustProxyMiddleware(t
 
 MIT License. See LICENSE file for details.
 
+## Testing
+
+Butter Cream includes a comprehensive test suite powered by PHPUnit. The current test coverage includes:
+
+### Tested Components
+- **FlashComponent** - Custom flash message handling
+- **RefererComponent** - URL normalization and redirect management
+
+### Tested Helpers
+- **FormatHelper** - US formatting (SSN, phone, ZIP)
+
+### Tested Utilities
+- **Format** - String formatting and masking
+- **Muddle** - Array manipulation utilities  
+
+### Tested Model Features
+- **Validation** - US data validation (phone, postal, SSN, birthdate)
+- **TreeviewTrait** - Nested data structure support
+
+### Tested Middleware
+- **SessionTimeoutMiddleware** - Session management and timeout handling
+
+### Running Tests
+
+```bash
+# Run all tests
+composer test
+
+# Run with coverage (requires Xdebug or pcov)
+vendor/bin/phpunit --coverage-html coverage/
+
+# Run specific test file
+vendor/bin/phpunit tests/TestCase/Utility/FormatTest.php
+```
+
+### Contributing Tests
+
+When adding new features or fixing bugs, please include tests. Test files should:
+- Be placed in `tests/TestCase/` matching the source structure
+- Extend `Cake\TestSuite\TestCase`
+- Follow PHPUnit best practices
+- Test both success and failure scenarios
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more details on writing tests.
+
 ## Support
 
 - Issues: [GitHub Issues](https://github.com/QueenCityCodeFactory/butter-cream/issues)
@@ -330,4 +378,13 @@ MIT License. See LICENSE file for details.
 
 ## Contributing
 
-Contributions are welcome! Please submit pull requests or open issues on GitHub.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+
+- Reporting bugs
+- Suggesting enhancements  
+- Submitting pull requests
+- Development setup
+- Coding standards
+- Testing requirements
+
+Please ensure all tests pass and code follows CakePHP standards before submitting a PR.

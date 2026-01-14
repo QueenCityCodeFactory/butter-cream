@@ -1,8 +1,10 @@
 # Remove files for archives generated using `git archive`
 .editorconfig export-ignore
 .gitattributes export-ignore
+.github export-ignore
 .gitignore export-ignore
-.scrutinizer.yml export-ignore
-.travis.yml export-ignore
+phpstan.neon export-ignore
 phpunit.xml.dist export-ignore
-tests
+psalm.xml export-ignore
+psalm-baseline.xml export-ignore
+tests export-ignore
