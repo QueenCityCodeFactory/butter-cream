@@ -65,11 +65,11 @@ if (Configure::read('debug') === true) {
 /**
  * Default `body` block.
  */
-$bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action'), 'error-page'];
+$bodyClasses = [Configure::read('App.environment'), $this->getRequest()->getParam('controller'), $this->getRequest()->getParam('action'), 'error-page'];
 if ($this->get('sessionMonitor') === true) {
     $bodyClasses[] = 'session-monitor';
 }
-$skinClass = $this->request->getSession()->read('Auth.theme');
+$skinClass = $this->getRequest()->getSession()->read('Auth.theme');
 if (!empty($skinClass)) {
     $bodyClasses[] = $skinClass;
 }
@@ -209,7 +209,7 @@ $this->append('script'); ?>
                                         <?php if ($this->fetch('templateName')) : ?>
                                         <p class="customize">
                                             If you want to customize this error message, create
-                                            <em><?= APP_DIR . DIRECTORY_SEPARATOR . 'Template' . DIRECTORY_SEPARATOR . 'Error' . DIRECTORY_SEPARATOR . $this->fetch('templateName') ?></em>
+                                            <em><?= APP_DIR . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'Error' . DIRECTORY_SEPARATOR . $this->fetch('templateName') ?></em>
                                         </p>
                                         <?php endif; ?>
                                     </div>

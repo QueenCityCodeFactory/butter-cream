@@ -29,14 +29,6 @@ class Controller extends CakeController
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false,
-            'viewClassMap' => [
-                'xlsx' => 'CakeSpreadsheet.Excel',
-                'pdf' => 'CakePdf.Pdf',
-            ],
-        ]);
-        $this->loadComponent('Paginator');
         $this->loadComponent('ButterCream.Flash');
         $this->loadComponent('ButterCream.Referer', [
             'ignored' => [
@@ -71,17 +63,25 @@ class Controller extends CakeController
     {
         parent::beforeRender($event);
 
-        if ($this->request->is('ajax')) {
+        if ($this->getRequest()->is('ajax')) {
             $this->paginate['limit'] = $this->ajaxPaginationLimit;
             $this->viewBuilder()->setLayout('ajax');
+        }
+
+        // Map content types to view classes (replaces deprecated RequestHandler viewClassMap)
+        $ext = $this->getRequest()->getParam('_ext');
+        if ($ext === 'xlsx') {
+            $this->viewBuilder()->setClassName('CakeSpreadsheet.Excel');
+        } elseif ($ext === 'pdf') {
+            $this->viewBuilder()->setClassName('CakePdf.Pdf');
         }
     }
 
     /**
      * Handles pagination of records in Table objects.
      *
-     * Will load the referenced Table object, and have the PaginatorComponent
-     * paginate the query using the request date and settings defined in `$this->paginate`.
+     * Will load the referenced Table object, and have the paginator
+     * paginate the query using the request data and settings defined in `$this->paginate`.
      *
      * This method will also make the PaginatorHelper available in the view.
      *
@@ -99,7 +99,7 @@ class Controller extends CakeController
         }
 
         if (is_string($object) || $object === null) {
-            $try = [$object, $this->modelClass];
+            $try = [$object, $this->defaultTable];
             foreach ($try as $tableName) {
                 if (empty($tableName)) {
                     continue;
@@ -109,14 +109,13 @@ class Controller extends CakeController
             }
         }
 
-        $this->loadComponent('Paginator');
         if (empty($table)) {
             throw new RuntimeException('Unable to locate an object compatible with paginate.');
         }
         $settings += $this->paginate;
 
         try {
-            return $this->Paginator->paginate($table, $settings);
+            return parent::paginate($table, $settings);
         } catch (NotFoundException $e) {
             $request = $this->getRequest();
             $queryString = $request->getQueryParams();

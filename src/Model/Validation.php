@@ -57,10 +57,10 @@ class Validation
     /**
      * Checks to make sure the birthdate is not in the future (but can be today's date)
      *
-     * @param \Cake\I18n\Time $check The value to check.
+     * @param \Cake\I18n\FrozenTime $check The value to check.
      * @return bool Success
      */
-    public static function birthdate(Time $check): bool
+    public static function birthdate(FrozenTime $check): bool
     {
         $today = new FrozenTime('00:00:00');
         if ($check->toUnixString() > $today->toUnixString()) {

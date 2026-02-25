@@ -116,7 +116,9 @@ class RefererComponent extends Component
     public function ignore(string $url): void
     {
         $url = $this->normalizeUrl($url);
-        $this->_config['ignored'][] = $url;
+        $ignored = $this->getConfig('ignored', []);
+        $ignored[] = $url;
+        $this->setConfig('ignored', $ignored);
     }
 
     /**
@@ -156,7 +158,7 @@ class RefererComponent extends Component
     {
         $referer = $this->getReferer();
 
-        if (in_array($referer, $this->_config['ignored'])) {
+        if (in_array($referer, $this->getConfig('ignored', []))) {
             $referer = null;
         }
 

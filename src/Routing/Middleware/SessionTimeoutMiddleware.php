@@ -21,7 +21,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
      *
      * @var array
      */
-    protected $_config = [
+    protected array $config = [
         'timeout' => 15,
     ];
 
@@ -32,7 +32,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
      */
     public function __construct(array $config = [])
     {
-        $this->_config = $config + $this->_config;
+        $this->config = $config + $this->config;
     }
 
     /**
@@ -47,7 +47,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
         $session = $request->getAttribute('session');
         $lastAccess = $session->read('SessionTimeoutFilter.lastAccess');
 
-        if ($lastAccess !== null && time() - $lastAccess > $this->_config['timeout'] * 60) {
+        if ($lastAccess !== null && time() - $lastAccess > $this->config['timeout'] * 60) {
             $session->destroy();
         }
 
