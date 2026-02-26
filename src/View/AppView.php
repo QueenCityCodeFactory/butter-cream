@@ -17,13 +17,13 @@ class AppView extends View
      */
     public function initialize(): void
     {
-        $this->loadHelper('Ajax', [
+        $this->addHelper('Ajax', [
             'className' => 'ButterCream.Ajax',
         ]);
-        $this->loadHelper('Flash', [
+        $this->addHelper('Flash', [
             'className' => 'ButterCream.Flash',
         ]);
-        $this->loadHelper('Form', [
+        $this->addHelper('Form', [
             'className' => 'ButterCream.Form',
             'templates' => [
                 'dateWidget' => '
@@ -39,22 +39,22 @@ class AppView extends View
                 ',
             ],
         ]);
-        $this->loadHelper('Format', [
+        $this->addHelper('Format', [
             'className' => 'ButterCream.Format',
         ]);
-        $this->loadHelper('Html', [
+        $this->addHelper('Html', [
             'className' => 'ButterCream.Html',
         ]);
-        $this->loadHelper('Paginator', [
+        $this->addHelper('Paginator', [
             'className' => 'ButterCream.Paginator',
         ]);
-        $this->loadHelper('Table', [
+        $this->addHelper('Table', [
             'className' => 'ButterCream.Table',
         ]);
-        $this->loadHelper('Time', [
+        $this->addHelper('Time', [
             'className' => 'ButterCream.Time',
         ]);
-        $this->loadHelper('Url', [
+        $this->addHelper('Url', [
             'className' => 'ButterCream.Url',
         ]);
     }

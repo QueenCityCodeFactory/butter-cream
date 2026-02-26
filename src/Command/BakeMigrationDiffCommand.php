@@ -126,7 +126,7 @@ class BakeMigrationDiffCommand extends BakeSimpleMigrationCommand
 
         $collection = $this->getCollection($this->connection);
         EventManager::instance()->on('Bake.initialize', function (Event $event) use ($collection) {
-            $event->getSubject()->loadHelper('Migrations.Migration', [
+            $event->getSubject()->addHelper('Migrations.Migration', [
                 'collection' => $collection,
             ]);
         });
