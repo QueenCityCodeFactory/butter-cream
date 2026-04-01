@@ -394,7 +394,7 @@ class HtmlHelper extends Helper
             return $button . $this->formatTemplate('tag', [
                 'tag' => 'div',
                 'attrs' => $this->templater()->formatAttributes([
-                    'class' => 'dropdown-menu dropdown-menu-right',
+                    'class' => 'dropdown-menu dropdown-menu-end',
                 ]),
                 'content' => join('', $menuItems),
             ]);

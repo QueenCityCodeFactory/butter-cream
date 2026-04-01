@@ -39,8 +39,7 @@ class TrustProxyMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // @phpstan-ignore-next-line
-        $request->trustProxy = $this->trust;
+        $request = $request->withAttribute('trustProxy', $this->trust);
 
         return $handler->handle($request);
     }

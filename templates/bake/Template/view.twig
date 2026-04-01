@@ -12,7 +12,7 @@
     $this->assign('page.heading', '{{ singularHumanName }}');
     $this->start('view.card.buttons');
 ?>
-<div class="btn-group btn-group-xs pull-right">
+<div class="btn-group float-end">
     <?= $this->Html->actionDropdownMenu([
         $this->Html->link('Edit {{ singularHumanName }}', ['action' => 'edit', {{ pK|raw }}], ['class' => 'dropdown-item']),
         $this->Html->link('List {{ pluralHumanName }}', ['action' => 'index'], ['class' => 'dropdown-item']),

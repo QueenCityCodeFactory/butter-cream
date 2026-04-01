@@ -41,10 +41,12 @@ class TimeHelper extends Helper
             $timezone = $this->getView()->getRequest()->getSession()->read('Auth.timezone');
         }
         try {
-            if ($date instanceof DateTimeInterface) {
+            if (!$date instanceof DateTime) {
                 $date = new DateTime($date);
             }
-            $date->setTimezone($timezone);
+            if ($timezone) {
+                $date = $date->setTimezone($timezone);
+            }
 
             return $date->i18nFormat($format, $timezone);
         } catch (Exception $e) {
