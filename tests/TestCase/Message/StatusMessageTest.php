@@ -23,7 +23,7 @@ class StatusMessageTest extends TestCase
         $this->assertIsArray($messages);
         $this->assertArrayHasKey('missing_field', $messages);
         $this->assertArrayHasKey('unauthorized', $messages);
-        $this->assertArrayHasKey('file_api_missing_tmp_file', $messages);
+        $this->assertArrayHasKey('file_service_missing_tmp_file', $messages);
     }
 
     /**
@@ -87,7 +87,7 @@ class StatusMessageTest extends TestCase
     {
         $this->assertEquals('A100', StatusMessage::getCode('missing_field'));
         $this->assertEquals('B100', StatusMessage::getCode('unauthorized'));
-        $this->assertEquals('FILEAPI-1', StatusMessage::getCode('file_api_missing_tmp_file'));
+        $this->assertEquals('FILESERVICE-1', StatusMessage::getCode('file_service_missing_tmp_file'));
         $this->assertFalse(StatusMessage::getCode('non_existent'));
     }
 

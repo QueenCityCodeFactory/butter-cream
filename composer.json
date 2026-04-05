@@ -27,6 +27,9 @@
         "vimeo/psalm": "^6.0",
         "league/flysystem": "^3.33"
     },
+    "suggest": {
+        "cakephp/migrations": "Required to run the optional files table migration."
+    },
     "support": {
         "issues": "https://github.com/QueenCityCodeFactory/butter-cream/issues",
         "source": "https://github.com/QueenCityCodeFactory/butter-cream"

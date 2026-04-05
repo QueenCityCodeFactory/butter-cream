@@ -3,319 +3,147 @@ declare(strict_types=1);
 
 namespace ButterCream\Filesystem;
 
-use ButterCream\Message\Exception\StatusMessageException;
 use ButterCream\Model\Entity\File;
-use Cake\Core\Configure;
-use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\Locator\TableLocator;
-use Cake\ORM\Table;
-use Cake\Utility\Text;
-use Exception;
-use Imagick;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Local\LocalFilesystemAdapter;
-use League\Flysystem\UnableToWriteFile;
+use ButterCream\Service\FileService;
 
 /**
  * File API
+ *
+ * @deprecated Use \ButterCream\Service\FileService instead.
  */
 class FileApi
 {
     /**
-     * The Table object for the files database table
-     *
-     * @var \Cake\ORM\Table|null
+     * @var \ButterCream\Service\FileService|null
      */
-    protected static ?Table $filesTable = null;
+    protected static ?FileService $service = null;
 
     /**
-     * A default image width if none is specified for resizing
+     * Get the FileService singleton instance.
      *
-     * @var int
+     * @return \ButterCream\Service\FileService
      */
-    public static int $defaultImageWidth = 300;
-
-    /**
-     * A default image height if none is specified for resizing
-     *
-     * @var int
-     */
-    public static int $defaultImageHeight = 300;
-
-    /**
-     * Allowed Mime Types for image processing & conversion
-     *
-     * @var array mime types
-     */
-    public static array $validImageMimeTypes = [
-        'image/gif',
-        'image/jpeg',
-        'image/png',
-    ];
-
-    /**
-     * Sets up the filesTable object if not already instantiated and then returns it
-     *
-     * @return \Cake\ORM\Table|null a Table object for the files database table
-     */
-    protected static function setupFilesTable(): ?Table
+    protected static function getService(): FileService
     {
-        if (!isset(static::$filesTable)) {
-            $locator = new TableLocator();
-            static::$filesTable = $locator->get('Files');
+        if (!isset(static::$service)) {
+            static::$service = new FileService();
         }
 
-        return static::$filesTable;
+        return static::$service;
     }
 
     /**
      * Get a file data from the file server/database
      *
-     * @param string $id The id of the file to get
+     * @param int|string $id The id of the file to get
      * @param bool $contents Do you want the file content?
-     * @return \ButterCream\Model\Entity\File The file object, patched with the file contents
+     * @return \ButterCream\Model\Entity\File
+     * @deprecated Use FileService::get() instead.
      */
-    public static function get(string $id, bool $contents = false): File
+    public static function get(int|string $id, bool $contents = false): File
     {
-        $file = static::data($id);
-        $file->path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
-        if ($contents !== false) {
-            $file->contents = file_get_contents(
-                Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename,
-            );
-        }
+        trigger_error('FileApi::get() is deprecated. Use FileService::get() instead.', E_USER_DEPRECATED);
 
-        return $file;
+        return static::getService()->get($id, $contents);
     }
 
     /**
      * Get the Base file data
      *
-     * @param string $id The id of the file
+     * @param int|string $id The id of the file
      * @return \ButterCream\Model\Entity\File
+     * @deprecated Use FileService::data() instead.
      */
-    public static function data(string $id): File
+    public static function data(int|string $id): File
     {
-        $filesTable = static::setupFilesTable();
-        /** @var \ButterCream\Model\Entity\File $file */
-        $file = $filesTable->get($id);
-        if (!empty($file) && is_object($file)) {
-            return $file;
-        }
-        throw new NotFoundException('The Panda was unable to retrieve the requested file.');
+        trigger_error('FileApi::data() is deprecated. Use FileService::data() instead.', E_USER_DEPRECATED);
+
+        return static::getService()->data($id);
     }
 
     /**
      * Gets the Local File Path to a File
      *
-     * @param string $id The id of the file
-     * @return string|false The Local File Path
+     * @param int|string $id The id of the file
+     * @return string|false
+     * @deprecated Use FileService::getLocalPath() instead.
      */
-    public static function getLocalPath(string $id): string|false
+    public static function getLocalPath(int|string $id): string|false
     {
-        $file = static::data($id);
-        $path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
+        trigger_error('FileApi::getLocalPath() is deprecated. Use FileService::getLocalPath() instead.', E_USER_DEPRECATED);
 
-        return file_exists($path) ? $path : false;
+        return static::getService()->getLocalPath($id);
     }
 
     /**
-     * Get a file from the file server/database
+     * Get file contents
      *
-     * @param string $id The id of the file to get
-     * @return string|false The file object, patched with the file contents
+     * @param int|string $id The id of the file
+     * @return string|false
+     * @deprecated Use FileService::fetchContent() instead.
      */
-    public static function fetchContent(string $id): string|false
+    public static function fetchContent(int|string $id): string|false
     {
-        $file = static::data($id);
-        $path = Configure::read('FileApi.basePath') . $file->category . DS . $file->tag . DS . $file->filename;
+        trigger_error('FileApi::fetchContent() is deprecated. Use FileService::fetchContent() instead.', E_USER_DEPRECATED);
 
-        return file_exists($path) ? file_get_contents($path) : false;
+        return static::getService()->fetchContent($id);
     }
 
     /**
      * Returns the MIME type of the file
      *
-     * @param string $id The file ID
-     * @return string|false the mime type of the file
+     * @param int|string $id The file ID
+     * @return string|false
+     * @deprecated Use FileService::fetchMime() instead.
      */
-    public static function fetchMime(string $id): string|false
+    public static function fetchMime(int|string $id): string|false
     {
-        $file = static::data($id);
-        $filePath = $file->category . DS . $file->tag . DS . $file->filename;
+        trigger_error('FileApi::fetchMime() is deprecated. Use FileService::fetchMime() instead.', E_USER_DEPRECATED);
 
-        $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
-        $filesystem = new Filesystem($adapter);
-
-        if ($filesystem->fileExists($filePath)) {
-            $mimeType = $filesystem->mimeType($filePath);
-
-            return $mimeType;
-        }
-
-        return false;
+        return static::getService()->fetchMime($id);
     }
 
     /**
      * Puts a file on the fileserver
      *
-     * @param array|string $tmpFilePath The file path to the original file (usually a tmp_name from a file upload)
-     * @param array $metaData The array of data associated with the file
-     *
-     * ### Required items in this metadata array:
-     *  - category - the type/category for this file
-     *  - tag - some sort of tag to organize this file in the category
-     *  - original_filename - the original uploaded filename
-     * @return string|bool the file id if successfully added, otherwise false
+     * @param array|string $tmpFilePath The file path
+     * @param array $metaData The metadata array (use 'model' and 'foreign_key' instead of 'category' and 'tag')
+     * @return int|string|bool
+     * @deprecated Use FileService::put() instead.
      */
-    public static function put(array|string $tmpFilePath, array $metaData = []): string|bool
+    public static function put(array|string $tmpFilePath, array $metaData = []): int|string|bool
     {
-        $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
-        $filesystem = new Filesystem($adapter);
+        trigger_error('FileApi::put() is deprecated. Use FileService::put() instead.', E_USER_DEPRECATED);
 
-        $originalFilename = $metaData['original_filename'] ?? null;
-
-        if (is_array($tmpFilePath)) {
-            $path = $tmpFilePath['tmp_name'];
-            $originalFilename = $tmpFilePath['name'];
-        } else {
-            $path = $tmpFilePath;
-        }
-
-        if (!$filesystem->fileExists($path)) {
-            throw new StatusMessageException('file_api_missing_tmp_file');
-        }
-
-        if (!isset($metaData['category']) || !isset($metaData['tag'])) {
-            throw new StatusMessageException('file_api_missing_metadata');
-        }
-
-        if (!$originalFilename) {
-            $originalFilename = basename($path);
-        }
-
-        /** @var \Cake\ORM\Table|null $filesTable */
-        $filesTable = static::setupFilesTable();
-
-        /** @var \ButterCream\Model\Entity\File $file */
-        $file = $filesTable->newEmptyEntity();
-        $file->category = $metaData['category'];
-        $file->tag = $metaData['tag'];
-        $file->size = $filesystem->fileSize($path);
-        $file->original_filename = $originalFilename;
-        $file->meta = $metaData['meta'] ?? null;
-
-        /** @var array $pathInfo */
-        $pathInfo = pathinfo((string)$originalFilename);
-        $file->filename = Text::uuid() . isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : null;
-
-        $targetPath = $file->category . DS . $file->tag . DS . $file->filename;
-
-        try {
-            $filesystem->copy($path, $targetPath);
-            $filesystem->delete($path);
-        } catch (UnableToWriteFile $exception) {
-            throw new StatusMessageException('file_api_can_not_copy_file');
-        }
-
-        $eventManager = $filesTable->getEventManager();
-        $eventManager->off($eventManager->listeners('Model.afterSave'));
-
-        if ($filesTable->save($file)) {
-            return $file->id;
-        }
-
-        return false;
+        return static::getService()->put($tmpFilePath, $metaData);
     }
 
     /**
-     * Resizes a specified file id.  Options include width and height as integer values
+     * Resizes a specified file id
      *
-     * @param string $id The id of the File to modify
+     * @param int|string $id The id of the File to modify
      * @param array $options The array of options for the resize
-     * @return bool true if the image was properly resized, false otherwise
+     * @return bool
+     * @deprecated Use FileService::resize() instead.
      */
-    public static function resize(string $id, array $options = []): bool
+    public static function resize(int|string $id, array $options = []): bool
     {
-        $record = static::data($id);
-        if (empty($record)) {
-            return false;
-        }
+        trigger_error('FileApi::resize() is deprecated. Use FileService::resize() instead.', E_USER_DEPRECATED);
 
-        $basePath = Configure::read('FileApi.basePath');
-        $filePath = $basePath . $record->category . DS . $record->tag . DS . $record->filename;
-
-        // Make sure the file exists, otherwise we're done!
-        if (!file_exists($filePath)) {
-            throw new StatusMessageException('file_api_resize_missing_file');
-        }
-
-        // Get additional image data
-        try {
-            $imageInfo = getimagesize($filePath);
-        } catch (Exception) {
-            $imageInfo = [];
-        }
-
-        if ($imageInfo !== false && !in_array($imageInfo['mime'], self::$validImageMimeTypes)) {
-            throw new StatusMessageException('file_api_resize_invalid_type');
-        }
-
-        // Make sure the Imagick class is available to use, otherwise just copy it.
-        if (class_exists('Imagick')) {
-            /** @var \Imagick $image */
-            $image = new Imagick($filePath);
-            $width = $image->getImageWidth();
-            $height = $image->getImageHeight();
-
-            $imgWidth = self::$defaultImageWidth; // Set default width
-            $imgHeight = self::$defaultImageHeight; // Set default height
-
-            // Override the width
-            if (!empty($options['width'])) {
-                $imgWidth = $options['width'];
-            }
-
-            // Override the height
-            if (!empty($options['height'])) {
-                $imgHeight = $options['height'];
-            }
-
-            $imgWidth = $imgWidth >= 0 ? $imgWidth : self::$defaultImageWidth;
-            $imgHeight = $imgHeight >= 0 ? $imgHeight : self::$defaultImageHeight;
-
-            // Keep image width in bounds and preserve aspect ratio
-            if ($width > $imgWidth) {
-                $image->scaleImage($imgWidth, $imgHeight, true);
-            }
-
-            // Keep image height in bounds and preserve aspect ratio
-            if ($height > $imgHeight) {
-                $image->scaleImage($imgWidth, $imgHeight, true);
-            }
-
-            $image->writeImage();
-        } else {
-            return false;
-        }
-
-        return true;
+        return static::getService()->resize($id, $options);
     }
 
     /**
-     * Deletes a file from the file server / database
+     * Deletes a file
      *
-     * @param string $id id of the file to delete
-     * @return bool true if the file was deleted, false otherwise
+     * @param int|string $id id of the file to delete
+     * @return bool
+     * @deprecated Use FileService::delete() instead.
      */
-    public static function delete(string $id): bool
+    public static function delete(int|string $id): bool
     {
-        $filesTable = static::setupFilesTable();
-        $file = $filesTable->get($id);
-        if ($filesTable->delete($file)) {
-            return true;
-        }
+        trigger_error('FileApi::delete() is deprecated. Use FileService::delete() instead.', E_USER_DEPRECATED);
 
-        return false;
+        return static::getService()->delete($id);
     }
 }

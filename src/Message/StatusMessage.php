@@ -47,40 +47,40 @@ class StatusMessage
             'code' => 'B101',
             'type' => 'error',
         ],
-        'file_api_missing_tmp_file' => [
+        'file_service_missing_tmp_file' => [
             'status' => 500,
             'responseText' => 'Missing or corrupt "tmp" file.',
-            'code' => 'FILEAPI-1',
+            'code' => 'FILESERVICE-1',
             'type' => 'error',
         ],
-        'file_api_missing_metadata' => [
+        'file_service_missing_metadata' => [
             'status' => 500,
-            'responseText' => 'Missing required Meta Data: Category and Tag are required.',
-            'code' => 'FILEAPI-2',
+            'responseText' => 'Missing required Meta Data: Model and Foreign Key are required.',
+            'code' => 'FILESERVICE-2',
             'type' => 'error',
         ],
-        'file_api_missing_fileserver' => [
+        'file_service_missing_fileserver' => [
             'status' => 500,
             'responseText' => 'Problem creating or locating uploads directory.',
-            'code' => 'FILEAPI-3',
+            'code' => 'FILESERVICE-3',
             'type' => 'error',
         ],
-        'file_api_can_not_copy_file' => [
+        'file_service_can_not_copy_file' => [
             'status' => 500,
             'responseText' => 'Unable to copy or save tmp file to final destination.',
-            'code' => 'FILEAPI-4',
+            'code' => 'FILESERVICE-4',
             'type' => 'error',
         ],
-        'file_api_resize_missing_file' => [
+        'file_service_resize_missing_file' => [
             'status' => 500,
             'responseText' => 'Missing or corrupt file, the resizing can not be completed.',
-            'code' => 'FILEAPI-5',
+            'code' => 'FILESERVICE-5',
             'type' => 'error',
         ],
-        'file_api_resize_invalid_type' => [
+        'file_service_resize_invalid_type' => [
             'status' => 500,
             'responseText' => 'The selected file is not an image, therefore can not be resized.',
-            'code' => 'FILEAPI-6',
+            'code' => 'FILESERVICE-6',
             'type' => 'error',
         ],
     ];

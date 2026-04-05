@@ -73,12 +73,6 @@ parameters:
 			path: src/Controller/Controller.php
 
 		-
-			message: '#^Method ButterCream\\Controller\\Controller\:\:paginate\(\) should return Cake\\Datasource\\Paging\\PaginatedInterface but returns Cake\\Http\\Response\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: src/Controller/Controller.php
-
-		-
 			message: '#^Method ButterCream\\Database\\Type\\JsonArrayType\:\:manyToPHP\(\) has parameter \$values with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -89,36 +83,6 @@ parameters:
 			identifier: function.notFound
 			count: 3
 			path: src/Error/ExceptionRenderer.php
-
-		-
-			message: '#^Cannot call method delete\(\) on Cake\\ORM\\Table\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Cannot call method get\(\) on Cake\\ORM\\Table\|null\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Cannot call method getEventManager\(\) on Cake\\ORM\\Table\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Cannot call method newEmptyEntity\(\) on Cake\\ORM\\Table\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Cannot call method save\(\) on Cake\\ORM\\Table\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: src/Filesystem/FileApi.php
 
 		-
 			message: '#^Method ButterCream\\Filesystem\\FileApi\:\:put\(\) has parameter \$metaData with no value type specified in iterable type array\.$#'
@@ -135,42 +99,6 @@ parameters:
 		-
 			message: '#^Method ButterCream\\Filesystem\\FileApi\:\:resize\(\) has parameter \$options with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Offset ''mime'' might not exist on array\{\}\|array\{0\: int\<0, max\>, 1\: int\<0, max\>, 2\: int, 3\: string, mime\: string, channels\?\: int, bits\?\: int\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^PHPDoc tag @var for variable \$pathInfo has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Parameter \#1 \$eventKey of method Cake\\Event\\EventManagerInterface\:\:off\(\) expects Cake\\Event\\EventListenerInterface\|\(callable\(\)\: mixed\)\|string, array given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Property ButterCream\\Filesystem\\FileApi\:\:\$validImageMimeTypes type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Property ButterCream\\Model\\Entity\\File\:\:\$filename \(string\) does not accept string\|null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: src/Filesystem/FileApi.php
-
-		-
-			message: '#^Variable \$record in empty\(\) always exists and is not falsy\.$#'
-			identifier: empty.variable
 			count: 1
 			path: src/Filesystem/FileApi.php
 
@@ -331,6 +259,24 @@ parameters:
 			path: src/Model/Table/FilesTable.php
 
 		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:beforeMarshal\(\) has parameter \$data with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:beforeMarshal\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:beforeMarshal\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
 			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:initialize\(\) has parameter \$config with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -353,6 +299,48 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Routing/Middleware/SessionTimeoutMiddleware.php
+
+		-
+			message: '#^Method ButterCream\\Service\\FileService\:\:put\(\) has parameter \$metaData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/FileService.php
+
+		-
+			message: '#^Method ButterCream\\Service\\FileService\:\:put\(\) has parameter \$tmpFilePath with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/FileService.php
+
+		-
+			message: '#^Method ButterCream\\Service\\FileService\:\:resize\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/FileService.php
+
+		-
+			message: '#^Offset ''mime'' might not exist on array\{\}\|array\{0\: int\<0, max\>, 1\: int\<0, max\>, 2\: int, 3\: string, mime\: string, channels\?\: int, bits\?\: int\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Service/FileService.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$pathInfo has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/FileService.php
+
+		-
+			message: '#^Parameter \#1 \$eventKey of method Cake\\Event\\EventManagerInterface\:\:off\(\) expects Cake\\Event\\EventListenerInterface\|\(callable\(\)\: mixed\)\|string, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Service/FileService.php
+
+		-
+			message: '#^Variable \$record in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Service/FileService.php
 
 		-
 			message: '#^Method ButterCream\\Utility\\Format\:\:parsePhone\(\) return type has no value type specified in iterable type array\.$#'
@@ -467,6 +455,30 @@ parameters:
 			identifier: method.childReturnType
 			count: 1
 			path: src/View/Helper/BakeHelper.php
+
+		-
+			message: '#^Class ButterCream\\View\\Helper\\FiltersHelper extends generic class Cake\\View\\Helper but does not specify its types\: TView$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/View/Helper/FiltersHelper.php
+
+		-
+			message: '#^Function __ not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/View/Helper/FiltersHelper.php
+
+		-
+			message: '#^Function h not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/View/Helper/FiltersHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\FiltersHelper\:\:\$_controls type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FiltersHelper.php
 
 		-
 			message: '#^Call to function is_array\(\) with non\-empty\-array will always evaluate to true\.$#'

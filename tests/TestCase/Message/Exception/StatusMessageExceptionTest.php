@@ -50,13 +50,13 @@ class StatusMessageExceptionTest extends TestCase
     }
 
     /**
-     * Test exception with file API key
+     * Test exception with file service key
      *
      * @return void
      */
-    public function testExceptionWithFileApiKey(): void
+    public function testExceptionWithFileServiceKey(): void
     {
-        $exception = new StatusMessageException('file_api_missing_tmp_file');
+        $exception = new StatusMessageException('file_service_missing_tmp_file');
 
         $this->assertStringContainsString('tmp', strtolower($exception->getMessage()));
         $this->assertEquals(500, $exception->getCode());

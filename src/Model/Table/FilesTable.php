@@ -9,6 +9,7 @@ use ButterCream\Model\Table\AppTable as Table;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 use Exception;
 use League\Flysystem\DirectoryAttributes;
@@ -70,20 +71,24 @@ class FilesTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->uuid('id')
+            ->nonNegativeInteger('id')
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('category')
-            ->maxLength('category', 45)
-            ->requirePresence('category', 'create')
-            ->notEmptyString('category');
+            ->uuid('uuid')
+            ->notEmptyString('uuid');
 
         $validator
-            ->scalar('tag')
-            ->maxLength('tag', 36)
-            ->requirePresence('tag', 'create')
-            ->notEmptyString('tag');
+            ->scalar('model')
+            ->maxLength('model', 255)
+            ->requirePresence('model', 'create')
+            ->notEmptyString('model');
+
+        $validator
+            ->scalar('foreign_key')
+            ->maxLength('foreign_key', 36)
+            ->requirePresence('foreign_key', 'create')
+            ->notEmptyString('foreign_key');
 
         $validator
             ->scalar('filename')
@@ -104,6 +109,59 @@ class FilesTable extends Table
     }
 
     /**
+     * BeforeMarshal Callback - Auto-generate UUID for new records
+     *
+     * @param \Cake\Event\EventInterface $event The beforeMarshal event that was fired
+     * @param \ArrayObject $data ArrayObject instance.
+     * @param \ArrayObject $options ArrayObject instance.
+     * @return void
+     */
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        parent::beforeMarshal($event, $data, $options);
+
+        if (!isset($data['uuid'])) {
+            $data['uuid'] = Text::uuid();
+        }
+    }
+
+    /**
+     * Get the base path for file storage.
+     *
+     * Override this method to customize the storage location in subclasses.
+     *
+     * @return string
+     */
+    protected function getBasePath(): string
+    {
+        return (string)Configure::read('FileService.basePath');
+    }
+
+    /**
+     * Get the temporary path for file uploads.
+     *
+     * Override this method to customize the temp location in subclasses.
+     *
+     * @return string
+     */
+    protected function getTmpPath(): string
+    {
+        return (string)Configure::read('FileService.tmpPath');
+    }
+
+    /**
+     * Build the relative file path for an entity.
+     *
+     * @param \Cake\Datasource\EntityInterface $entity The file entity
+     * @return string
+     */
+    protected function buildRelativePath(EntityInterface $entity): string
+    {
+        /** @var \ButterCream\Model\Entity\File $entity */
+        return $entity->model . DS . $entity->foreign_key . DS . $entity->filename;
+    }
+
+    /**
      * AfterSave Callback
      *
      * @param \Cake\Event\EventInterface $event The event object
@@ -119,40 +177,41 @@ class FilesTable extends Table
         if ($this->skipAfterSave !== true && $entity->isNew()) {
             $filePath = $entity->filename;
 
-            $sourceAdapter = new LocalFilesystemAdapter(Configure::read('FileApi.tmpPath'));
+            $sourceAdapter = new LocalFilesystemAdapter($this->getTmpPath());
             $sourceFilesystem = new Filesystem($sourceAdapter);
 
             if (!$sourceFilesystem->fileExists($filePath)) {
-                throw new StatusMessageException('file_api_missing_tmp_file');
+                throw new StatusMessageException('file_service_missing_tmp_file');
             }
 
-            if (!isset($entity->category) || !isset($entity->tag)) {
-                throw new StatusMessageException('file_api_missing_metadata');
+            if (!isset($entity->model) || !isset($entity->foreign_key)) {
+                throw new StatusMessageException('file_service_missing_metadata');
             }
 
             if (empty($entity->original_filename)) {
                 $entity->original_filename = basename($filePath);
             }
 
-            $destinationAdapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
+            $destinationAdapter = new LocalFilesystemAdapter($this->getBasePath());
             $destinationFilesystem = new Filesystem($destinationAdapter);
             try {
+                $relativePath = $this->buildRelativePath($entity);
                 $destinationFilesystem->createDirectory(
-                    Configure::read('FileApi.basePath') . $entity->category . DS . $entity->tag,
+                    $this->getBasePath() . $entity->model . DS . $entity->foreign_key,
                 );
                 $destinationFilesystem->write(
-                    $entity->category . DS . $entity->tag . DS . $entity->filename,
+                    $relativePath,
                     $sourceFilesystem->read($filePath),
                 );
                 $sourceFilesystem->delete($filePath);
             } catch (Exception) {
-                throw new StatusMessageException('file_api_can_not_copy_file');
+                throw new StatusMessageException('file_service_can_not_copy_file');
             }
         }
     }
 
     /**
-     * Event fired after the record has been deleted
+     * Event fired before the record has been deleted
      *
      * @param \Cake\Event\EventInterface $event The event object
      * @param \Cake\Datasource\EntityInterface $entity The entity
@@ -162,18 +221,18 @@ class FilesTable extends Table
     public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         /** @var \ButterCream\Model\Entity\File $entity */
-        $basePath = Configure::read('FileApi.basePath');
+        $basePath = $this->getBasePath();
 
         parent::beforeDelete($event, $entity, $options);
 
         $sourceAdapter = new LocalFilesystemAdapter($basePath);
         $sourceFilesystem = new Filesystem($sourceAdapter);
 
-        $sourceFilesystem->delete($entity->category . DS . $entity->tag . DS . $entity->filename);
+        $sourceFilesystem->delete($this->buildRelativePath($entity));
 
         $directories = [
-            $entity->category . DS . $entity->tag,
-            $entity->category,
+            $entity->model . DS . $entity->foreign_key,
+            $entity->model,
         ];
 
         foreach ($directories as $directory) {

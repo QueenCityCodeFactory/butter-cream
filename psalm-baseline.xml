@@ -21,18 +21,6 @@
     <ImplementedReturnTypeMismatch>
       <code><![CDATA[\Cake\Http\Response|null|void]]></code>
     </ImplementedReturnTypeMismatch>
-    <InvalidReturnStatement>
-      <code><![CDATA[$this->redirect([
-                'plugin' => $request->getParam('plugin'),
-                'prefix' => $request->getParam('prefix'),
-                'controller' => $request->getParam('controller'),
-                'action' => $request->getParam('action'),
-                '?' => $queryString,
-            ])]]></code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code><![CDATA[\Cake\Datasource\Paging\PaginatedInterface]]></code>
-    </InvalidReturnType>
     <LessSpecificImplementedReturnType>
       <code><![CDATA[\Cake\Datasource\Paging\PaginatedInterface]]></code>
     </LessSpecificImplementedReturnType>
@@ -41,15 +29,6 @@
       <code><![CDATA[public function initialize(): void]]></code>
       <code><![CDATA[public function paginate(]]></code>
     </MissingOverrideAttribute>
-    <NullableReturnStatement>
-      <code><![CDATA[$this->redirect([
-                'plugin' => $request->getParam('plugin'),
-                'prefix' => $request->getParam('prefix'),
-                'controller' => $request->getParam('controller'),
-                'action' => $request->getParam('action'),
-                '?' => $queryString,
-            ])]]></code>
-    </NullableReturnStatement>
   </file>
   <file src="src/Database/Type/JsonArrayType.php">
     <MissingOverrideAttribute>
@@ -68,25 +47,6 @@
       <code><![CDATA[__d('cake', 'Record Not Found')]]></code>
     </UndefinedFunction>
   </file>
-  <file src="src/Filesystem/FileApi.php">
-    <InvalidOperand>
-      <code><![CDATA[isset($pathInfo['extension'])]]></code>
-    </InvalidOperand>
-    <TypeDoesNotContainType>
-      <code><![CDATA[empty($record)]]></code>
-      <code><![CDATA[empty($record)]]></code>
-    </TypeDoesNotContainType>
-    <UndefinedClass>
-      <code><![CDATA[Filesystem]]></code>
-      <code><![CDATA[Filesystem]]></code>
-      <code><![CDATA[LocalFilesystemAdapter]]></code>
-      <code><![CDATA[LocalFilesystemAdapter]]></code>
-      <code><![CDATA[UnableToWriteFile]]></code>
-    </UndefinedClass>
-    <UndefinedDocblockClass>
-      <code><![CDATA[$image]]></code>
-    </UndefinedDocblockClass>
-  </file>
   <file src="src/Message/Exception/StatusMessageException.php">
     <TypeDoesNotContainNull>
       <code><![CDATA[$code === false || $code === null]]></code>
@@ -94,10 +54,9 @@
     </TypeDoesNotContainNull>
   </file>
   <file src="src/Model/Entity/File.php">
-    <UndefinedClass>
-      <code><![CDATA[Filesystem]]></code>
-      <code><![CDATA[LocalFilesystemAdapter]]></code>
-    </UndefinedClass>
+    <RedundantCast>
+      <code><![CDATA[(string)$contents]]></code>
+    </RedundantCast>
   </file>
   <file src="src/Model/Table/AppTable.php">
     <MissingTemplateParam>
@@ -108,19 +67,10 @@
     <MissingOverrideAttribute>
       <code><![CDATA[public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void]]></code>
       <code><![CDATA[public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void]]></code>
+      <code><![CDATA[public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void]]></code>
       <code><![CDATA[public function initialize(array $config): void]]></code>
       <code><![CDATA[public function validationDefault(Validator $validator): Validator]]></code>
     </MissingOverrideAttribute>
-    <UndefinedClass>
-      <code><![CDATA[DirectoryAttributes]]></code>
-      <code><![CDATA[FileAttributes]]></code>
-      <code><![CDATA[Filesystem]]></code>
-      <code><![CDATA[Filesystem]]></code>
-      <code><![CDATA[Filesystem]]></code>
-      <code><![CDATA[LocalFilesystemAdapter]]></code>
-      <code><![CDATA[LocalFilesystemAdapter]]></code>
-      <code><![CDATA[LocalFilesystemAdapter]]></code>
-    </UndefinedClass>
   </file>
   <file src="src/Routing/Middleware/SessionTimeoutMiddleware.php">
     <MissingOverrideAttribute>
@@ -131,6 +81,15 @@
     <MissingOverrideAttribute>
       <code><![CDATA[public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface]]></code>
     </MissingOverrideAttribute>
+  </file>
+  <file src="src/Service/FileService.php">
+    <TypeDoesNotContainType>
+      <code><![CDATA[empty($record)]]></code>
+      <code><![CDATA[empty($record)]]></code>
+    </TypeDoesNotContainType>
+    <UndefinedDocblockClass>
+      <code><![CDATA[$image]]></code>
+    </UndefinedDocblockClass>
   </file>
   <file src="src/Utility/Format.php">
     <InvalidNullableReturnType>
@@ -166,6 +125,18 @@
       <code><![CDATA[public function getFieldAccessibility(array|false|null $fields = null, ?array $primaryKey = null): array]]></code>
     </MissingOverrideAttribute>
   </file>
+  <file src="src/View/Helper/FiltersHelper.php">
+    <MissingTemplateParam>
+      <code><![CDATA[FiltersHelper]]></code>
+    </MissingTemplateParam>
+    <UndefinedFunction>
+      <code><![CDATA[__('Apply')]]></code>
+      <code><![CDATA[__('Clear')]]></code>
+      <code><![CDATA[__('Filters')]]></code>
+      <code><![CDATA[h($setup['id'])]]></code>
+      <code><![CDATA[h($setup['title'])]]></code>
+    </UndefinedFunction>
+  </file>
   <file src="src/View/Helper/FormHelper.php">
     <MissingOverrideAttribute>
       <code><![CDATA[public function control(string $fieldName, array $options = []): string]]></code>
@@ -174,7 +145,7 @@
       <code><![CDATA[public function postLink(string $title, string|array|null $url = null, array $options = []): string]]></code>
     </MissingOverrideAttribute>
     <RedundantCondition>
-      <code><![CDATA[$options['select2'] !== false && isset($options['options']) && is_array($options)]]></code>
+      <code><![CDATA[$options['enhancedSelect'] !== false && isset($options['options']) && is_array($options)]]></code>
       <code><![CDATA[is_array($options)]]></code>
     </RedundantCondition>
   </file>

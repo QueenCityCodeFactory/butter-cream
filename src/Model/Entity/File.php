@@ -11,9 +11,10 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 /**
  * File Entity
  *
- * @property string $id
- * @property string $category
- * @property string $tag
+ * @property int $id
+ * @property string $uuid
+ * @property string $model
+ * @property string $foreign_key
  * @property string $filename
  * @property string|null $original_filename
  * @property int|null|false $size
@@ -28,9 +29,6 @@ class File extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
-     * Note that '*' is set to true, which allows all unspecified fields to be
-     * mass assigned. For security purposes, it is advised to set '*' to false
-     * (or remove), and explicitly make individual fields accessible as needed.
      *
      * @var array
      */
@@ -47,7 +45,7 @@ class File extends Entity
      */
     protected function _getPath(): string
     {
-        return Configure::read('FileApi.basePath') . $this->category . DS . $this->tag . DS . $this->filename;
+        return Configure::read('FileService.basePath') . $this->model . DS . $this->foreign_key . DS . $this->filename;
     }
 
     /**
@@ -57,9 +55,9 @@ class File extends Entity
      */
     protected function _getBase64(): string
     {
-        $filePath = $this->category . DS . $this->tag . DS . $this->filename;
+        $filePath = $this->model . DS . $this->foreign_key . DS . $this->filename;
 
-        $adapter = new LocalFilesystemAdapter(Configure::read('FileApi.basePath'));
+        $adapter = new LocalFilesystemAdapter(Configure::read('FileService.basePath'));
         $filesystem = new Filesystem($adapter);
 
         $contents = '';
