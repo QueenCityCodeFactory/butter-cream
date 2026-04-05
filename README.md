@@ -7,8 +7,8 @@ A CakePHP 5 Plugin with Bootstrap 5 theme, custom helpers, components, and bake 
 
 ## Requirements
 
-- PHP 8.2 or higher
-- CakePHP 5.1 or higher
+- PHP 8.4 or higher
+- CakePHP 5.3 or higher
 - Bootstrap 5 (via FriendsOfCake/bootstrap-ui)
 
 ## Installation
@@ -331,8 +331,8 @@ MIT License. See LICENSE file for details.
 Butter Cream includes a comprehensive test suite powered by PHPUnit. The current test coverage includes:
 
 ### Tested Components
-- **FlashComponent** - Custom flash message handling
-- **RefererComponent** - URL normalization and redirect management
+- **FlashComponent** - Escape default, HTML flash messaging, exception handling
+- **RefererComponent** - URL normalization, referer tracking, redirect logic, ignore list
 
 ### Tested Helpers
 - **FormatHelper** - US formatting (SSN, phone, ZIP)
@@ -343,10 +343,19 @@ Butter Cream includes a comprehensive test suite powered by PHPUnit. The current
 
 ### Tested Model Features
 - **Validation** - US data validation (phone, postal, SSN, birthdate)
-- **TreeviewTrait** - Nested data structure support
+- **TreeviewTrait** - Nested data structure nesting and custom keys
+- **AppTable** - Data cleaning (smart quotes, whitespace, encoding)
+- **StatusMessage** - Message registry getters and type coercion
+- **StatusMessageException** - Exception with status message keys
+
+### Tested Database Types
+- **JsonArrayType** - JSON parsing, error handling, batch casting
 
 ### Tested Middleware
 - **SessionTimeoutMiddleware** - Session management and timeout handling
+
+### Tested Plugin
+- **ButterCreamPlugin** - Plugin bootstrap, command discovery
 
 ### Running Tests
 

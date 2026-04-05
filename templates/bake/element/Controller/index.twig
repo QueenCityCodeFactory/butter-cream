@@ -15,5 +15,8 @@
 {% endif %}
         ${{ pluralName }} = $this->paginate($query);
 
-        $this->set(compact('{{ pluralName }}'));
+{% for otherName, otherDetails in simpleAssociations %}
+        ${{ otherName }} = $this->{{ currentModelName }}->{{ otherDetails.alias }}->find('list', limit: 200)->all();
+{% endfor %}
+        $this->set(compact('{{ pluralName }}'{% for item in simpleAssociations|keys %}, '{{ item }}'{% endfor %}));
     }

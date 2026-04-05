@@ -20,12 +20,10 @@ use CakePdf\View\PdfView as View;
  */
 class PdfView extends View
 {
+    use ButterCreamHelpersTrait;
+
     /**
      * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading helpers.
-     *
-     * e.g. `$this->loadHelper('Html');`
      *
      * @return void
      */
@@ -33,45 +31,6 @@ class PdfView extends View
     {
         parent::initialize();
 
-        $this->addHelper('Ajax', [
-            'className' => 'ButterCream.Ajax',
-        ]);
-        $this->addHelper('Flash', [
-            'className' => 'ButterCream.Flash',
-        ]);
-        $this->addHelper('Form', [
-            'className' => 'ButterCream.Form',
-            'templates' => [
-                'dateWidget' => '
-                    <ul class="list-inline">
-                        <li class="month">{{month}}</li>
-                        <li class="day">{{day}}</li>
-                        <li class="year">{{year}}</li>
-                        <li class="hour">{{hour}}</li>
-                        <li class="minute">{{minute}}</li>
-                        <li class="second">{{second}}</li>
-                        <li class="meridian">{{meridian}}</li>
-                    </ul>
-                ',
-            ],
-        ]);
-        $this->addHelper('Format', [
-            'className' => 'ButterCream.Format',
-        ]);
-        $this->addHelper('Html', [
-            'className' => 'ButterCream.Html',
-        ]);
-        $this->addHelper('Paginator', [
-            'className' => 'ButterCream.Paginator',
-        ]);
-        $this->addHelper('Table', [
-            'className' => 'ButterCream.Table',
-        ]);
-        $this->addHelper('Time', [
-            'className' => 'ButterCream.Time',
-        ]);
-        $this->addHelper('Url', [
-            'className' => 'ButterCream.Url',
-        ]);
+        $this->loadButterCreamHelpers();
     }
 }

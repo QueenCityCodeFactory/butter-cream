@@ -19,22 +19,10 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 /**
  * Files Model
  *
- * @property \App\Model\Table\OrganizationsTable&\Cake\ORM\Association\BelongsTo $Organizations
- * @property \App\Model\Table\PhotosTable&\Cake\ORM\Association\BelongsTo $Photos
- * @property \App\Model\Table\SexesTable&\Cake\ORM\Association\BelongsTo $Sexes
- * @property \App\Model\Table\OrganizationsTable&\Cake\ORM\Association\BelongsTo $Organizations
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class FilesTable extends Table
 {
-    /**
-     * Searchable Filter Args
-     *
-     * @var array
-     */
-    public array $filterArgs = [
-    ];
-
     /**
      * Skip afterSave
      *

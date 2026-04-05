@@ -6,7 +6,7 @@
          bootstrap="tests/bootstrap.php"
          cacheDirectory=".phpunit.cache"
          backupGlobals="true"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
          cacheResult="true">
     <testsuites>
         <testsuite name="ButterCream Test Suite">

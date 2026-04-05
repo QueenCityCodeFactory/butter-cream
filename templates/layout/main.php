@@ -46,10 +46,23 @@ if (!empty($skinClass)) {
     $bodyClasses[] = $skinClass;
 }
 
+$extraBodyClasses = $this->get('extraBodyClasses', []);
+if (!empty($extraBodyClasses)) {
+    $bodyClasses = array_merge($bodyClasses, $extraBodyClasses);
+}
+
 $bodyAttributes = $this->get('bodyAttributes');
 
 if (empty($bodyAttributes)) {
     $bodyAttributes = ['class' => $bodyClasses];
+}
+
+// Session monitor config via data attributes (no inline script globals)
+if ($this->get('sessionMonitor') === true) {
+    $bodyAttributes['data-session-timeout'] = Configure::read('Session.timeout');
+    $bodyAttributes['data-last-access-time'] = $this->getRequest()->getSession()->read('SessionTimeoutFilter.lastAccess');
+    $bodyAttributes['data-session-username'] = $this->getRequest()->getSession()->read('Auth.username');
+    $bodyAttributes['data-session-user-email'] = $this->getRequest()->getSession()->read('Auth.email');
 }
 
 if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
@@ -74,68 +87,6 @@ if (Configure::read('debug') === true) {
     $this->prepend('css', $this->Html->css(['app.min.css?cb=' . Configure::read('CacheBuster.cssCB')]));
     $this->prepend('script', $this->Html->script(['app.min.js?cb=' . Configure::read('CacheBuster.jsCB')]));
 }
-
-if (!(isset($noModalScript) && $noModalScript === true)) :
-$this->append('script'); ?>
-<script>
-    var sessionTimeout = "<?= Configure::read('Session.timeout') ?>";
-    var lastAccessTime = "<?= $this->getRequest()->getSession()->read('SessionTimeoutFilter.lastAccess') ?>";
-    var sessionUserName = "<?= $this->getRequest()->getSession()->read('Auth.username') ?>";
-    var sessionUserEmail = "<?= $this->getRequest()->getSession()->read('Auth.email') ?>";
-</script>
-<script id="modal-template" type="text/x-jsrender">
-    {{if id}}
-    <div id="{{:id}}" class="modal fade">
-    {{else}}
-    <div class="modal fade">
-    {{/if}}
-         <div class="modal-dialog{{:modalSizeClass}}">
-              <div class="modal-content">
-                   <div class="modal-header">
-                        {{if closeButton}}
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        {{/if}}
-                        <h4 class="modal-title">{{:title}}</h4>
-                   </div>
-                   <div class="modal-body">
-                        {{if login}}
-                        <div id="expired-alert-message" class="alert alert-danger">Your session has expired due to inactivity.</div>
-                        <div class="form-group text">
-                            <label class="control-label" for="username">Username or Email</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fa fa-at"></i>
-                                </span>
-                                <input type="text" name="username" autocomplete="off" id="expired-username" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group password">
-                            <label class="control-label" for="password">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fa fa-key"></i>
-                                </span>
-                                <input type="password" name="password" autocomplete="off" id="expired-password" class="form-control">
-                            </div>
-                        </div>
-                        {{else}}
-                            {{:html}}
-                        {{/if}}
-                   </div>
-                   {{if buttons}}
-                   <div class="modal-footer">
-                        {{for buttons}}
-                            {{:button}}
-                        {{/for}}
-                   </div>
-                   {{/if}}
-              </div>
-         </div>
-    </div>
-</script>
-<?php
-$this->end();
-endif;
 ?>
 
 <!doctype html>

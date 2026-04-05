@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace ButterCream\Http\Exception;
 
-use Cake\Core\Exception\CakeException;
-
-class HttpException extends CakeException
+/**
+ * @deprecated Use ButterCreamException instead. This alias will be removed in a future release.
+ */
+class HttpException extends ButterCreamException
 {
 }

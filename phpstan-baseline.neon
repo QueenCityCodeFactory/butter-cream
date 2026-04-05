@@ -1,0 +1,853 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method ButterCream\\ButterCreamPlugin\:\:bootstrap\(\) has parameter \$app with generic interface Cake\\Core\\PluginApplicationInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/ButterCreamPlugin.php
+
+		-
+			message: '#^Parameter \#1 \$namespace of method ButterCream\\ButterCreamPlugin\:\:findInPath\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/ButterCreamPlugin.php
+
+		-
+			message: '#^Method ButterCream\\Command\\ModelCommand\:\:bakeTable\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Command/ModelCommand.php
+
+		-
+			message: '#^Class ButterCream\\Controller\\Component\\FlashComponent has PHPDoc tag @method for method error\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/Component/FlashComponent.php
+
+		-
+			message: '#^Class ButterCream\\Controller\\Component\\FlashComponent has PHPDoc tag @method for method success\(\) parameter \#2 \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/Component/FlashComponent.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Component\\FlashComponent\:\:set\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/Component/FlashComponent.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Component\\RefererComponent\:\:redirect\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/Component/RefererComponent.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Component\\RefererComponent\:\:setReferer\(\) has parameter \$default with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/Component/RefererComponent.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Component\\RefererComponent\:\:startup\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Controller/Component/RefererComponent.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Controller\:\:beforeRender\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Controller/Controller.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Controller\:\:paginate\(\) return type has no value type specified in iterable type Cake\\Datasource\\Paging\\PaginatedInterface\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/Controller.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Controller\:\:paginate\(\) return type with generic interface Cake\\Datasource\\Paging\\PaginatedInterface does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Controller/Controller.php
+
+		-
+			message: '#^Method ButterCream\\Controller\\Controller\:\:paginate\(\) should return Cake\\Datasource\\Paging\\PaginatedInterface but returns Cake\\Http\\Response\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Controller/Controller.php
+
+		-
+			message: '#^Method ButterCream\\Database\\Type\\JsonArrayType\:\:manyToPHP\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Database/Type/JsonArrayType.php
+
+		-
+			message: '#^Function __d not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Error/ExceptionRenderer.php
+
+		-
+			message: '#^Cannot call method delete\(\) on Cake\\ORM\\Table\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Cannot call method get\(\) on Cake\\ORM\\Table\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Cannot call method getEventManager\(\) on Cake\\ORM\\Table\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Cannot call method newEmptyEntity\(\) on Cake\\ORM\\Table\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Cannot call method save\(\) on Cake\\ORM\\Table\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Method ButterCream\\Filesystem\\FileApi\:\:put\(\) has parameter \$metaData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Method ButterCream\\Filesystem\\FileApi\:\:put\(\) has parameter \$tmpFilePath with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Method ButterCream\\Filesystem\\FileApi\:\:resize\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Offset ''mime'' might not exist on array\{\}\|array\{0\: int\<0, max\>, 1\: int\<0, max\>, 2\: int, 3\: string, mime\: string, channels\?\: int, bits\?\: int\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$pathInfo has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Parameter \#1 \$eventKey of method Cake\\Event\\EventManagerInterface\:\:off\(\) expects Cake\\Event\\EventListenerInterface\|\(callable\(\)\: mixed\)\|string, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Property ButterCream\\Filesystem\\FileApi\:\:\$validImageMimeTypes type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Property ButterCream\\Model\\Entity\\File\:\:\$filename \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Variable \$record in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Filesystem/FileApi.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between int and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Message/Exception/StatusMessageException.php
+
+		-
+			message: '#^Class ButterCream\\Model\\Entity\\File has PHPDoc tag @property for property \$meta with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Entity/File.php
+
+		-
+			message: '#^PHPDoc tag @property for property ButterCream\\Model\\Entity\\File\:\:\$meta contains unknown class Cake\\ORM\\Entity\\text\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Model/Entity/File.php
+
+		-
+			message: '#^PHPDoc type array of property ButterCream\\Model\\Entity\\File\:\:\$_accessible is not covariant with PHPDoc type array\<string, bool\> of overridden property Cake\\ORM\\Entity\:\:\$_accessible\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Model/Entity/File.php
+
+		-
+			message: '#^Property ButterCream\\Model\\Entity\\File\:\:\$_accessible type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Entity/File.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:afterSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:afterSave\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeDelete\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeDelete\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeMarshal\(\) has parameter \$data with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeMarshal\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeMarshal\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:beforeSave\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:cleanData\(\) has parameter \$data with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:cleanData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:cleanData\(\) has parameter \$data with no value type specified in iterable type array\|ArrayObject\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:cleanData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:cleanData\(\) return type has no value type specified in iterable type array\|ArrayObject\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\AppTable\:\:cleanData\(\) return type with generic class ArrayObject does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Property ButterCream\\Model\\Table\\AppTable\:\:\$encodingReplacements type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Property ButterCream\\Model\\Table\\AppTable\:\:\$encodingsToReplace type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/AppTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:afterSave\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:afterSave\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:beforeDelete\(\) has parameter \$event with generic interface Cake\\Event\\EventInterface but does not specify its types\: TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:beforeDelete\(\) has parameter \$options with generic class ArrayObject but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Method ButterCream\\Model\\Table\\FilesTable\:\:initialize\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Table/FilesTable.php
+
+		-
+			message: '#^Trait ButterCream\\Model\\TreeviewTrait is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Model/TreeviewTrait.php
+
+		-
+			message: '#^Method ButterCream\\Routing\\Middleware\\SessionTimeoutMiddleware\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Routing/Middleware/SessionTimeoutMiddleware.php
+
+		-
+			message: '#^Property ButterCream\\Routing\\Middleware\\SessionTimeoutMiddleware\:\:\$config type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Routing/Middleware/SessionTimeoutMiddleware.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Format\:\:parsePhone\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Format\:\:phone\(\) has parameter \$formats with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Format\:\:stripNonAlphaNumeric\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Format\:\:zip\(\) has parameter \$formats with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Offset ''string'' might not exist on array\|string\.$#'
+			identifier: offsetAccess.notFound
+			count: 3
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Offset 2 on array\{0\: non\-falsy\-string, 1\: ''''\|\(non\-falsy\-string&numeric\-string\), 2\: non\-falsy\-string&numeric\-string, 3\: non\-falsy\-string&numeric\-string, 4\?\: numeric\-string\} in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.offset
+			count: 1
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Offset 3 on array\{0\: non\-falsy\-string, 1\: ''''\|\(non\-falsy\-string&numeric\-string\), 2\: non\-falsy\-string&numeric\-string, 3\: non\-falsy\-string&numeric\-string, 4\?\: numeric\-string\} in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.offset
+			count: 1
+			path: src/Utility/Format.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Muddle\:\:buildDotNotationPath\(\) has parameter \$path with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Muddle.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Muddle\:\:buildDotNotationPath\(\) has parameter \$prefix with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Muddle.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Muddle\:\:buildDotNotationPath\(\) has parameter \$suffix with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Muddle.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Muddle\:\:insert\(\) has parameter \$array with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Muddle.php
+
+		-
+			message: '#^Method ButterCream\\Utility\\Muddle\:\:insert\(\) has parameter \$path with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Utility/Muddle.php
+
+		-
+			message: '#^Parameter \#1 \$separator of function explode expects non\-empty\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Utility/Muddle.php
+
+		-
+			message: '#^Class ButterCream\\View\\Helper\\AjaxHelper extends generic class Cake\\View\\Helper but does not specify its types\: TView$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/View/Helper/AjaxHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\AjaxHelper\:\:relatedData\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/AjaxHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\AjaxHelper\:\:relatedData\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/AjaxHelper.php
+
+		-
+			message: '#^PHPDoc type array of property ButterCream\\View\\Helper\\AjaxHelper\:\:\$_defaultConfig is not covariant with PHPDoc type array\<string, mixed\> of overridden property Cake\\View\\Helper\<Cake\\View\\View\>\:\:\$_defaultConfig\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/View/Helper/AjaxHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\AjaxHelper\:\:\$_defaultConfig type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/AjaxHelper.php
+
+		-
+			message: '#^Return type \(array\<string\>\) of method ButterCream\\View\\Helper\\BakeHelper\:\:getFieldAccessibility\(\) should be compatible with return type \(array\<string, bool\>\) of method Bake\\View\\Helper\\BakeHelper\:\:getFieldAccessibility\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: src/View/Helper/BakeHelper.php
+
+		-
+			message: '#^Call to function is_array\(\) with non\-empty\-array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:backButton\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:cancelButton\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:confirmButton\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:continueButton\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:control\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:create\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:deleteBtn\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:error\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:error\(\) has parameter \$text with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:postLink\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:postLink\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormHelper\:\:saveButton\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Parameter \#1 \$title of method Cake\\View\\Helper\\FormHelper\:\:button\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/View/Helper/FormHelper.php
+
+		-
+			message: '#^Class ButterCream\\View\\Helper\\FormatHelper extends generic class Cake\\View\\Helper but does not specify its types\: TView$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/View/Helper/FormatHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormatHelper\:\:parsePhone\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormatHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormatHelper\:\:phone\(\) has parameter \$formats with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormatHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\FormatHelper\:\:zip\(\) has parameter \$formats with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/FormatHelper.php
+
+		-
+			message: '#^Class ButterCream\\View\\Helper\\GravatarHelper extends generic class Cake\\View\\Helper but does not specify its types\: TView$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/View/Helper/GravatarHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\GravatarHelper\:\:image\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/GravatarHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\GravatarHelper\:\:\$helpers type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/GravatarHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:actionDropdownMenu\(\) has parameter \$tagLinks with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:addBtn\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:button\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:editBtn\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:icon\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:link\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:link\(\) has parameter \$title with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:link\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:popover\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:tagLink\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:tagLink\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:tooltip\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\HtmlHelper\:\:viewBtn\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\HtmlHelper\:\:\$_templates type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/HtmlHelper.php
+
+		-
+			message: '#^Class ButterCream\\View\\Helper\\NestedTreeHelper extends generic class Cake\\View\\Helper but does not specify its types\: TView$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Function h not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\NestedTreeHelper\:\:buildList\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\NestedTreeHelper\:\:buildList\(\) has parameter \$tree with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\NestedTreeHelper\:\:sorter\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\NestedTreeHelper\:\:sorter\(\) has parameter \$tree with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^PHPDoc type array of property ButterCream\\View\\Helper\\NestedTreeHelper\:\:\$_defaultConfig is not covariant with PHPDoc type array\<string, mixed\> of overridden property Cake\\View\\Helper\<Cake\\View\\View\>\:\:\$_defaultConfig\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\NestedTreeHelper\:\:\$_defaultConfig type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\NestedTreeHelper\:\:\$helpers type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/NestedTreeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\PaginatorHelper\:\:ajaxTemplateOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/PaginatorHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\PaginatorHelper\:\:next\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/PaginatorHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\PaginatorHelper\:\:numbers\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/PaginatorHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\PaginatorHelper\:\:prev\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/PaginatorHelper.php
+
+		-
+			message: '#^Class ButterCream\\View\\Helper\\TableHelper extends generic class Cake\\View\\Helper but does not specify its types\: TView$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^Function __ not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\TableHelper\:\:header\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^PHPDoc type array of property ButterCream\\View\\Helper\\TableHelper\:\:\$_defaultConfig is not covariant with PHPDoc type array\<string, mixed\> of overridden property Cake\\View\\Helper\<Cake\\View\\View\>\:\:\$_defaultConfig\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^Parameter \#1 \$string of static method Cake\\Utility\\Inflector\:\:humanize\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\TableHelper\:\:\$_defaultConfig type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^Property ButterCream\\View\\Helper\\TableHelper\:\:\$helpers type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/TableHelper.php
+
+		-
+			message: '#^Instanceof between DateTime\|int\<min, \-1\>\|int\<1, max\>\|string and Cake\\I18n\\DateTime will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: src/View/Helper/TimeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\TimeHelper\:\:userFormat\(\) should return string but returns bool\|string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/View/Helper/TimeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\TimeHelper\:\:userFormat\(\) should return string but returns int\|string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/View/Helper/TimeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\TimeHelper\:\:userFormat\(\) should return string but returns string\|true\.$#'
+			identifier: return.type
+			count: 1
+			path: src/View/Helper/TimeHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\UrlHelper\:\:build\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/UrlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\UrlHelper\:\:build\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/UrlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\UrlHelper\:\:isEqual\(\) has parameter \$url with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/UrlHelper.php
+
+		-
+			message: '#^Method ButterCream\\View\\Helper\\UrlHelper\:\:isEqual\(\) has parameter \$url2 with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/View/Helper/UrlHelper.php

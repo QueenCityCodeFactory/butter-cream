@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * QueenCityCodeFactory(tm) : Web application developers (http://queencitycodefactory.com)
@@ -9,11 +10,10 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Queen City Code Factory, Inc. (http://queencitycodefactory.com)
- * @link          https://git.willetts.com/packages/referer Referer Component
+ * @link          https://github.com/QueenCityCodeFactory/butter-cream
  * @since         0.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-declare(strict_types=1);
 
 namespace ButterCream\Controller\Component;
 
@@ -25,15 +25,16 @@ use Cake\Routing\Router;
 /**
  * Referer Component Class
  *
- * Helps get the user back to where the want to be
+ * Tracks the referring URL across requests and provides smart redirection.
+ * Automatically stores the referer on startup and makes it available to views.
  */
 class RefererComponent extends Component
 {
     /**
      * Default config
-     * - `ignored` - Array of URLs to ignore
+     * - `ignored` - Array of URLs to ignore when redirecting
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $_defaultConfig = [
         'ignored' => [],
@@ -53,21 +54,17 @@ class RefererComponent extends Component
     /**
      * Store referer data in view referer variable
      *
-     * @param array|string $default default referer
+     * @param array|string|null $default default referer
      * @return void
      */
     public function setReferer(string|array|null $default = null): void
     {
-        $request = $this->_registry->getController()->getRequest();
+        $request = $this->getController()->getRequest();
         if ($request->getData('Referer.url') === null) {
             $referer = $request->referer();
 
-            if ($referer == '/' && !empty($default)) {
-                $referer = $default;
-
-                if (is_array($referer)) {
-                    $referer = Router::url($referer);
-                }
+            if ($referer === '/' && !empty($default)) {
+                $referer = is_array($default) ? Router::url($default) : $default;
             }
         } else {
             $referer = $request->getData('Referer.url');
@@ -85,23 +82,21 @@ class RefererComponent extends Component
      */
     public function getReferer(): string
     {
-        $request = $this->_registry->getController()->getRequest();
+        $request = $this->getController()->getRequest();
         if ($request->getData('Referer.url')) {
             $referer = $request->getData('Referer.url');
         } else {
             $referer = $request->referer();
         }
 
-        $referer = $this->normalizeUrl($referer);
-
-        return $referer ?? '';
+        return $this->normalizeUrl($referer) ?? '';
     }
 
     /**
-     * Determine if the referer matches
+     * Determine if the referer matches the given URL
      *
-     * @param string $url The URL
-     * @return bool true if the match, otherwise false
+     * @param string $url The URL to compare against
+     * @return bool true if they match, otherwise false
      */
     public function isMatch(string $url): bool
     {
@@ -109,37 +104,39 @@ class RefererComponent extends Component
     }
 
     /**
-     * Determine if the referer matches
+     * Add a URL to the ignore list
      *
-     * @param string $url The URL
+     * @param string $url The URL to ignore
      * @return void
      */
     public function ignore(string $url): void
     {
-        $url = $this->normalizeUrl($url);
-        $this->_config['ignored'][] = $url;
+        $ignored = $this->getConfig('ignored', []);
+        $ignored[] = $this->normalizeUrl($url);
+        $this->setConfig('ignored', $ignored);
     }
 
     /**
-     * This function strips the host and protocol out of a URL if the host and url match
+     * Strips the host and protocol from a URL if the host matches the application's base URL.
      *
-     * @param string|null $url url to normalize
-     * @return string normalized $url
+     * @param string|null $url URL to normalize
+     * @return string|null Normalized URL
      */
     public function normalizeUrl(?string $url = null): ?string
     {
-        if (is_array($url)) {
-            $url = Router::url($url);
+        if ($url === null) {
+            return null;
         }
-        $baseUrl = Router::url('/', true);
-        /** @var array $baseUri */
-        $baseUri = parse_url($baseUrl);
-        /** @var array $uri */
-        $uri = isset($url) ? parse_url($url) : [];
 
-        if (isset($uri['host']) && isset($baseUri['host']) && $baseUri['host'] == $uri['host']) {
+        $baseUrl = Router::url('/', true);
+        /** @var array<string, string> $baseUri */
+        $baseUri = parse_url($baseUrl);
+        /** @var array<string, string> $uri */
+        $uri = parse_url($url);
+
+        if (isset($uri['host'], $baseUri['host']) && $baseUri['host'] === $uri['host']) {
             $url = urldecode(
-                (!empty($uri['path']) ? $uri['path'] : '') . (!empty($uri['query']) ? '?' . $uri['query'] : ''),
+                ($uri['path'] ?? '') . (!empty($uri['query']) ? '?' . $uri['query'] : ''),
             );
         }
 
@@ -147,24 +144,21 @@ class RefererComponent extends Component
     }
 
     /**
-     * Redirect to url stored in Data.referer or default $url
+     * Redirect to the stored referer or the default URL
      *
-     * @param mixed $url the url to redirect to
-     * @param int $status http status code, default is null
+     * @param array|string $url The fallback URL to redirect to
+     * @param int $status HTTP status code
      * @return \Cake\Http\Response|null
      */
-    public function redirect(mixed $url, int $status = 302): ?Response
+    public function redirect(array|string $url, int $status = 302): ?Response
     {
         $referer = $this->getReferer();
+        $ignored = $this->getConfig('ignored', []);
 
-        if (in_array($referer, $this->_config['ignored'])) {
-            $referer = null;
-        }
-
-        if (strlen((string)$referer) == 0 || $referer == '/') {
+        if (in_array($referer, $ignored, true) || $referer === '' || $referer === '/') {
             return $this->getController()->redirect($url, $status);
-        } else {
-            return $this->getController()->redirect($referer, $status);
         }
+
+        return $this->getController()->redirect($referer, $status);
     }
 }

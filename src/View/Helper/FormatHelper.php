@@ -17,7 +17,7 @@ class FormatHelper extends Helper
      * @param string $ssn The unformatted ssn to format
      * @param string $format The format to be applied
      * @return string The formatted ssn
-     * @see \App\Utility\Format::ssn()
+     * @see \ButterCream\Utility\Format::ssn()
      */
     public function ssn(string $ssn, string $format = '000-00-0000'): string
     {
@@ -30,7 +30,7 @@ class FormatHelper extends Helper
      * @param string $zip The zipcode to be formatted
      * @param array $formats An array of formats where the index is the number of digits present in the zipcode
      * @return string The formatted zipcode
-     * @see \App\Utility\Format::zip()
+     * @see \ButterCream\Utility\Format::zip()
      */
     public function zip(string $zip, array $formats = []): string
     {
@@ -44,7 +44,7 @@ class FormatHelper extends Helper
      * @param array $formats An array of formats where the index is the number of digits present in the phone number
      * @param string $extFormat The ext format
      * @return string The formatted phone
-     * @see \App\Utility\Format::phone()
+     * @see \ButterCream\Utility\Format::phone()
      */
     public function phone(string $phone, array $formats = [], string $extFormat = ' x'): string
     {
@@ -57,7 +57,7 @@ class FormatHelper extends Helper
      * @param string $phone The phone number to be parsed apart
      * @param bool $returnBoth Whether or not an array containing both the phone string and phone parts is returned
      * @return array|string Defaults to returning a string(NO ext included) of an array with both string and parts
-     * @see \App\Utility\Format::parsePhone()
+     * @see \ButterCream\Utility\Format::parsePhone()
      */
     public function parsePhone(string $phone, bool $returnBoth = false): string|array
     {
@@ -71,7 +71,7 @@ class FormatHelper extends Helper
      * @param string $string The string to be formatted
      * @param string $format The format to be applied
      * @return string The formatted string
-     * @see \App\Utility\Format::formatString()
+     * @see \ButterCream\Utility\Format::formatString()
      */
     public function formatString(string $string, string $format): string
     {
@@ -87,7 +87,7 @@ class FormatHelper extends Helper
      * @param string $format The format to be applied
      * @param string $ignore Characters to be ignored in the format (Defaults: single space)
      * @return string The masked string
-     * @see \App\Utility\Format::maskString()
+     * @see \ButterCream\Utility\Format::maskString()
      */
     public function maskString(string $string = '', string $format = '', string $ignore = ' '): string
     {

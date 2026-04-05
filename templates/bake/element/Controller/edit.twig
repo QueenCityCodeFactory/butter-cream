@@ -8,7 +8,7 @@
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(string|int|null $id = null)
     {
 {% if belongsToMany is empty %}
         ${{ singularName }} = $this->{{ currentModelName }}->get($id);
@@ -27,7 +27,7 @@
 {% for assoc in belongsTo|merge(belongsToMany) %}
     {%- set otherName = Bake.getAssociatedTableAlias(modelObj, assoc) %}
     {%- set otherPlural = otherName|variable %}
-        ${{ otherPlural }} = $this->{{ currentModelName }}->{{ otherName }}->find('list', ['limit' => 200]);
+        ${{ otherPlural }} = $this->{{ currentModelName }}->{{ otherName }}->find('list', ['limit' => 200])->all();
         {{- "\n" }}
     {%- set compact = compact|merge(["'#{otherPlural}'"]) %}
 {% endfor %}

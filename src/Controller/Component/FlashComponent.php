@@ -11,6 +11,10 @@ use Throwable;
  * to the session from your controllers, to be rendered in a view with the
  * FlashHelper.
  *
+ * **Security Note:** This component defaults `escape` to `false` to allow HTML in flash
+ * messages. Ensure all user-provided content is properly sanitized before passing it
+ * to flash methods to prevent XSS attacks. Use `h()` to escape user input.
+ *
  * @method void success(string $message, array $options = []) Set a message using "success" element
  * @method void error(string $message, array $options = []) Set a message using "error" element
  */

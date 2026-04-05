@@ -11,9 +11,18 @@ use Cake\Datasource\Paging\PaginatedInterface;
 use Cake\Datasource\QueryInterface;
 use Cake\Datasource\RepositoryInterface;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\NotFoundException;
 use CakePdf\View\PdfView;
 use CakeSpreadsheet\View\SpreadsheetView;
 
+/**
+ * Base Controller
+ *
+ * Provides AJAX pagination, automatic layout switching, and page-out-of-bounds handling.
+ *
+ * @property \ButterCream\Controller\Component\FlashComponent $Flash
+ * @property \ButterCream\Controller\Component\RefererComponent $Referer
+ */
 class Controller extends CakeController
 {
     /**
@@ -44,19 +53,6 @@ class Controller extends CakeController
         ]);
 
         $this->addViewClasses([PdfView::class, SpreadsheetView::class]);
-    }
-
-    /**
-     * Called before the controller action. You can use this method to configure and customize components
-     * or perform logic that needs to happen before each controller action.
-     *
-     * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
-     * @link https://book.cakephp.org/5/en/controllers.html#request-life-cycle-callbacks
-     */
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
     }
 
     /**
@@ -119,19 +115,7 @@ class Controller extends CakeController
                 $settings,
             );
         } catch (PageOutOfBoundsException $exception) {
-            $request = $this->getRequest();
-            $queryString = $request->getQueryParams();
-            if (isset($queryString['page'])) {
-                $queryString['page'] = 1;
-            }
-
-            return $this->redirect([
-                'plugin' => $request->getParam('plugin'),
-                'prefix' => $request->getParam('prefix'),
-                'controller' => $request->getParam('controller'),
-                'action' => $request->getParam('action'),
-                '?' => $queryString,
-            ]);
+            throw new NotFoundException(null, null, $exception);
         }
 
         return $results;

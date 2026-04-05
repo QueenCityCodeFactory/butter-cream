@@ -1,10 +1,4 @@
-<?php
-    $sessionMonitor = $this->get('sessionMonitor', false);
-    if ($sessionMonitor !== false) {
-        $this->set('sessionMonitor', $sessionMonitor);
-    }
-?>
-<?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./layout/common'); ?>
+<?php $this->getLayout() === 'ajax' ?: $this->extend('ButterCream./layout/common'); ?>
 <?= $this->fetch('form.content.before') ?>
 <div class="row">
     <?= $this->fetch('content'); ?>

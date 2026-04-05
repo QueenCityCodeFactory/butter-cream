@@ -1,38 +1,246 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.14.2@3538fe1955d47f6ee926c0769d71af6db08aa488">
-  <file src="src/Command/CopyLayoutsCommand.php">
-    <InternalClass occurrences="1">
-      <code>new Filesystem()</code>
-    </InternalClass>
-    <InternalMethod occurrences="1">
-      <code>copyDir</code>
-    </InternalMethod>
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+  <file src="src/ButterCreamPlugin.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function bootstrap(PluginApplicationInterface $app): void]]></code>
+      <code><![CDATA[public function console(CommandCollection $commands): CommandCollection]]></code>
+    </MissingOverrideAttribute>
   </file>
-  <file src="src/Command/InstallCommand.php">
-    <ForbiddenCode occurrences="1">
-      <code>`$command`</code>
-    </ForbiddenCode>
-    <InternalClass occurrences="4">
-      <code>new Filesystem()</code>
-      <code>new Filesystem()</code>
-      <code>new Filesystem()</code>
-      <code>new Filesystem()</code>
-    </InternalClass>
-    <InternalMethod occurrences="5">
-      <code>deleteDir</code>
-      <code>findRecursive</code>
-      <code>mkdir</code>
-      <code>mkdir</code>
-      <code>findRecursive</code>
-    </InternalMethod>
-    <NullReference occurrences="2">
-      <code>$output</code>
-      <code>$return</code>
-    </NullReference>
+  <file src="src/Command/ModelCommand.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function bakeTable(Table $model, array $data, Arguments $args, ConsoleIo $io): void]]></code>
+      <code><![CDATA[public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser]]></code>
+    </MissingOverrideAttribute>
   </file>
-  <file src="vendor/cakephp/cakephp/src/View/View.php">
-    <UnsafeInstantiation occurrences="1">
-      <code>new $this-&gt;_viewBlockClass()</code>
-    </UnsafeInstantiation>
+  <file src="src/Controller/Component/FlashComponent.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function set(string|Throwable $message, array $options = []): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Controller/Controller.php">
+    <ImplementedReturnTypeMismatch>
+      <code><![CDATA[\Cake\Http\Response|null|void]]></code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidReturnStatement>
+      <code><![CDATA[$this->redirect([
+                'plugin' => $request->getParam('plugin'),
+                'prefix' => $request->getParam('prefix'),
+                'controller' => $request->getParam('controller'),
+                'action' => $request->getParam('action'),
+                '?' => $queryString,
+            ])]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[\Cake\Datasource\Paging\PaginatedInterface]]></code>
+    </InvalidReturnType>
+    <LessSpecificImplementedReturnType>
+      <code><![CDATA[\Cake\Datasource\Paging\PaginatedInterface]]></code>
+    </LessSpecificImplementedReturnType>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function beforeRender(EventInterface $event)]]></code>
+      <code><![CDATA[public function initialize(): void]]></code>
+      <code><![CDATA[public function paginate(]]></code>
+    </MissingOverrideAttribute>
+    <NullableReturnStatement>
+      <code><![CDATA[$this->redirect([
+                'plugin' => $request->getParam('plugin'),
+                'prefix' => $request->getParam('prefix'),
+                'controller' => $request->getParam('controller'),
+                'action' => $request->getParam('action'),
+                '?' => $queryString,
+            ])]]></code>
+    </NullableReturnStatement>
+  </file>
+  <file src="src/Database/Type/JsonArrayType.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function manyToPHP(array $values, array $fields, Driver $driver): array]]></code>
+      <code><![CDATA[public function toPHP(mixed $value, Driver $driver): mixed]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Error/ExceptionRenderer.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function _message(Throwable $exception, int $code): string]]></code>
+      <code><![CDATA[protected function _outputMessageSafe(string $template): Response]]></code>
+    </MissingOverrideAttribute>
+    <UndefinedFunction>
+      <code><![CDATA[__d('cake', 'An Internal Error Has Occurred.')]]></code>
+      <code><![CDATA[__d('cake', 'Not Found')]]></code>
+      <code><![CDATA[__d('cake', 'Record Not Found')]]></code>
+    </UndefinedFunction>
+  </file>
+  <file src="src/Filesystem/FileApi.php">
+    <InvalidOperand>
+      <code><![CDATA[isset($pathInfo['extension'])]]></code>
+    </InvalidOperand>
+    <TypeDoesNotContainType>
+      <code><![CDATA[empty($record)]]></code>
+      <code><![CDATA[empty($record)]]></code>
+    </TypeDoesNotContainType>
+    <UndefinedClass>
+      <code><![CDATA[Filesystem]]></code>
+      <code><![CDATA[Filesystem]]></code>
+      <code><![CDATA[LocalFilesystemAdapter]]></code>
+      <code><![CDATA[LocalFilesystemAdapter]]></code>
+      <code><![CDATA[UnableToWriteFile]]></code>
+    </UndefinedClass>
+    <UndefinedDocblockClass>
+      <code><![CDATA[$image]]></code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/Message/Exception/StatusMessageException.php">
+    <TypeDoesNotContainNull>
+      <code><![CDATA[$code === false || $code === null]]></code>
+      <code><![CDATA[$code === null]]></code>
+    </TypeDoesNotContainNull>
+  </file>
+  <file src="src/Model/Entity/File.php">
+    <UndefinedClass>
+      <code><![CDATA[Filesystem]]></code>
+      <code><![CDATA[LocalFilesystemAdapter]]></code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Model/Table/AppTable.php">
+    <MissingTemplateParam>
+      <code><![CDATA[AppTable]]></code>
+    </MissingTemplateParam>
+  </file>
+  <file src="src/Model/Table/FilesTable.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void]]></code>
+      <code><![CDATA[public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void]]></code>
+      <code><![CDATA[public function initialize(array $config): void]]></code>
+      <code><![CDATA[public function validationDefault(Validator $validator): Validator]]></code>
+    </MissingOverrideAttribute>
+    <UndefinedClass>
+      <code><![CDATA[DirectoryAttributes]]></code>
+      <code><![CDATA[FileAttributes]]></code>
+      <code><![CDATA[Filesystem]]></code>
+      <code><![CDATA[Filesystem]]></code>
+      <code><![CDATA[Filesystem]]></code>
+      <code><![CDATA[LocalFilesystemAdapter]]></code>
+      <code><![CDATA[LocalFilesystemAdapter]]></code>
+      <code><![CDATA[LocalFilesystemAdapter]]></code>
+    </UndefinedClass>
+  </file>
+  <file src="src/Routing/Middleware/SessionTimeoutMiddleware.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Routing/Middleware/TrustProxyMiddleware.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Utility/Format.php">
+    <InvalidNullableReturnType>
+      <code><![CDATA[string]]></code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement>
+      <code><![CDATA[preg_replace('/[^0-9]/', '', $string)]]></code>
+    </NullableReturnStatement>
+  </file>
+  <file src="src/Utility/TemplateRenderer.php">
+    <LessSpecificImplementedReturnType>
+      <code><![CDATA[\Cake\View\View]]></code>
+    </LessSpecificImplementedReturnType>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getView(): View]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/View/AppView.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function initialize(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/View/Helper/AjaxHelper.php">
+    <MissingTemplateParam>
+      <code><![CDATA[AjaxHelper]]></code>
+    </MissingTemplateParam>
+  </file>
+  <file src="src/View/Helper/BakeHelper.php">
+    <ImplementedReturnTypeMismatch>
+      <code><![CDATA[array<string>]]></code>
+    </ImplementedReturnTypeMismatch>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getFieldAccessibility(array|false|null $fields = null, ?array $primaryKey = null): array]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/View/Helper/FormHelper.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function control(string $fieldName, array $options = []): string]]></code>
+      <code><![CDATA[public function create(mixed $context = null, array $options = []): string]]></code>
+      <code><![CDATA[public function error(string $field, string|array|null $text = null, array $options = []): string]]></code>
+      <code><![CDATA[public function postLink(string $title, string|array|null $url = null, array $options = []): string]]></code>
+    </MissingOverrideAttribute>
+    <RedundantCondition>
+      <code><![CDATA[$options['select2'] !== false && isset($options['options']) && is_array($options)]]></code>
+      <code><![CDATA[is_array($options)]]></code>
+    </RedundantCondition>
+  </file>
+  <file src="src/View/Helper/FormatHelper.php">
+    <MissingTemplateParam>
+      <code><![CDATA[FormatHelper]]></code>
+    </MissingTemplateParam>
+  </file>
+  <file src="src/View/Helper/GravatarHelper.php">
+    <MissingTemplateParam>
+      <code><![CDATA[GravatarHelper]]></code>
+    </MissingTemplateParam>
+  </file>
+  <file src="src/View/Helper/HtmlHelper.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function icon(string $name, array $options = []): string]]></code>
+      <code><![CDATA[public function link(array|string $title, string|array|null $url = null, array $options = []): string]]></code>
+    </MissingOverrideAttribute>
+    <MoreSpecificImplementedParamType>
+      <code><![CDATA[$title]]></code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src/View/Helper/NestedTreeHelper.php">
+    <MissingTemplateParam>
+      <code><![CDATA[NestedTreeHelper]]></code>
+    </MissingTemplateParam>
+    <UndefinedFunction>
+      <code><![CDATA[h($treeItem->name)]]></code>
+    </UndefinedFunction>
+  </file>
+  <file src="src/View/Helper/PaginatorHelper.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function next(string $title = '<em class="fa-solid fa-angle-right"></em>', array $options = []): string]]></code>
+      <code><![CDATA[public function numbers(array $options = []): string]]></code>
+      <code><![CDATA[public function prev(string $title = '<em class="fa-solid fa-angle-left"></em>', array $options = []): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/View/Helper/TableHelper.php">
+    <MissingTemplateParam>
+      <code><![CDATA[TableHelper]]></code>
+    </MissingTemplateParam>
+    <UndefinedFunction>
+      <code><![CDATA[__(Inflector::humanize(preg_replace('/_id$/', '', $title)))]]></code>
+    </UndefinedFunction>
+  </file>
+  <file src="src/View/Helper/TimeHelper.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[$date->i18nFormat($format, $timezone)]]></code>
+      <code><![CDATA[$invalid]]></code>
+      <code><![CDATA[$invalid]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[string]]></code>
+    </InvalidReturnType>
+    <RedundantCondition>
+      <code><![CDATA[$date instanceof DateTime]]></code>
+    </RedundantCondition>
+  </file>
+  <file src="src/View/Helper/UrlHelper.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function build(string|array|null $url = null, array $options = []): string]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/View/PdfView.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function initialize(): void]]></code>
+    </MissingOverrideAttribute>
   </file>
 </files>

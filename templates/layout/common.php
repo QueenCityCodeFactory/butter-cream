@@ -1,5 +1,13 @@
 <?php
 /**
+ * Pass the sessionMonitor view variable through to the parent layout.
+ */
+$sessionMonitor = $this->get('sessionMonitor', false);
+if ($sessionMonitor !== false) {
+    $this->set('sessionMonitor', $sessionMonitor);
+}
+
+/**
  * Flash Messages
  */
 if (!$this->fetch('flash')) {

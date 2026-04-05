@@ -378,7 +378,7 @@ class HtmlHelper extends Helper
      */
     public function actionDropdownMenu(
         array $tagLinks = [],
-        string $menuButton = '<em class="fa fa-bars"></em>',
+        string $menuButton = '<em class="fa-solid fa-bars"></em>',
     ): string|bool {
         $menuItems = [];
         foreach ($tagLinks as $tagLink) {

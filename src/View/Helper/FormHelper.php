@@ -216,7 +216,7 @@ class FormHelper extends Helper
         ];
 
         $url = empty($this->_View->get('referer'))
-            ? 'javascript:void((function() { window.history.go(-1); })());'
+            ? '#'
             : $this->_View->get('referer');
 
         return $this->Html->link($title, $url, $options);
@@ -231,11 +231,11 @@ class FormHelper extends Helper
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
     public function backButton(
-        string $title = '<em class="fa fa-arrow-circle-left"></em> Back',
+        string $title = '<em class="fa-solid fa-circle-arrow-left"></em> Back',
         array $options = [],
     ): string {
         if (empty($title)) {
-            $title = $this->Html->icon('arrow-circle-left') . ' Back';
+            $title = $this->Html->icon('circle-arrow-left') . ' Back';
         }
         $options += [
             'class' => 'btn btn-info',
@@ -256,11 +256,11 @@ class FormHelper extends Helper
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
     public function continueButton(
-        string $title = 'Continue <em class="fa fa-arrow-circle-right"></em>',
+        string $title = 'Continue <em class="fa-solid fa-circle-arrow-right"></em>',
         array $options = [],
     ): string {
         if (empty($title)) {
-            $title = 'Continue ' . $this->Html->icon('arrow-circle-right');
+            $title = 'Continue ' . $this->Html->icon('circle-arrow-right');
         }
         $options += [
             'class' => 'btn btn-primary continue-button',
@@ -340,97 +340,6 @@ class FormHelper extends Helper
     }
 
     /**
-     * Creates a Tempus Dominus Bootstrap 4 DateTimePicker. Using this helper requires Bootstrap 4,
-     * the tempusdominus datetimepicker javascript, and a fetch for the 'script' block
-     * i.e. <?= $this->fetch('script') ?> somewhere in your view. If using another view block called
-     * 'script' ->start('script') will clear the contents inserted by this helper. To override the JS
-     * this helper outputs, set options['script'] false and add your JS to the view your picker is on.
-     * If you only intend to override the datetimepicker's object literal parameters, just pass your
-     * options into options['datetimepicker']['options']. If a placeholder is passed, any value will
-     * be wiped out - the datetimepicker will not have a value and show a placeholder. If
-     * frontEndTimezoneConversion is not used, you're responsible for adjusting the time read from
-     * the database before it gets to this helper. The helper will still give the guessed timezone
-     * abbreviation based on the timezone given by the browser. If you'd like to override this, add
-     * that functionality to this helper.
-     *
-     * @param string $fieldName A field name, like "modelname.fieldname"
-     * @param array $options Array of options and HTML attributes
-     * @return string A form-group div containing the datetimepicker
-     */
-    public function dateTimePicker(string $fieldName, array $options = []): string
-    {
-        $domId = $this->_domId($fieldName);
-
-        $options += [
-            'type' => 'text',
-            'target' => $domId . '-datetimepicker',
-            'prepend' => '<em class="fa fa-calendar"></em>',
-            'placeholder' => false,
-            'frontEndTimezoneConversion' => false,
-            'script' => true,
-            'datetimepicker' => [
-                'options' => [
-                    'timezone: moment.tz.guess()',
-                    'format: "MM/DD/YYYY hh:mm a z"',
-                    'icons: { time: "fa-solid fa-clock" }',
-                ],
-            ],
-            'class' => ['datetimepicker-input'],
-        ];
-
-        $target = $options['target'];
-        unset($options['target']);
-        $placeholder = $options['placeholder'];
-        unset($options['placeholder']);
-        $frontEndTimezoneConversion = $options['frontEndTimezoneConversion'];
-        unset($options['frontEndTimezoneConversion']);
-        $script = $options['script'];
-        unset($options['script']);
-        $datetimepicker = $options['datetimepicker'];
-        unset($options['datetimepicker']);
-
-        $options += [
-            'templates' => [
-                'inputGroupAddon' => '<div class="{{class}}" data-target="#' . $target .
-                    '" data-toggle="datetimepicker">{{content}}</div>',
-                'inputGroupContainer' => '<div{{attrs}} id="' . $target .
-                    '" data-target-input="nearest">{{prepend}}{{content}}{{append}}</div>',
-            ],
-            'data-target' => '#' . $target,
-            'data-toggle' => 'datetimepicker',
-        ];
-
-        $placeholderJs = '';
-        if (!empty($placeholder)) {
-            $placeholderJs .= "\n\t$(\"#" . $domId . "\").attr('placeholder', '" . $placeholder . "');\n";
-        }
-
-        $timezone = 'moment.tz.guess()';
-        $conversionJs = '';
-        if ($frontEndTimezoneConversion === true) {
-            $timezone = '\'UTC\'';
-            $conversionJs = "\tif ($(\"#" . $domId . '").val()) {';
-            $conversionJs .= "\n\t\t$(\"#" . $target . "\").datetimepicker('date', $(\"#" . $target .
-                "\").datetimepicker('viewDate').tz(moment.tz.guess()));";
-            $conversionJs .= "\n\t}";
-            $conversionJs .= "\n\tmoment.tz.setDefault(moment.tz.guess());\n";
-        }
-
-        if ($script === true) {
-            // This will load into a block called 'script' by default
-            $this->Html->scriptBlock(
-                "$(function() {\n\tmoment.tz.setDefault(" . $timezone .
-                    ");\n\t$(\"#" . $target . "\").datetimepicker({\n\t\t" .
-                    join(",\n\t\t", $datetimepicker['options']) .
-                    "\n\t});\n" . $conversionJs . $placeholderJs . '});',
-                ['block' => true],
-            );
-        }
-
-        return $this->control($fieldName, $options);
-    }
-
-    /**
      * Generates a form control element complete with label and wrapper div.
      *
      * ### Options
@@ -468,22 +377,22 @@ class FormHelper extends Helper
     {
         $options += [
             'type' => null,
-            'select2' => true,
+            'enhancedSelect' => true,
         ];
 
-        if ($options['select2'] !== false && isset($options['options']) && is_array($options)) {
+        if ($options['enhancedSelect'] !== false && isset($options['options']) && is_array($options)) {
             if (empty($options['type'])) {
                 $options['type'] = $this->_inputType($fieldName, $options);
             }
 
             if ($options['type'] == 'select') {
                 $options += [
-                    'class' => ['select2-input-field'],
+                    'class' => ['enhanced-select'],
                 ];
             }
         }
 
-        unset($options['select2']);
+        unset($options['enhancedSelect']);
 
         return parent::control($fieldName, $options);
     }

@@ -47,30 +47,30 @@ class NestedTreeHelper extends Helper
      */
     public function sorter(array $tree = [], array $options = []): bool|string
     {
-        if (!empty($tree)) {
-            $container = !empty($options['container']) ? $options['container'] : [];
-            $sortable = !empty($options['sortable']) ? $options['sortable'] : [];
-            $items = !empty($options['items']) ? $options['items'] : [];
-            $nestingKey = $options['nestingKey'] ?? 'children';
-
-            if (!isset($container['class'])) {
-                $container['class'] = 'nested-sortable';
-            }
-            if (!isset($sortable['class'])) {
-                $sortable['class'] = 'sortable list-group';
-            }
-
-            return $this->formatTemplate('container', [
-                'attrs' => $this->templater()->formatAttributes($container),
-                'content' => $this->sorter($tree, [
-                    'root' => $sortable,
-                    'items' => $items,
-                    'nestingKey' => $nestingKey,
-                ]),
-            ]);
-        } else {
+        if (empty($tree)) {
             return false;
         }
+
+        $container = $options['container'] ?? [];
+        $sortable = $options['sortable'] ?? [];
+        $items = $options['items'] ?? [];
+        $nestingKey = $options['nestingKey'] ?? 'children';
+
+        if (!isset($container['class'])) {
+            $container['class'] = 'nested-sortable';
+        }
+        if (!isset($sortable['class'])) {
+            $sortable['class'] = 'sortable list-group';
+        }
+
+        return $this->formatTemplate('container', [
+            'attrs' => $this->templater()->formatAttributes($container),
+            'content' => $this->buildList($tree, [
+                'root' => $sortable,
+                'items' => $items,
+                'nestingKey' => $nestingKey,
+            ]),
+        ]);
     }
 
     /**
@@ -83,9 +83,9 @@ class NestedTreeHelper extends Helper
      *
      * @param array $tree The tree data - needs to be tree structure
      * @param array $options The Options
-     * @return string|bool HTML for the sorter
+     * @return string HTML for the sorter
      */
-    protected function sorter(array $tree = [], array $options = []): bool|string
+    protected function buildList(array $tree = [], array $options = []): string
     {
         if (empty($tree)) {
             return '';
@@ -108,8 +108,8 @@ class NestedTreeHelper extends Helper
             $options['data-id'] = $treeItem->id;
             $listItems[] = $this->formatTemplate('listItem', [
                 'attrs' => $this->templater()->formatAttributes($options),
-                'title' => $treeItem->name,
-                'content' => $this->sorter(
+                'title' => h($treeItem->name),
+                'content' => $this->buildList(
                     !empty($treeItem->$nestingKey) ? $treeItem->$nestingKey : [],
                     $options + ['nestingKey' => $nestingKey],
                 ),
@@ -118,7 +118,7 @@ class NestedTreeHelper extends Helper
 
         return $this->formatTemplate('list', [
             'attrs' => $this->templater()->formatAttributes($root),
-            'content' => join('', $listItems),
+            'content' => implode('', $listItems),
         ]);
     }
 }

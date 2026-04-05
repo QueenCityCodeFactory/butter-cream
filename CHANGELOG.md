@@ -8,16 +8,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- GitHub Actions CI/CD workflow with PHP 8.2, 8.3, 8.4 support
-- PHPUnit test suite configuration
-- PHPStan and Psalm static analysis
-- Comprehensive documentation
-- Contributing guidelines
-- CI status badges
+- JSON decode error checking in `JsonArrayType::toPHP()` and `manyToPHP()`
+- XSS protection: `h()` escaping in `NestedTreeHelper` tree item names
+- Security documentation on `FlashComponent` `escape => false` default
+- `@property` annotations on base `Controller` for component IDE support
+- Comprehensive test coverage for FlashComponent, RefererComponent, JsonArrayType, TreeviewTrait, AppTable, StatusMessage, StatusMessageException, ButterCreamPlugin
+- CategoriesFixture class for TreeviewTrait tests
 
 ### Changed
-- Updated minimum PHP requirement to 8.2
-- Updated Psalm to version 6.x for PHP 8.4 compatibility
+- **BREAKING:** Minimum PHP version raised to 8.4
+- Renamed `NestedTreeHelper::sorter()` (protected) to `buildList()` to fix duplicate method name fatal error
+- `RefererComponent` modernized: replaced `_registry->getController()` with `getController()`, `_config` with `getConfig()`/`setConfig()`
+- Simplified `Validation::birthdate()` and `Validation::check()` methods
+- Improved `StatusMessage` return types from `mixed` to specific types
+- `FormHelper::cancelButton()` now uses `'#'` instead of `javascript:void()` (CSP safe)
+- `composer.json` scripts simplified to use `phpcs.xml` config automatically
+- PHPUnit schema updated to 11.5
+- `.gitattributes` updated to export-ignore additional dev files (CHANGELOG, CONTRIBUTING, SECURITY, phpcs.xml)
+
+### Fixed
+- **Security:** XSS vulnerability in `templates/layout/main.php` — session data now encoded via `json_encode()` instead of raw string interpolation
+- **Security:** XSS vulnerability in `NestedTreeHelper` — tree item names now escaped with `h()`
+- **Security:** `javascript:void()` replaced with `'#'` in `FormHelper::cancelButton()`
+- Fatal error: `NestedTreeHelper` had two methods named `sorter()` (public and protected)
+- `RefererComponent::normalizeUrl()` removed unreachable `is_array($url)` check
+- `AppTable::beforeDelete` docblock type corrected to `EntityInterface`
+- `FormatHelper` `@see` annotations corrected from `\App\` to `\ButterCream\` namespace
+- `FilesTable` removed incorrect `@property` annotations referencing `\App\Model\Table\*`
+- `templates/layout/error.php` added `isset($error)` guard and fixed template path
+- Stale entries cleared from `psalm-baseline.xml`
+- Replaced `join()` alias with `implode()` in `NestedTreeHelper`
+
+### Removed
+- Empty `routes()` and `middleware()` overrides from `ButterCreamPlugin`
+- Empty `beforeFilter()` from base `Controller`
+- Empty `$filterArgs` from `FilesTable`
 
 ## [1.0.0] - 2024-XX-XX
 

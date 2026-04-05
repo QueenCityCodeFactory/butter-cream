@@ -2,36 +2,22 @@
 use Cake\Core\Configure;
 
 /**
- * Default `html` block.
+ * ButterCream Error Layout
+ *
+ * Extends the main layout for consistent HTML shell and asset loading.
+ * Adds error-page body class and error-specific content structure
+ * with optional debug stack-trace panel.
  */
-if (!$this->fetch('html')) {
-    $this->assign('html', $this->Html->tag('html', null, ['lang' => Configure::read('App.language')]));
-}
-
-/**
- * Default `meta` block.
- */
-if (!$this->fetch('meta')) {
-    $this->start('meta');
-    echo $this->Html->meta('viewport', 'width=device-width, initial-scale=1');
-    echo $this->Html->meta('description', '');
-    echo $this->Html->meta('author', '');
-    $this->end();
-}
-
-/**
- * Default `Google Analytics` tracking code.
- */
-if (!$this->fetch('google_analytics')) {
-    $this->assign('google_analytics', $this->element('google_analytics', [], ['ignoreMissing' => true, 'plugin' => false]));
-}
+$this->extend('ButterCream.main');
+$this->set('noModalScript', true);
+$this->set('extraBodyClasses', ['error-page']);
 
 /**
  * Flash Messages
  */
 if (!$this->fetch('flash')) {
     $this->start('flash');
-    if (isset($this->Flash)) {
+    if ($this->helpers()->has('Flash')) {
         echo $this->Flash->render();
     }
     $this->end();
@@ -52,48 +38,12 @@ if (!$this->fetch('footer')) {
 }
 
 /**
- * Load assets
+ * Debug stack-trace interaction handlers.
+ * These enable the collapsible stack frames in the debug error card below.
  */
-if (Configure::read('debug') === true) {
-    $this->prepend('css', $this->Html->css(['app.css?cb=' . Configure::read('CacheBuster.cssCB')]));
-    $this->prepend('script', $this->Html->script(['app.js?cb=' . Configure::read('CacheBuster.jsCB')]));
-} else {
-    $this->prepend('css', $this->Html->css(['app.min.css?cb=' . Configure::read('CacheBuster.cssCB')]));
-    $this->prepend('script', $this->Html->script(['app.min.js?cb=' . Configure::read('CacheBuster.jsCB')]));
-}
-
-/**
- * Default `body` block.
- */
-$bodyClasses = [Configure::read('App.environment'), $this->request->getParam('controller'), $this->request->getParam('action'), 'error-page'];
-if ($this->get('sessionMonitor') === true) {
-    $bodyClasses[] = 'session-monitor';
-}
-$skinClass = $this->request->getSession()->read('Auth.theme');
-if (!empty($skinClass)) {
-    $bodyClasses[] = $skinClass;
-}
-
-$bodyAttributes = $this->get('bodyAttributes');
-
-if (empty($bodyAttributes)) {
-    $bodyAttributes = ['class' => $bodyClasses];
-}
-
-if (!empty($bodyAttributes['class']) && is_array($bodyAttributes['class'])) {
-    $bodyAttributes['class'] = array_unique($bodyAttributes['class']);
-}
-
-if (!$this->fetch('body.start')) {
-    $this->assign('body.start', $this->Html->tag('body', null, $bodyAttributes));
-}
-
-if (!$this->fetch('body.end')) {
-    $this->assign('body.end', '</body>');
-}
-
+if (Configure::read('debug')) :
 $this->append('script'); ?>
-<script type="text/javascript">
+<script>
     function bindEvent(selector, eventName, listener) {
         var els = document.querySelectorAll(selector);
         for (var i = 0, len = els.length; i < len; i++) {
@@ -151,76 +101,64 @@ $this->append('script'); ?>
         });
     });
 </script>
-<?php $this->end(); ?>
+<?php
+$this->end();
+endif;
+?>
 
-<!doctype html>
-<?= $this->fetch('html') ?>
-    <head>
-        <?= $this->Html->charset() ?>
-        <?= $this->fetch('meta') ?>
-        <title><?= $this->fetch('title') ?></title>
-        <?= $this->fetch('css') ?>
-        <?= $this->fetch('google_analytics') ?>
-    </head>
-    <?= $this->fetch('body.start') ?>
-        <?= $this->fetch('header') ?>
-        <div class="container-fluid">
-            <div class="row">
-                <main role="main" class="col-12" spellcheck="true">
-                    <?= $this->fetch('flash') ?>
-                    <noscript>
-                        <div class="bs-callout bs-callout-danger">
-                            <h4>JavaScript is Disabled</h4>
-                            <p>Without JavaScript enabled this web application may not function as intended. Please enable JavaScript before continuing.</p>
-                        </div>
-                    </noscript>
-                    <?= $this->fetch('callout') ?>
-                    <?= $this->fetch('content') ?>
-                    <?php if (Configure::read('debug')) : ?>
-                        <div class="card border-danger">
-                            <div class="card-header text-danger">
-                                <div class="row">
-                                    <div class="col">
-                                        <?= h($this->fetch('title')) ?>
-                                    </div>
-                                    <div class="col text-end">
-                                        <small><?= $error::class ?></small>
-                                    </div>
-                                </div>
+<div class="container-fluid">
+    <div class="row">
+        <main role="main" class="col-12" spellcheck="true">
+            <?= $this->fetch('flash') ?>
+            <noscript>
+                <div class="bs-callout bs-callout-danger">
+                    <h4>JavaScript is Disabled</h4>
+                    <p>Without JavaScript enabled this web application may not function as intended. Please enable JavaScript before continuing.</p>
+                </div>
+            </noscript>
+            <?= $this->fetch('callout') ?>
+            <?= $this->fetch('content') ?>
+            <?php if (Configure::read('debug')) : ?>
+                <div class="card border-danger">
+                    <div class="card-header text-danger">
+                        <div class="row">
+                            <div class="col">
+                                <?= h($this->fetch('title')) ?>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-4 error-nav">
-                                        <?= $this->element('exception_stack_trace_nav') ?>
-                                    </div>
-                                    <div class="col-md-8 error-contents">
-                                        <?php if ($this->fetch('subheading')) : ?>
-                                        <div class="alert alert-info error-subheading">
-                                            <?= $this->fetch('subheading') ?>
-                                        </div>
-                                        <?php endif; ?>
-
-                                        <?= $this->element('exception_stack_trace'); ?>
-
-                                        <div class="error-suggestion">
-                                            <?= $this->fetch('file') ?>
-                                        </div>
-
-                                        <?php if ($this->fetch('templateName')) : ?>
-                                        <p class="customize">
-                                            If you want to customize this error message, create
-                                            <em><?= APP_DIR . DIRECTORY_SEPARATOR . 'Template' . DIRECTORY_SEPARATOR . 'Error' . DIRECTORY_SEPARATOR . $this->fetch('templateName') ?></em>
-                                        </p>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+                            <div class="col text-end">
+                                <small><?= isset($error) ? h($error::class) : '' ?></small>
                             </div>
                         </div>
-                    <?php endif; ?>
-                </main>
-            </div>
-        </div>
-        <?= $this->fetch('footer') ?>
-        <?= $this->fetch('script') ?>
-    <?= $this->fetch('body.end') ?>
-</html>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 error-nav">
+                                <?= $this->element('exception_stack_trace_nav') ?>
+                            </div>
+                            <div class="col-md-8 error-contents">
+                                <?php if ($this->fetch('subheading')) : ?>
+                                <div class="alert alert-info error-subheading">
+                                    <?= $this->fetch('subheading') ?>
+                                </div>
+                                <?php endif; ?>
+
+                                <?= $this->element('exception_stack_trace'); ?>
+
+                                <div class="error-suggestion">
+                                    <?= $this->fetch('file') ?>
+                                </div>
+
+                                <?php if ($this->fetch('templateName')) : ?>
+                                <p class="customize">
+                                    If you want to customize this error message, create
+                                    <em><?= 'templates' . DIRECTORY_SEPARATOR . 'Error' . DIRECTORY_SEPARATOR . $this->fetch('templateName') ?></em>
+                                </p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </main>
+    </div>
+</div>

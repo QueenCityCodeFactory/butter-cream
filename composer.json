@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "cakephp/cakephp": "^5.3",
         "friendsofcake/search": "^7.0.0",
         "friendsofcake/bootstrap-ui" : "^5.0.0",
@@ -24,7 +24,8 @@
         "cakephp/bake": "^3.6",
         "cakephp/cakephp-codesniffer": "^5.3",
         "phpstan/phpstan": "^2.0",
-        "vimeo/psalm": "^6.0"
+        "vimeo/psalm": "^6.0",
+        "league/flysystem": "^3.33"
     },
     "support": {
         "issues": "https://github.com/QueenCityCodeFactory/butter-cream/issues",
@@ -46,8 +47,8 @@
             "@cs-check",
             "@stan"
         ],
-        "cs-check": "phpcs -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/",
-        "cs-fix": "phpcbf --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/",
+        "cs-check": "phpcs -p",
+        "cs-fix": "phpcbf",
         "stan": "phpstan analyse",
         "psalm": "psalm",
         "test": "phpunit"

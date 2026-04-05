@@ -1,10 +1,4 @@
-<?php
-    $sessionMonitor = $this->get('sessionMonitor', false);
-    if ($sessionMonitor !== false) {
-        $this->set('sessionMonitor', $sessionMonitor);
-    }
-?>
-<?php $this->layout == 'ajax' ? null : $this->extend('ButterCream./layout/common'); ?>
+<?php $this->getLayout() === 'ajax' ?: $this->extend('ButterCream./layout/common'); ?>
 <?php if (!$this->fetch('index.card.footer') && $this->get('index.noCardFooter', false) !== true) : ?>
     <?php $this->start('index.card.footer'); ?>
         <div class="card-footer">
@@ -22,8 +16,9 @@
                     <small><?= $this->fetch('page.description') ?></small>
                 <?php endif; ?>
             </div>
-            <?php if ($this->fetch('index.card.buttons')) : ?>
+            <?php if ($this->fetch('index.card.buttons') || $this->Filters->hasFilters()) : ?>
                 <div class="col-auto card-header-buttons">
+                    <?= $this->Filters->render() ?>
                     <?= $this->fetch('index.card.buttons') ?>
                 </div>
             <?php endif ?>

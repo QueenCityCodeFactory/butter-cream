@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ButterCream\Error;
 
-use ButterCream\Http\Exception\HttpException;
+use ButterCream\Http\Exception\ButterCreamException;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Error\Renderer\WebExceptionRenderer;
@@ -27,7 +27,7 @@ class ExceptionRenderer extends WebExceptionRenderer
 
         if (
             Configure::read('debug') !== true &&
-            !($exception instanceof HttpException) &&
+            !($exception instanceof ButterCreamException) &&
             !($exception instanceof CakeHttpException) &&
             !($exception instanceof InvalidArgumentException)
         ) {

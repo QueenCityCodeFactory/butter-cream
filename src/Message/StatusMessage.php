@@ -5,13 +5,16 @@ namespace ButterCream\Message;
 
 /**
  * Status Message Class - Library of application status messages.
+ *
+ * Provides a centralized registry of status messages with codes, HTTP status,
+ * and types for consistent error/success messaging across the application.
  */
 class StatusMessage
 {
     /**
      * Application Status Messages
      *
-     * @var array
+     * @var array<string, array{status: int, responseText: string, code: string, type: string}>
      */
     protected static array $messages = [
         'missing_field' => [
@@ -85,20 +88,20 @@ class StatusMessage
     /**
      * Get all of the messages
      *
-     * @return mixed The all the messages or false if no messages
+     * @return array<string, array{status: int, responseText: string, code: string, type: string}>
      */
-    public static function getMessages(): mixed
+    public static function getMessages(): array
     {
-        return static::$messages ?? false;
+        return static::$messages;
     }
 
     /**
-     * Get a messages by key
+     * Get a message by key
      *
      * @param string $key The array key for the message
-     * @return mixed The message array or false if not found
+     * @return array{status: int, responseText: string, code: string, type: string}|false The message array or false if not found
      */
-    public static function getMessage(string $key): mixed
+    public static function getMessage(string $key): array|false
     {
         return static::$messages[$key] ?? false;
     }
@@ -107,9 +110,9 @@ class StatusMessage
      * Get a message's status
      *
      * @param string $key The array key for the message
-     * @return mixed The message status or false if not found
+     * @return int|false The HTTP status code or false if not found
      */
-    public static function getStatus(string $key): mixed
+    public static function getStatus(string $key): int|false
     {
         return static::$messages[$key]['status'] ?? false;
     }
@@ -118,9 +121,9 @@ class StatusMessage
      * Get Response Text
      *
      * @param string $key The array key for the message
-     * @return mixed The message response text or false if not found
+     * @return string|false The message response text or false if not found
      */
-    public static function getResponseText(string $key): mixed
+    public static function getResponseText(string $key): string|false
     {
         return static::$messages[$key]['responseText'] ?? false;
     }
@@ -129,9 +132,9 @@ class StatusMessage
      * Get Code
      *
      * @param string $key The array key for the message
-     * @return mixed The message code or false if not found
+     * @return string|false The message code or false if not found
      */
-    public static function getCode(string $key): mixed
+    public static function getCode(string $key): string|false
     {
         return static::$messages[$key]['code'] ?? false;
     }
@@ -140,25 +143,25 @@ class StatusMessage
      * Get type
      *
      * @param string $key The array key for the message
-     * @return mixed The message type or false if not found
+     * @return string|false The message type or false if not found
      */
-    public static function getType(string $key): mixed
+    public static function getType(string $key): string|false
     {
         return static::$messages[$key]['type'] ?? false;
     }
 
     /**
-     * To Sting - Message/Type/Code
+     * To String - Message/Type/Code
      *
      * @param string $key The array key for the message
-     * @return mixed The message string with type and code or false if not found
+     * @return string The message string with type and code
      */
-    public static function toString(string $key): mixed
+    public static function toString(string $key): string
     {
         $code = static::$messages[$key]['code'] ?? '';
         $message = static::$messages[$key]['responseText'] ?? '';
         $type = static::$messages[$key]['type'] ?? 'notice';
 
-        return trim($message . ' ' . strtoupper((string)$type) . ': ' . $code);
+        return trim($message . ' ' . strtoupper($type) . ': ' . $code);
     }
 }

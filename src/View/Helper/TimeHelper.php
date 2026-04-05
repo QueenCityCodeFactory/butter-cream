@@ -6,7 +6,6 @@ namespace ButterCream\View\Helper;
 use Cake\I18n\DateTime;
 use Cake\View\Helper\TimeHelper as Helper;
 use DateTime as NativeDateTime;
-use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 

@@ -14,10 +14,16 @@ class StatusMessageException extends HttpException
     /**
      * Constructor
      *
-     * @param string $key The Status Message Key
+     * @param string|null $key The Status Message Key
      */
     public function __construct(?string $key = null)
     {
+        if ($key === null) {
+            parent::__construct('Whoops! It looks like an invalid `$key` was provided', 500);
+
+            return;
+        }
+
         $message = StatusMessage::getResponseText($key);
         $code = StatusMessage::getStatus($key);
 

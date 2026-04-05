@@ -8,6 +8,12 @@ $this->extend('ButterCream./layout/index');
 $this->assign('page.heading', '{{ pluralHumanName }}');
 $this->assign('ajax_update_element', '#{{ pluralHumanName|lower|slug }}-pagination');
 $this->Paginator->ajaxTemplateOptions($this->fetch('ajax_update_element'));
+{% if associations.BelongsTo %}
+
+{% for alias, details in associations.BelongsTo %}
+$this->Filters->addControl('{{ details.foreignKey }}', ['options' => ${{ alias|variable }}, 'empty' => 'All']);
+{% endfor %}
+{% endif %}
 ?>
 
 <?php $this->start('index.card.buttons'); ?>

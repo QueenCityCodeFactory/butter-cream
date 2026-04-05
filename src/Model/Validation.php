@@ -62,12 +62,7 @@ class Validation
      */
     public static function birthdate(DateTime $check): bool
     {
-        $today = DateTime::now();
-        if ($check->toUnixString() > $today->toUnixString()) {
-            return false;
-        }
-
-        return true;
+        return $check <= DateTime::now();
     }
 
     /**
@@ -79,10 +74,6 @@ class Validation
      */
     protected static function check(string $check, string $regex): bool
     {
-        if (is_string($regex) && preg_match($regex, $check)) {
-            return true;
-        }
-
-        return false;
+        return (bool)preg_match($regex, $check);
     }
 }

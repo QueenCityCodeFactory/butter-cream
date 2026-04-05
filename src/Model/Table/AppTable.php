@@ -123,10 +123,10 @@ class AppTable extends Table
     }
 
     /**
-     * Event fired after the record has been deleted
+     * Event fired before the record is deleted
      *
      * @param \Cake\Event\EventInterface $event The beforeDelete event that was fired.
-     * @param \Cake\ORM\Entity $entity The entity
+     * @param \Cake\Datasource\EntityInterface $entity The entity
      * @param \ArrayObject $options The options
      * @return void
      */

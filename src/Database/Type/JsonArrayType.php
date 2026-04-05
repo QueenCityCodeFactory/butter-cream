@@ -25,7 +25,9 @@ class JsonArrayType extends JsonType implements BatchCastingInterface
             return null;
         }
 
-        return json_decode($value, false);
+        $decoded = json_decode($value, false);
+
+        return json_last_error() === JSON_ERROR_NONE ? $decoded : null;
     }
 
     /**
@@ -38,7 +40,8 @@ class JsonArrayType extends JsonType implements BatchCastingInterface
                 continue;
             }
 
-            $values[$field] = json_decode($values[$field], false);
+            $decoded = json_decode($values[$field], false);
+            $values[$field] = json_last_error() === JSON_ERROR_NONE ? $decoded : null;
         }
 
         return $values;
