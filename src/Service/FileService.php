@@ -245,7 +245,9 @@ class FileService
         }
 
         $eventManager = $this->filesTable->getEventManager();
-        $eventManager->off($eventManager->listeners('Model.afterSave'));
+        foreach ($eventManager->listeners('Model.afterSave') as $listener) {
+            $eventManager->off('Model.afterSave', $listener['callable']);
+        }
 
         if ($this->filesTable->save($file)) {
             return $file->id;
