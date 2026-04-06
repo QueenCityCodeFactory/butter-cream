@@ -73,11 +73,6 @@
       <code><![CDATA[public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface]]></code>
     </MissingOverrideAttribute>
   </file>
-  <file src="src/Service/FileService.php">
-    <UndefinedDocblockClass>
-      <code><![CDATA[$image]]></code>
-    </UndefinedDocblockClass>
-  </file>
   <file src="src/Utility/TemplateRenderer.php">
     <LessSpecificImplementedReturnType>
       <code><![CDATA[\Cake\View\View]]></code>

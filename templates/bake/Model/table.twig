@@ -103,7 +103,7 @@ class {{ name }}Table extends Table{{ fileBuilder.classBuilder.implements ? ' im
         {{- "\n" }}
         {%- endif %}
         {%- for assoc in assocs %}
-        $this->searchManager()->value('{{ assoc.foreignKey}}');
+        $this->getBehavior('Search')->searchManager()->value('{{ assoc.foreignKey}}');
         {{- "\n" }}
         {%- endfor %}
     {%- endif %}

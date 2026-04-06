@@ -291,7 +291,6 @@ class FileService
 
         // Make sure the Imagick class is available to use, otherwise just copy it.
         if (class_exists('Imagick')) {
-            /** @var \Imagick $image */
             $image = new Imagick($filePath);
             $width = $image->getImageWidth();
             $height = $image->getImageHeight();
