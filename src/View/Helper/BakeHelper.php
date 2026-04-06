@@ -13,9 +13,13 @@ class BakeHelper extends Helper
     /**
      * Get field accessibility data.
      *
+     * Returns string values ('true'/'false') for bake template code generation,
+     * intentionally differs from parent's bool values.
+     *
      * @param array<string>|false|null $fields Fields list.
      * @param array<string>|null $primaryKey Primary key.
-     * @return array<string>
+     * @return array<string, string>
+     * @phpstan-ignore method.childReturnType
      */
     public function getFieldAccessibility(array|false|null $fields = null, ?array $primaryKey = null): array
     {

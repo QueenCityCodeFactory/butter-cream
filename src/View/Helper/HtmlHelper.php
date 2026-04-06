@@ -17,7 +17,7 @@ class HtmlHelper extends Helper
     /**
      * Default config for this class
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $_templates = [
         'templates' => [
@@ -41,7 +41,7 @@ class HtmlHelper extends Helper
      *        size `lg` class '<prefix>-lg` will be added. Default null.
      *
      * @param \Cake\View\View $View The View this helper is being attached to.
-     * @param array $config Configuration settings for the helper.
+     * @param array<string, mixed> $config Configuration settings for the helper.
      */
     public function __construct(View $View, array $config = [])
     {
@@ -60,7 +60,7 @@ class HtmlHelper extends Helper
      * Returns bootstrap icon markup. By default, uses `<i>` tag and font awesome icon set.
      *
      * @param string $name Name of icon (i.e. search, leaf, etc.).
-     * @param array $options Additional options and HTML attributes.
+     * @param array<array-key, mixed> $options Additional options and HTML attributes.
      * ### Options
      *
      * - `iconSet`: Common class name for the icon set. Default 'fa-solid'.
@@ -88,7 +88,7 @@ class HtmlHelper extends Helper
      * Tooltip - Useful for Help messages
      *
      * @param string $text The text
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      * @return string HTML icon with Tooltip markup
      */
     public function tooltip(string $text, array $options = []): string
@@ -112,7 +112,7 @@ class HtmlHelper extends Helper
      *
      * @param string $title The title
      * @param string $text The text
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      * @return string HTML icon with Popover markup
      */
     public function popover(string $title, string $text, array $options = []): string
@@ -150,10 +150,10 @@ class HtmlHelper extends Helper
      * - `tooltip` - adds Bootstrap popover tooltip to link, set false to remove tooltip
      * - `title` - set title attribute activates tooltip
      *
-     * @param string $title The content to be wrapped by <a> tags.
-     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
+     * @param array<string, mixed>|string $title The content to be wrapped by <a> tags.
+     * @param array<string|int, mixed>|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
@@ -205,9 +205,9 @@ class HtmlHelper extends Helper
      * - `confirm` JavaScript confirmation message.
      *
      * @param string $title The content to be wrapped by <a> tags.
-     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
+     * @param array<string|int, mixed>|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string An `<a />` element.
      * @link http://book.cakephp.org/3.0/en/views/helpers/html.html#creating-links
      */
@@ -237,7 +237,7 @@ class HtmlHelper extends Helper
      * Optionally the button can be an `<a>` tag with a linking URL.
      *
      * @param string $title Text/HTML to be put on the button.
-     * @param array $options Additional HTML attributes.
+     * @param array<string, mixed> $options Additional HTML attributes.
      * Options Include:
      *  - `url` The url to link to if this is an `A` tag
      *  - `tag` The type of tag to use for the button (BUTTON|A)
@@ -315,7 +315,7 @@ class HtmlHelper extends Helper
      * View Button for Index Pages
      *
      * @param string|int $primaryKey The primary key
-     * @param array $options The standard options for links
+     * @param array<string, mixed> $options The standard options for links
      * @return string HTML Link
      */
     public function viewBtn(string|int $primaryKey, array $options = []): string
@@ -333,7 +333,7 @@ class HtmlHelper extends Helper
      * Edit Button for Index Pages
      *
      * @param string|int $primaryKey The primary key
-     * @param array $options The standard options for links
+     * @param array<string, mixed> $options The standard options for links
      * @return string HTML Link
      */
     public function editBtn(string|int $primaryKey, array $options = []): string
@@ -350,7 +350,7 @@ class HtmlHelper extends Helper
     /**
      * Add Button for Cards
      *
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      * @return string|bool Html Link
      */
     public function addBtn(array $options = []): string|bool
@@ -372,7 +372,7 @@ class HtmlHelper extends Helper
     /**
      * Creates and action dropdown menu
      *
-     * @param array $tagLinks An array of tagLinks, example: <li><a>Some Link in a List Item</a></li>
+     * @param list<string> $tagLinks An array of tagLinks, example: <li><a>Some Link in a List Item</a></li>
      * @param string $menuButton The Menu button to use
      * @return string|bool Menu HTML otherwise false
      */

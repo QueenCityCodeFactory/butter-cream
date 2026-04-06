@@ -20,10 +20,10 @@ class UrlHelper extends Helper
      *    escaped afterwards before being displayed.
      * - `fullBase`: If true, the full base URL will be prepended to the result
      *
-     * @param array|string|null $url Either a relative string URL like `/products/view/23` or
+     * @param array<array-key, mixed>|string|null $url Either a relative string URL like `/products/view/23` or
      *    an array of URL parameters. Using an array for URLs will allow you to leverage
      *    the reverse routing features of CakePHP.
-     * @param array $options Array of options.
+     * @param array<string, mixed> $options Array of options.
      * @return string Full translated URL with base path.
      */
     public function build(string|array|null $url = null, array $options = []): string
@@ -40,8 +40,8 @@ class UrlHelper extends Helper
     /**
      * Normalizes two url/routes and returns if they are considered equal
      *
-     * @param array|string $url The first url
-     * @param array|string $url2 The second url
+     * @param array<string, mixed>|string $url The first url
+     * @param array<string, mixed>|string $url2 The second url
      * @return bool Are they the same URL???
      */
     public function isEqual(array|string $url, array|string $url2): bool

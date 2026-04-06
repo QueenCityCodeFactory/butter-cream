@@ -8,6 +8,8 @@ use Cake\View\StringTemplateTrait;
 
 /**
  * Nested Tree Helper
+ *
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class NestedTreeHelper extends Helper
 {
@@ -16,14 +18,14 @@ class NestedTreeHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var array
+     * @var list<string>
      */
     public array $helpers = ['Html'];
 
     /**
      * Default config for this class
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $_defaultConfig = [
         'templates' => [
@@ -41,8 +43,8 @@ class NestedTreeHelper extends Helper
      *     - `items`
      *     - `sortable`
      *
-     * @param array $tree The tree data - needs to be tree structure
-     * @param array $options The options
+     * @param array<int, mixed> $tree The tree data - needs to be tree structure
+     * @param array<string, mixed> $options The options
      * @return string|bool The HTML for the sorter
      */
     public function sorter(array $tree = [], array $options = []): bool|string
@@ -81,8 +83,8 @@ class NestedTreeHelper extends Helper
      *     - `items`
      *     - `data-id`
      *
-     * @param array $tree The tree data - needs to be tree structure
-     * @param array $options The Options
+     * @param array<int, mixed> $tree The tree data - needs to be tree structure
+     * @param array<string, mixed> $options The Options
      * @return string HTML for the sorter
      */
     protected function buildList(array $tree = [], array $options = []): string

@@ -43,7 +43,7 @@ class RefererComponent extends Component
     /**
      * Main execution method. Handles setting the referer
      *
-     * @param \Cake\Event\EventInterface $event The startup event.
+     * @param \Cake\Event\EventInterface<\Cake\Controller\Component> $event The startup event.
      * @return void
      */
     public function startup(EventInterface $event): void
@@ -54,7 +54,7 @@ class RefererComponent extends Component
     /**
      * Store referer data in view referer variable
      *
-     * @param array|string|null $default default referer
+     * @param array<string, mixed>|string|null $default default referer
      * @return void
      */
     public function setReferer(string|array|null $default = null): void
@@ -146,7 +146,7 @@ class RefererComponent extends Component
     /**
      * Redirect to the stored referer or the default URL
      *
-     * @param array|string $url The fallback URL to redirect to
+     * @param array<string, mixed>|string $url The fallback URL to redirect to
      * @param int $status HTTP status code
      * @return \Cake\Http\Response|null
      */

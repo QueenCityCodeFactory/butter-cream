@@ -24,7 +24,7 @@ class Format
      * Format a 5 or 9 digit U.S. Zipcode
      *
      * @param string $zip The zipcode to be formatted
-     * @param array $formats An array of formats where the index is the number of digits present in the zipcode
+     * @param array<int, string> $formats An array of formats where the index is the number of digits present in the zipcode
      * @return string The formatted zipcode
      */
     public static function zip(string $zip, array $formats = []): string
@@ -47,7 +47,7 @@ class Format
      * Format a phone number to the supplied format string
      *
      * @param string $phone The phone number to be formatted
-     * @param array $formats An array of formats where the index is the number of digits present in the phone number
+     * @param array<int, string> $formats An array of formats where the index is the number of digits present in the phone number
      * @param string $extFormat The ext format
      * @return string The Formatted Phone
      */
@@ -58,14 +58,15 @@ class Format
             10 => '(000) 000-0000',
         ];
 
-        $phone = self::parsePhone($phone, true);
-        $format = !empty($formats[strlen((string)$phone['string'])])
-            ? $formats[strlen((string)$phone['string'])]
+        /** @var array{parts: array<string, string>, string: string} $phoneParsed */
+        $phoneParsed = self::parsePhone($phone, true);
+        $format = !empty($formats[strlen($phoneParsed['string'])])
+            ? $formats[strlen($phoneParsed['string'])]
             : '';
-        $formattedPhone = self::formatString($phone['string'], $format);
+        $formattedPhone = self::formatString($phoneParsed['string'], $format);
 
-        if (!empty($phone['parts']['ext'])) {
-            $formattedPhone .= $extFormat . $phone['parts']['ext'];
+        if (!empty($phoneParsed['parts']['ext'])) {
+            $formattedPhone .= $extFormat . $phoneParsed['parts']['ext'];
         }
 
         return $formattedPhone;
@@ -76,7 +77,7 @@ class Format
      *
      * @param string $phone The phone number to be parsed apart
      * @param bool $returnBoth Whether or not an array containing both the phone string and phone parts is returned
-     * @return array|string Defaults to returning a string(NO ext included) of an array with both string and parts
+     * @return array<string, mixed>|string Defaults to returning a string(NO ext included) of an array with both string and parts
      */
     public static function parsePhone(string $phone, bool $returnBoth = false): string|array
     {
@@ -87,12 +88,12 @@ class Format
 
         if (preg_match($rx, $phone, $matches)) {
             $parts = [
-                'area' => !empty($matches[1]) ? $matches[1] : '',
-                'exchange' => !empty($matches[2]) ? $matches[2] : '',
-                'number' => !empty($matches[3]) ? $matches[3] : '',
+                'area' => $matches[1],
+                'exchange' => $matches[2],
+                'number' => $matches[3],
             ];
             $partsString = implode('', $parts);
-            $parts['ext'] = !empty($matches[4]) ? $matches[4] : '';
+            $parts['ext'] = $matches[4] ?? '';
         }
 
         if ($returnBoth) {
@@ -180,6 +181,6 @@ class Format
      */
     protected static function stripNonAlphaNumeric(string $string): string
     {
-        return preg_replace('/[^0-9]/', '', $string);
+        return (string)preg_replace('/[^0-9]/', '', $string);
     }
 }

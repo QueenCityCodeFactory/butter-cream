@@ -13,6 +13,7 @@ use Cake\View\StringTemplateTrait;
  *
  * @property \ButterCream\View\Helper\HtmlHelper $Html
  * @property \ButterCream\View\Helper\PaginatorHelper $Paginator
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class TableHelper extends Helper
 {
@@ -22,14 +23,14 @@ class TableHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var array
+     * @var list<string>
      */
     public array $helpers = ['Html', 'Paginator'];
 
     /**
      * Default config for this class
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $_defaultConfig = [
         'templates' => [
@@ -42,7 +43,7 @@ class TableHelper extends Helper
      *
      * @param string $key - column key/name
      * @param string|null $title - alternate header title
-     * @param array $options - options
+     * @param array<string, mixed> $options - options
      * @return string
      */
     public function header(string $key, ?string $title = null, array $options = []): string
@@ -74,7 +75,7 @@ class TableHelper extends Helper
                 $title = str_replace('.', ' ', $title);
             }
 
-            $title = __(Inflector::humanize(preg_replace('/_id$/', '', $title)));
+            $title = __(Inflector::humanize((string)preg_replace('/_id$/', '', $title)));
         }
 
         $sort = isset($options['sort']) && $options['sort'] === false ? false : true;

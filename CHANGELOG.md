@@ -8,19 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `FileService` class — new service-layer replacement for `FileApi`, using Flysystem for file storage, retrieval, resizing, and deletion
+- `ButterCreamHelpersTrait` — reusable trait for loading the standard ButterCream helper stack in any View class
+- `FiltersHelper` — Bootstrap 5 dropdown-based filter drawer for index pages
+- `ButterCreamException` base exception class
+- `CreateFiles` migration (`config/Migrations/20260405000000_CreateFiles.php`) for the files table
 - JSON decode error checking in `JsonArrayType::toPHP()` and `manyToPHP()`
 - XSS protection: `h()` escaping in `NestedTreeHelper` tree item names
 - Security documentation on `FlashComponent` `escape => false` default
 - `@property` annotations on base `Controller` for component IDE support
 - Comprehensive test coverage for FlashComponent, RefererComponent, JsonArrayType, TreeviewTrait, AppTable, StatusMessage, StatusMessageException, ButterCreamPlugin
 - CategoriesFixture class for TreeviewTrait tests
+- `league/flysystem` added as a suggested dependency for file management
 
 ### Changed
 - **BREAKING:** Minimum PHP version raised to 8.4
+- **BREAKING:** `FileApi` removed — use `FileService` instead
+- `FileService` uses `EntityInterface` type hints instead of concrete `File` entity where appropriate
+- `FileService` disables model listeners during internal save operations to avoid side-effects
+- `FilesTable` expanded with validation rules, `beforeSave`/`afterSave`/`afterDelete` callbacks, and Flysystem integration
+- `StatusMessage` refactored for improved return types and method signatures
 - Renamed `NestedTreeHelper::sorter()` (protected) to `buildList()` to fix duplicate method name fatal error
 - `RefererComponent` modernized: replaced `_registry->getController()` with `getController()`, `_config` with `getConfig()`/`setConfig()`
 - Simplified `Validation::birthdate()` and `Validation::check()` methods
-- Improved `StatusMessage` return types from `mixed` to specific types
 - `FormHelper::cancelButton()` now uses `'#'` instead of `javascript:void()` (CSP safe)
 - `composer.json` scripts simplified to use `phpcs.xml` config automatically
 - PHPUnit schema updated to 11.5
@@ -30,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Security:** XSS vulnerability in `templates/layout/main.php` — session data now encoded via `json_encode()` instead of raw string interpolation
 - **Security:** XSS vulnerability in `NestedTreeHelper` — tree item names now escaped with `h()`
 - **Security:** `javascript:void()` replaced with `'#'` in `FormHelper::cancelButton()`
+- Migration `CreateFiles` corrected to extend `Migrations\BaseMigration` (was incorrectly using `Migrations\AbstractMigration`)
 - Fatal error: `NestedTreeHelper` had two methods named `sorter()` (public and protected)
 - `RefererComponent::normalizeUrl()` removed unreachable `is_array($url)` check
 - `AppTable::beforeDelete` docblock type corrected to `EntityInterface`
@@ -40,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced `join()` alias with `implode()` in `NestedTreeHelper`
 
 ### Removed
+- `FileApi` class — replaced entirely by `FileService`
 - Empty `routes()` and `middleware()` overrides from `ButterCreamPlugin`
 - Empty `beforeFilter()` from base `Controller`
 - Empty `$filterArgs` from `FilesTable`

@@ -8,16 +8,43 @@ use Cake\Database\Type\BatchCastingInterface;
 use Cake\Database\Type\JsonType;
 
 /**
- * Provides behavior for the JSON type
+ * JSON database type that decodes values as objects instead of associative arrays.
+ *
+ * Extends CakePHP's `JsonType` to use `json_decode($value, false)`, returning
+ * `stdClass` objects for JSON objects. This is useful when you need to distinguish
+ * between an empty object (`{}`) and an empty array (`[]`), or when object property
+ * access (`$data->name`) is preferred over array key access (`$data['name']`).
+ *
+ * Also implements `BatchCastingInterface` for efficient bulk decoding of multiple
+ * rows via `manyToPHP()`.
+ *
+ * ### Usage
+ *
+ * Register the type in your application's `bootstrap.php`:
+ *
+ * ```php
+ * use Cake\Database\TypeFactory;
+ * TypeFactory::map('json_array', JsonArrayType::class);
+ * ```
+ *
+ * Then in your Table class:
+ *
+ * ```php
+ * $schema->setColumnType('metadata', 'json_array');
+ * ```
  */
 class JsonArrayType extends JsonType implements BatchCastingInterface
 {
     /**
-     * {@inheritDoc}
+     * Convert a JSON string from the database into a PHP value (object).
      *
-     * @param mixed $value The value to convert.
-     * @param \Cake\Database\Driver $driver The driver instance to convert with.
-     * @return mixed
+     * Returns `null` if the value is not a string or if JSON decoding fails.
+     * Unlike the parent `JsonType`, this decodes JSON objects as `stdClass`
+     * instances rather than associative arrays.
+     *
+     * @param mixed $value The raw database value.
+     * @param \Cake\Database\Driver $driver The database driver instance.
+     * @return mixed The decoded value, or `null` on failure.
      */
     public function toPHP(mixed $value, Driver $driver): mixed
     {
@@ -31,7 +58,15 @@ class JsonArrayType extends JsonType implements BatchCastingInterface
     }
 
     /**
-     * @inheritDoc
+     * Batch-convert multiple JSON columns to PHP values in a single row.
+     *
+     * Iterates over the specified fields and decodes each JSON string as an object.
+     * Fields that are not set in the row are skipped. Invalid JSON is replaced with `null`.
+     *
+     * @param array<array-key, mixed> $values The row data keyed by column name.
+     * @param array<array-key, mixed> $fields The column names to decode.
+     * @param \Cake\Database\Driver $driver The database driver instance.
+     * @return array<string, mixed> The row data with decoded JSON values.
      */
     public function manyToPHP(array $values, array $fields, Driver $driver): array
     {

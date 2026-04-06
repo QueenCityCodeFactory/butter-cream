@@ -8,6 +8,8 @@ use Cake\View\Helper;
 
 /**
  * Format Helper
+ *
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class FormatHelper extends Helper
 {
@@ -28,7 +30,7 @@ class FormatHelper extends Helper
      * Format a 5 or 9 digit U.S. Zipcode
      *
      * @param string $zip The zipcode to be formatted
-     * @param array $formats An array of formats where the index is the number of digits present in the zipcode
+     * @param array<int, string> $formats An array of formats where the index is the number of digits present in the zipcode
      * @return string The formatted zipcode
      * @see \ButterCream\Utility\Format::zip()
      */
@@ -41,7 +43,7 @@ class FormatHelper extends Helper
      * Format a phone number to the supplied format string
      *
      * @param string $phone The phone number to be formatted
-     * @param array $formats An array of formats where the index is the number of digits present in the phone number
+     * @param array<int, string> $formats An array of formats where the index is the number of digits present in the phone number
      * @param string $extFormat The ext format
      * @return string The formatted phone
      * @see \ButterCream\Utility\Format::phone()
@@ -56,7 +58,7 @@ class FormatHelper extends Helper
      *
      * @param string $phone The phone number to be parsed apart
      * @param bool $returnBoth Whether or not an array containing both the phone string and phone parts is returned
-     * @return array|string Defaults to returning a string(NO ext included) of an array with both string and parts
+     * @return array<string, mixed>|string Defaults to returning a string(NO ext included) of an array with both string and parts
      * @see \ButterCream\Utility\Format::parsePhone()
      */
     public function parsePhone(string $phone, bool $returnBoth = false): string|array

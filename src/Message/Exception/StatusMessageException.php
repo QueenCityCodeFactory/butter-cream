@@ -30,7 +30,7 @@ class StatusMessageException extends HttpException
         if ($message === false) {
             $message = 'Whoops! It looks like an invalid `$key` was provided';
         }
-        if ($code === false || $code === null) {
+        if ($code === false) {
             $code = 500;
         }
 

@@ -9,6 +9,8 @@ use Cake\View\StringTemplateTrait;
 
 /**
  * Ajax Helper
+ *
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class AjaxHelper extends Helper
 {
@@ -17,7 +19,7 @@ class AjaxHelper extends Helper
     /**
      * Default config for the helper.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $_defaultConfig = [
         'templates' => [
@@ -35,8 +37,8 @@ class AjaxHelper extends Helper
      * - `class`
      *
      * @param string $domId - the HTML DOM ID
-     * @param array|string $url - Router::url() format
-     * @param array $options - options for the HTML Element
+     * @param array<string, mixed>|string $url - Router::url() format
+     * @param array<string, mixed> $options - options for the HTML Element
      * @return string
      */
     public function relatedData(string $domId, string|array $url, array $options = []): string

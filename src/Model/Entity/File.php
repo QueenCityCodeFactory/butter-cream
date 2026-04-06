@@ -21,7 +21,7 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
  * @property string $path
  * @property string|false $contents
  * @property string $base64
- * @property \Cake\ORM\Entity\text|array|null $meta
+ * @property array<string, mixed>|null $meta
  * @property \Cake\I18n\DateTime|null $created
  * @property \Cake\I18n\DateTime|null $modified
  */
@@ -30,7 +30,7 @@ class File extends Entity
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
-     * @var array
+     * @var array<string, bool>
      */
     protected array $_accessible = [
         '*' => true,

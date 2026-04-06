@@ -16,6 +16,7 @@ use Cake\View\Helper;
  *
  * @property \ButterCream\View\Helper\FormHelper $Form
  * @property \ButterCream\View\Helper\HtmlHelper $Html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class FiltersHelper extends Helper
 {
@@ -34,7 +35,7 @@ class FiltersHelper extends Helper
     /**
      * Buffered filter controls (field => options).
      *
-     * @var array<string, array>
+     * @var array<string, array<string, mixed>>
      */
     protected array $_controls = [];
 

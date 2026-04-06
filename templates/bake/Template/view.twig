@@ -48,7 +48,7 @@ $this->end(); ?>
 {% if associationFields[field] %}
 {% set details = associationFields[field] %}
         <h6>{{ details.property|humanize }}</h6>
-        <p><?= ${{ singularVar }}->has('{{ details.property }}') ? $this->Html->link(${{ singularVar }}->{{ details.property }}->{{ details.displayField }}, ['controller' => '{{ details.controller }}', 'action' => 'view', ${{ singularVar }}->{{ details.property }}->{{ details.primaryKey[0] }}]) : '' ?></p>
+        <p><?= ${{ singularVar }}->{{ details.property }} ? $this->Html->link(${{ singularVar }}->{{ details.property }}->{{ details.displayField }} ?? '', ['controller' => '{{ details.controller }}', 'action' => 'view', ${{ singularVar }}->{{ details.property }}->{{ details.primaryKey[0] }}]) : '' ?></p>
 {% else %}
         <h6>{{ field|humanize }}</h6>
         <p><?= h(${{ singularVar }}->{{ field }}) ?></p>

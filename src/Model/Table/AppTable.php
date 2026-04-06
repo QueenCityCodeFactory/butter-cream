@@ -16,7 +16,7 @@ class AppTable extends Table
     /**
      * Weird Encoding from Word or Other Applications that need replaced
      *
-     * @var array
+     * @var list<string>
      */
     protected array $encodingsToReplace = [
         "\xC2\xAB", // « (U+00AB) in UTF-8
@@ -39,7 +39,7 @@ class AppTable extends Table
     /**
      * List of Replacements for Weird encodings
      *
-     * @var array
+     * @var list<string>
      */
     protected array $encodingReplacements = [
         '<<',
@@ -62,9 +62,9 @@ class AppTable extends Table
     /**
      * Before Marshal Callback
      *
-     * @param \Cake\Event\EventInterface $event The beforeMarshal event that was fired
-     * @param \ArrayObject $data ArrayObject instance.
-     * @param \ArrayObject $options ArrayObject instance.
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The beforeMarshal event that was fired
+     * @param \ArrayObject<string, mixed> $data ArrayObject instance.
+     * @param \ArrayObject<string, mixed> $options ArrayObject instance.
      * @return void
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
@@ -75,8 +75,8 @@ class AppTable extends Table
     /**
      * Recursive Function to Clean Up submitted form Fields
      *
-     * @param \ArrayObject|array $data The data being marshalled
-     * @return \ArrayObject|array The cleaned up data
+     * @param \ArrayObject<string, mixed>|array<string, mixed> $data The data being marshalled
+     * @return \ArrayObject<string, mixed>|array<string, mixed> The cleaned up data
      */
     protected function cleanData(ArrayObject|array $data): ArrayObject|array
     {
@@ -99,9 +99,9 @@ class AppTable extends Table
      * Modifies the entity before it is saved so that translated fields are persisted
      * in the database too.
      *
-     * @param \Cake\Event\EventInterface $event The beforeSave event that was fired
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The beforeSave event that was fired
      * @param \Cake\Datasource\EntityInterface $entity The entity that is going to be saved
-     * @param \ArrayObject $options the options passed to the save method
+     * @param \ArrayObject<string, mixed> $options the options passed to the save method
      * @return void
      */
     public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
@@ -112,9 +112,9 @@ class AppTable extends Table
     /**
      * AfterSave Callback
      *
-     * @param \Cake\Event\EventInterface $event The afterDelete event that was fired.
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The afterDelete event that was fired.
      * @param \Cake\Datasource\EntityInterface $entity The entity
-     * @param \ArrayObject $options The options
+     * @param \ArrayObject<string, mixed> $options The options
      * @return void
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
@@ -125,9 +125,9 @@ class AppTable extends Table
     /**
      * Event fired before the record is deleted
      *
-     * @param \Cake\Event\EventInterface $event The beforeDelete event that was fired.
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The beforeDelete event that was fired.
      * @param \Cake\Datasource\EntityInterface $entity The entity
-     * @param \ArrayObject $options The options
+     * @param \ArrayObject<string, mixed> $options The options
      * @return void
      */
     public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void

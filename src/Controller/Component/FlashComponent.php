@@ -15,8 +15,8 @@ use Throwable;
  * messages. Ensure all user-provided content is properly sanitized before passing it
  * to flash methods to prevent XSS attacks. Use `h()` to escape user input.
  *
- * @method void success(string $message, array $options = []) Set a message using "success" element
- * @method void error(string $message, array $options = []) Set a message using "error" element
+ * @method void success(string $message, array<string, mixed> $options = []) Set a message using "success" element
+ * @method void error(string $message, array<string, mixed> $options = []) Set a message using "error" element
  */
 class FlashComponent extends Component
 {
@@ -38,7 +38,7 @@ class FlashComponent extends Component
      * @param \Throwable|string $message Message to be flashed. If an instance
      *   of \Throwable the exception message will be used and code will be set
      *   in params.
-     * @param array $options An array of options
+     * @param array<string, mixed> $options An array of options
      * @return void
      */
     public function set(string|Throwable $message, array $options = []): void

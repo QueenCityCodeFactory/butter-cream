@@ -12,6 +12,7 @@ Thumbs.db
 vendor/
 composer.lock
 .phpunit.result.cache
+.phpunit.cache/
 
 
 # Tool specific files #

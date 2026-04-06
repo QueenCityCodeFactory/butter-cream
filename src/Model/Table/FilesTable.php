@@ -45,7 +45,7 @@ class FilesTable extends Table
     /**
      * Initialize method
      *
-     * @param array $config The configuration for the Table.
+     * @param array<string, mixed> $config The configuration for the Table.
      * @return void
      */
     public function initialize(array $config): void
@@ -111,9 +111,9 @@ class FilesTable extends Table
     /**
      * BeforeMarshal Callback - Auto-generate UUID for new records
      *
-     * @param \Cake\Event\EventInterface $event The beforeMarshal event that was fired
-     * @param \ArrayObject $data ArrayObject instance.
-     * @param \ArrayObject $options ArrayObject instance.
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The beforeMarshal event that was fired
+     * @param \ArrayObject<string, mixed> $data ArrayObject instance.
+     * @param \ArrayObject<string, mixed> $options ArrayObject instance.
      * @return void
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
@@ -164,9 +164,9 @@ class FilesTable extends Table
     /**
      * AfterSave Callback
      *
-     * @param \Cake\Event\EventInterface $event The event object
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The event object
      * @param \Cake\Datasource\EntityInterface $entity The entity
-     * @param \ArrayObject $options The options
+     * @param \ArrayObject<string, mixed> $options The options
      * @return void
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
@@ -213,9 +213,9 @@ class FilesTable extends Table
     /**
      * Event fired before the record has been deleted
      *
-     * @param \Cake\Event\EventInterface $event The event object
+     * @param \Cake\Event\EventInterface<\Cake\ORM\Table> $event The event object
      * @param \Cake\Datasource\EntityInterface $entity The entity
-     * @param \ArrayObject $options The options
+     * @param \ArrayObject<string, mixed> $options The options
      * @return void
      */
     public function beforeDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void

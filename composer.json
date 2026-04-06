@@ -52,7 +52,7 @@
         ],
         "cs-check": "phpcs -p",
         "cs-fix": "phpcbf",
-        "stan": "phpstan analyse",
+        "stan": "phpstan analyse --memory-limit=512M",
         "psalm": "psalm",
         "test": "phpunit"
     },

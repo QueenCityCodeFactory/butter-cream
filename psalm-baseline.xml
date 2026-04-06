@@ -21,9 +21,6 @@
     <ImplementedReturnTypeMismatch>
       <code><![CDATA[\Cake\Http\Response|null|void]]></code>
     </ImplementedReturnTypeMismatch>
-    <LessSpecificImplementedReturnType>
-      <code><![CDATA[\Cake\Datasource\Paging\PaginatedInterface]]></code>
-    </LessSpecificImplementedReturnType>
     <MissingOverrideAttribute>
       <code><![CDATA[public function beforeRender(EventInterface $event)]]></code>
       <code><![CDATA[public function initialize(): void]]></code>
@@ -46,12 +43,6 @@
       <code><![CDATA[__d('cake', 'Not Found')]]></code>
       <code><![CDATA[__d('cake', 'Record Not Found')]]></code>
     </UndefinedFunction>
-  </file>
-  <file src="src/Message/Exception/StatusMessageException.php">
-    <TypeDoesNotContainNull>
-      <code><![CDATA[$code === false || $code === null]]></code>
-      <code><![CDATA[$code === null]]></code>
-    </TypeDoesNotContainNull>
   </file>
   <file src="src/Model/Entity/File.php">
     <RedundantCast>
@@ -83,21 +74,9 @@
     </MissingOverrideAttribute>
   </file>
   <file src="src/Service/FileService.php">
-    <TypeDoesNotContainType>
-      <code><![CDATA[empty($record)]]></code>
-      <code><![CDATA[empty($record)]]></code>
-    </TypeDoesNotContainType>
     <UndefinedDocblockClass>
       <code><![CDATA[$image]]></code>
     </UndefinedDocblockClass>
-  </file>
-  <file src="src/Utility/Format.php">
-    <InvalidNullableReturnType>
-      <code><![CDATA[string]]></code>
-    </InvalidNullableReturnType>
-    <NullableReturnStatement>
-      <code><![CDATA[preg_replace('/[^0-9]/', '', $string)]]></code>
-    </NullableReturnStatement>
   </file>
   <file src="src/Utility/TemplateRenderer.php">
     <LessSpecificImplementedReturnType>
@@ -112,23 +91,15 @@
       <code><![CDATA[public function initialize(): void]]></code>
     </MissingOverrideAttribute>
   </file>
-  <file src="src/View/Helper/AjaxHelper.php">
-    <MissingTemplateParam>
-      <code><![CDATA[AjaxHelper]]></code>
-    </MissingTemplateParam>
-  </file>
   <file src="src/View/Helper/BakeHelper.php">
     <ImplementedReturnTypeMismatch>
-      <code><![CDATA[array<string>]]></code>
+      <code><![CDATA[array<string, string>]]></code>
     </ImplementedReturnTypeMismatch>
     <MissingOverrideAttribute>
       <code><![CDATA[public function getFieldAccessibility(array|false|null $fields = null, ?array $primaryKey = null): array]]></code>
     </MissingOverrideAttribute>
   </file>
   <file src="src/View/Helper/FiltersHelper.php">
-    <MissingTemplateParam>
-      <code><![CDATA[FiltersHelper]]></code>
-    </MissingTemplateParam>
     <UndefinedFunction>
       <code><![CDATA[__('Apply')]]></code>
       <code><![CDATA[__('Clear')]]></code>
@@ -144,20 +115,6 @@
       <code><![CDATA[public function error(string $field, string|array|null $text = null, array $options = []): string]]></code>
       <code><![CDATA[public function postLink(string $title, string|array|null $url = null, array $options = []): string]]></code>
     </MissingOverrideAttribute>
-    <RedundantCondition>
-      <code><![CDATA[$options['enhancedSelect'] !== false && isset($options['options']) && is_array($options)]]></code>
-      <code><![CDATA[is_array($options)]]></code>
-    </RedundantCondition>
-  </file>
-  <file src="src/View/Helper/FormatHelper.php">
-    <MissingTemplateParam>
-      <code><![CDATA[FormatHelper]]></code>
-    </MissingTemplateParam>
-  </file>
-  <file src="src/View/Helper/GravatarHelper.php">
-    <MissingTemplateParam>
-      <code><![CDATA[GravatarHelper]]></code>
-    </MissingTemplateParam>
   </file>
   <file src="src/View/Helper/HtmlHelper.php">
     <MissingOverrideAttribute>
@@ -169,9 +126,6 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/View/Helper/NestedTreeHelper.php">
-    <MissingTemplateParam>
-      <code><![CDATA[NestedTreeHelper]]></code>
-    </MissingTemplateParam>
     <UndefinedFunction>
       <code><![CDATA[h($treeItem->name)]]></code>
     </UndefinedFunction>
@@ -184,25 +138,9 @@
     </MissingOverrideAttribute>
   </file>
   <file src="src/View/Helper/TableHelper.php">
-    <MissingTemplateParam>
-      <code><![CDATA[TableHelper]]></code>
-    </MissingTemplateParam>
     <UndefinedFunction>
-      <code><![CDATA[__(Inflector::humanize(preg_replace('/_id$/', '', $title)))]]></code>
+      <code><![CDATA[__(Inflector::humanize((string)preg_replace('/_id$/', '', $title)))]]></code>
     </UndefinedFunction>
-  </file>
-  <file src="src/View/Helper/TimeHelper.php">
-    <InvalidReturnStatement>
-      <code><![CDATA[$date->i18nFormat($format, $timezone)]]></code>
-      <code><![CDATA[$invalid]]></code>
-      <code><![CDATA[$invalid]]></code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code><![CDATA[string]]></code>
-    </InvalidReturnType>
-    <RedundantCondition>
-      <code><![CDATA[$date instanceof DateTime]]></code>
-    </RedundantCondition>
   </file>
   <file src="src/View/Helper/UrlHelper.php">
     <MissingOverrideAttribute>

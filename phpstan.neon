@@ -6,5 +6,11 @@ parameters:
     treatPhpDocTypesAsCertain: false
     bootstrapFiles:
         - tests/bootstrap.php
+    scanFiles:
+        - vendor/cakephp/cakephp/src/Core/functions_global.php
+        - vendor/cakephp/cakephp/src/I18n/functions_global.php
     paths:
         - src
+    ignoreErrors:
+        -
+            identifier: trait.unused

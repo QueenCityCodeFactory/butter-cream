@@ -117,9 +117,22 @@ public function bootstrap(): void
 - **`ButterCream\View\Helper\GravatarHelper`**
 - Generate Gravatar image URLs
 
+#### Filters Helper
+- **`ButterCream\View\Helper\FiltersHelper`**
+- Bootstrap 5 dropdown-based filter drawer for index pages
+- Register filter controls in templates; the layout calls `render()` for the toggle button and drawer panel
+- Works in both standalone page and AJAX (relatedData) contexts
+
 #### Nested Tree Helper
 - **`ButterCream\View\Helper\NestedTreeHelper`**
 - Render nested tree structures
+
+### View Traits
+
+#### ButterCreamHelpersTrait
+- **`ButterCream\View\ButterCreamHelpersTrait`**
+- Reusable trait for loading the standard ButterCream helper stack in any View class
+- Call `loadButterCreamHelpers()` from your View's `initialize()` method
 
 ### Model Layer
 
@@ -144,6 +157,26 @@ public function bootstrap(): void
 - **`ButterCream\Model\Entity\File`**
 - File management entity with path and base64 getters
 - Flysystem integration
+
+### Services
+
+#### FileService
+- **`ButterCream\Service\FileService`**
+- Service-layer class for file storage, retrieval, resizing, and deletion
+- Uses Flysystem for filesystem abstraction
+- Model/foreign key pattern to associate files with any table record
+- Image resizing with Imagick support
+- Replaces the deprecated `FileApi`
+
+### Exceptions
+
+#### ButterCreamException
+- **`ButterCream\Http\Exception\ButterCreamException`**
+- Base exception class for the plugin
+
+#### StatusMessageException
+- **`ButterCream\Message\Exception\StatusMessageException`**
+- Exception for user-facing errors with flash message support
 
 ### Middleware
 
@@ -280,6 +313,23 @@ class CategoriesTable extends AppTable
 $categories = $this->Categories->find('treeview');
 ```
 
+### Using FileService
+
+```php
+use ButterCream\Service\FileService;
+
+$fileService = new FileService();
+
+// Get a file record (optionally with file contents)
+$file = $fileService->get($id, contents: true);
+
+// Upload a file associated with a record
+$fileService->upload($uploadedFile, 'Articles', $articleId);
+
+// Delete a file (removes from disk and database)
+$fileService->delete($id);
+```
+
 ### Baking with ButterCream Templates
 
 The plugin includes custom bake templates that generate Bootstrap 5 styled code:
@@ -321,6 +371,11 @@ $middlewareQueue->add(new \ButterCream\Routing\Middleware\TrustProxyMiddleware(t
 - [friendsofcake/bootstrap-ui](https://github.com/FriendsOfCake/bootstrap-ui) - Bootstrap 5 integration
 - [friendsofcake/cakepdf](https://github.com/FriendsOfCake/CakePDF) - PDF generation
 - [queencitycodefactory/cakespreadsheet](https://github.com/QueenCityCodeFactory/cakespreadsheet) - Spreadsheet generation
+
+### Optional / Suggested
+
+- [league/flysystem](https://github.com/thephpleague/flysystem) - Required for `FileService` file operations
+- [cakephp/migrations](https://github.com/cakephp/migrations) - Required to run the optional files table migration
 
 ## License
 

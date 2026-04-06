@@ -11,7 +11,7 @@ class PaginatorHelper extends Helper
      * Set Ajax Link templates
      *
      * @param string $domId Html DOM ID
-     * @param array $options list of options
+     * @param array<string, mixed> $options list of options
      * @return void
      */
     public function ajaxTemplateOptions(string $domId, array $options = []): void
@@ -61,7 +61,7 @@ class PaginatorHelper extends Helper
      *   The helper's original templates will be restored once prev() is done.
      *
      * @param string $title Title for the link. Defaults to '<< Previous'.
-     * @param array $options Options for pagination link. See above for list of keys.
+     * @param array<array-key, mixed> $options Options for pagination link. See above for list of keys.
      * @return string A "previous" link or a disabled link.
      * @link https://book.cakephp.org/5/en/views/helpers/paginator.html#creating-jump-links
      */
@@ -91,7 +91,7 @@ class PaginatorHelper extends Helper
      *   The helper's original templates will be restored once next() is done.
      *
      * @param string $title Title for the link. Defaults to 'Next >>'.
-     * @param array $options Options for pagination link. See above for list of keys.
+     * @param array<array-key, mixed> $options Options for pagination link. See above for list of keys.
      * @return string A "next" link or $disabledTitle text if the link is disabled.
      * @link https://book.cakephp.org/5/en/views/helpers/paginator.html#creating-jump-links
      */
@@ -137,7 +137,7 @@ class PaginatorHelper extends Helper
      * and the number of pages exceed the modulus. For example if you have 25 pages, and use the first/last
      * options and a modulus of 8, ellipsis content will be inserted after the first and last link sets.
      *
-     * @param array $options Options for the numbers.
+     * @param array<string, mixed> $options Options for the numbers.
      * @return string Numbers string.
      * @link https://book.cakephp.org/5/en/views/helpers/paginator.html#creating-page-number-links
      */

@@ -29,7 +29,7 @@ class ButterCreamPlugin extends BasePlugin
      * The host application is provided as an argument. This allows you to load
      * additional plugin dependencies, or attach events.
      *
-     * @param \Cake\Core\PluginApplicationInterface $app The host application
+     * @param \Cake\Core\PluginApplicationInterface<mixed> $app The host application
      * @return void
      */
     public function bootstrap(PluginApplicationInterface $app): void
@@ -64,7 +64,7 @@ class ButterCreamPlugin extends BasePlugin
      */
     protected function discoverCommands(CommandCollection $commands): CommandCollection
     {
-        $found = $this->findInPath($this->name, $this->path . DS . 'src' . DS);
+        $found = $this->findInPath((string)$this->name, $this->path . DS . 'src' . DS);
         if (count($found)) {
             $commands->addMany($found);
         }

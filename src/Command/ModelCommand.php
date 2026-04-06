@@ -18,7 +18,7 @@ class ModelCommand extends BakeModelCommand
      * Bake a table class.
      *
      * @param \Cake\ORM\Table $model Model name or object
-     * @param array $data An array to use to generate the Table
+     * @param array<string, mixed> $data An array to use to generate the Table
      * @param \Cake\Console\Arguments $args CLI Arguments
      * @param \Cake\Console\ConsoleIo $io CLI Arguments
      * @return void

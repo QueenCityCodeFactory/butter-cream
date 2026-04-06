@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace ButterCream\Service;
 
 use ButterCream\Message\Exception\StatusMessageException;
+use ButterCream\Model\Entity\File;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
@@ -91,10 +91,10 @@ class FileService
     /**
      * Build the relative filesystem path for a file entity.
      *
-     * @param \Cake\Datasource\EntityInterface $file The file entity
+     * @param \ButterCream\Model\Entity\File $file The file entity
      * @return string
      */
-    protected function buildRelativePath(EntityInterface $file): string
+    protected function buildRelativePath(File $file): string
     {
         return $file->model . DS . $file->foreign_key . DS . $file->filename;
     }
@@ -102,11 +102,11 @@ class FileService
     /**
      * Get a file with data from the database, optionally including file contents.
      *
-     * @param int|string $id The id of the file to get
+     * @param string|int $id The id of the file to get
      * @param bool $contents Whether to include the file contents
-     * @return \Cake\Datasource\EntityInterface The file entity
+     * @return \ButterCream\Model\Entity\File The file entity
      */
-    public function get(int|string $id, bool $contents = false): EntityInterface
+    public function get(int|string $id, bool $contents = false): File
     {
         $file = $this->data($id);
         $file->path = $this->getBasePath() . $this->buildRelativePath($file);
@@ -122,10 +122,10 @@ class FileService
     /**
      * Get the base file data from the database.
      *
-     * @param int|string $id The id of the file
-     * @return \Cake\Datasource\EntityInterface
+     * @param string|int $id The id of the file
+     * @return \ButterCream\Model\Entity\File
      */
-    public function data(int|string $id): EntityInterface
+    public function data(int|string $id): File
     {
         /** @var \ButterCream\Model\Entity\File $file */
         $file = $this->filesTable->get($id);
@@ -138,7 +138,7 @@ class FileService
     /**
      * Gets the local file path to a file.
      *
-     * @param int|string $id The id of the file
+     * @param string|int $id The id of the file
      * @return string|false The local file path, or false if not found
      */
     public function getLocalPath(int|string $id): string|false
@@ -152,7 +152,7 @@ class FileService
     /**
      * Fetch the contents of a file.
      *
-     * @param int|string $id The id of the file
+     * @param string|int $id The id of the file
      * @return string|false The file contents, or false if not found
      */
     public function fetchContent(int|string $id): string|false
@@ -166,7 +166,7 @@ class FileService
     /**
      * Returns the MIME type of the file.
      *
-     * @param int|string $id The file ID
+     * @param string|int $id The file ID
      * @return string|false The mime type, or false if not found
      */
     public function fetchMime(int|string $id): string|false
@@ -187,14 +187,14 @@ class FileService
     /**
      * Store a file and create a database record.
      *
-     * @param array|string $tmpFilePath The file path to the original file (usually a tmp_name from a file upload)
-     * @param array $metaData The metadata for the file
+     * @param array<string, mixed>|string $tmpFilePath The file path to the original file (usually a tmp_name from a file upload)
+     * @param array<string, mixed> $metaData The metadata for the file
      *
      * ### Required items in this metadata array:
      *  - model - the model/table name this file belongs to
      *  - foreign_key - the foreign key of the related record
      *  - original_filename - the original uploaded filename
-     * @return int|string|bool The file id if successfully added, otherwise false
+     * @return string|int|bool The file id if successfully added, otherwise false
      */
     public function put(array|string $tmpFilePath, array $metaData = []): int|string|bool
     {
@@ -231,7 +231,7 @@ class FileService
         $file->original_filename = $originalFilename;
         $file->meta = $metaData['meta'] ?? null;
 
-        /** @var array $pathInfo */
+        /** @var array{dirname?: string, basename: string, extension?: string, filename: string} $pathInfo */
         $pathInfo = pathinfo((string)$originalFilename);
         $file->filename = Text::uuid() . (isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : '');
 
@@ -259,16 +259,13 @@ class FileService
     /**
      * Resizes a specified file. Options include width and height as integer values.
      *
-     * @param int|string $id The id of the file to modify
-     * @param array $options The array of options for the resize
+     * @param string|int $id The id of the file to modify
+     * @param array<string, mixed> $options The array of options for the resize
      * @return bool True if the image was properly resized, false otherwise
      */
     public function resize(int|string $id, array $options = []): bool
     {
         $record = $this->data($id);
-        if (empty($record)) {
-            return false;
-        }
 
         $filePath = $this->getBasePath() . $this->buildRelativePath($record);
 
@@ -284,7 +281,11 @@ class FileService
             $imageInfo = [];
         }
 
-        if ($imageInfo !== false && !in_array($imageInfo['mime'], $this->validImageMimeTypes)) {
+        if (
+            $imageInfo !== false
+            && isset($imageInfo['mime'])
+            && !in_array($imageInfo['mime'], $this->validImageMimeTypes)
+        ) {
             throw new StatusMessageException('file_service_resize_invalid_type');
         }
 
@@ -328,7 +329,7 @@ class FileService
     /**
      * Deletes a file from the filesystem and database.
      *
-     * @param int|string $id The id of the file to delete
+     * @param string|int $id The id of the file to delete
      * @return bool True if the file was deleted, false otherwise
      */
     public function delete(int|string $id): bool

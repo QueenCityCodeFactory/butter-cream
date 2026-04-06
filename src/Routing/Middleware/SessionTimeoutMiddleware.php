@@ -19,7 +19,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
     /**
      * Default Config
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $config = [
         'timeout' => 15,
@@ -28,7 +28,7 @@ class SessionTimeoutMiddleware implements MiddlewareInterface
     /**
      * Constructor
      *
-     * @param array $config Config options. See $config for valid keys.
+     * @param array<string, mixed> $config Config options. See $config for valid keys.
      */
     public function __construct(array $config = [])
     {

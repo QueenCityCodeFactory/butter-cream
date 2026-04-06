@@ -19,7 +19,7 @@ class FormHelper extends Helper
      * @param mixed $context The context for which the form is being defined.
      *   Can be a ContextInterface instance, ORM entity, ORM resultset, or an
      *   array of meta data. You can use `null` to make a context-less form.
-     * @param array $options An array of html attributes and options.
+     * @param array<array-key, mixed> $options An array of html attributes and options.
      * @return string An formatted opening FORM tag.
      */
     public function create(mixed $context = null, array $options = []): string
@@ -61,9 +61,9 @@ class FormHelper extends Helper
      * - The option `onclick` will be replaced.
      *
      * @param string $title The content to be wrapped by <a> tags.
-     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
+     * @param array<string|int, mixed>|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
-     * @param array $options Array of HTML attributes.
+     * @param array<string, mixed> $options Array of HTML attributes.
      * @return string An `<a />` element.
      * @link https://book.cakephp.org/5/en/views/helpers/form.html#creating-standalone-buttons-and-post-links
      */
@@ -161,7 +161,7 @@ class FormHelper extends Helper
      * Delete Button for Index Pages
      *
      * @param string|int $primaryKey The primary key
-     * @param array $options The standard options for links
+     * @param array<string, mixed> $options The standard options for links
      * @return string HTML Link wrapped in a form
      */
     public function deleteBtn(string|int $primaryKey, array $options = []): string
@@ -179,7 +179,7 @@ class FormHelper extends Helper
      * Creates a `<button>` tag. It is preset with save icon font awesome class and title for the button.
      *
      * @param string $title The button's caption. Not automatically HTML encoded
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
@@ -200,7 +200,7 @@ class FormHelper extends Helper
      * Creates an `a` tag not a true button. It is preset with font awesome class and title for the button.
      *
      * @param string $title The button's caption. Not automatically HTML encoded
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
@@ -226,7 +226,7 @@ class FormHelper extends Helper
      * Creates an `button` tag. It is preset with font awesome class and title for the button.
      *
      * @param string $title The button's caption. Not automatically HTML encoded
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
@@ -251,7 +251,7 @@ class FormHelper extends Helper
      * Creates an `a` tag not a true button. It is preset with font awesome class and title for the button.
      *
      * @param string $title The button's caption. Not automatically HTML encoded
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
@@ -273,7 +273,7 @@ class FormHelper extends Helper
      * Creates an `button` tag. It is preset with font awesome class and title for the button.
      *
      * @param string $title The button's caption. Not automatically HTML encoded
-     * @param array $options Array of options and HTML attributes.
+     * @param array<string, mixed> $options Array of options and HTML attributes.
      * @return string A HTML button tag.
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#FormHelper::button
      */
@@ -310,7 +310,7 @@ class FormHelper extends Helper
             }
         }
 
-        return parent::button($title, $options);
+        return parent::button($title ?? '', $options);
     }
 
     /**
@@ -324,9 +324,9 @@ class FormHelper extends Helper
      * - `escape` boolean - Whether or not to html escape the contents of the error.
      *
      * @param string $field A field name, like "modelname.fieldname"
-     * @param array|string|null $text Error message as string or array of messages. If an array,
+     * @param array<array-key, mixed>|string|null $text Error message as string or array of messages. If an array,
      *   it should be a hash of key names => messages.
-     * @param array $options See above.
+     * @param array<string, mixed> $options See above.
      * @return string Formatted errors or ''.
      * @link https://book.cakephp.org/5/en/views/helpers/form.html#displaying-and-checking-errors
      */
@@ -367,7 +367,7 @@ class FormHelper extends Helper
      * - `select2` - turn on/off select2
      *
      * @param string $fieldName This should be "modelname.fieldname"
-     * @param array $options Each type of input takes different options.
+     * @param array<array-key, mixed> $options Each type of input takes different options.
      * @return string Completed form widget.
      * @link https://book.cakephp.org/5/en/views/helpers/form.html#creating-form-inputs
      * @psalm-suppress InvalidReturnType
@@ -380,7 +380,7 @@ class FormHelper extends Helper
             'enhancedSelect' => true,
         ];
 
-        if ($options['enhancedSelect'] !== false && isset($options['options']) && is_array($options)) {
+        if ($options['enhancedSelect'] !== false && isset($options['options']) && is_array($options['options'])) {
             if (empty($options['type'])) {
                 $options['type'] = $this->_inputType($fieldName, $options);
             }

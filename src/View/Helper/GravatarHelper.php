@@ -9,13 +9,14 @@ use Cake\View\Helper;
  * Gravatar Helper
  *
  * @property \ButterCream\View\Helper\HtmlHelper $Html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class GravatarHelper extends Helper
 {
     /**
      * List of helpers used by this helper
      *
-     * @var array
+     * @var list<string>
      */
     public array $helpers = ['Html'];
 
@@ -26,7 +27,7 @@ class GravatarHelper extends Helper
      * or an image tag with the specified default options.
      *
      * @param string $email The gravatar email address.
-     * @param array $options An array specify overrides to the default options
+     * @param array<string, mixed> $options An array specify overrides to the default options
      * - size: The width and height of the profile (150 default)
      * - default: The default gravatar image (mm default) [List Here](http://en.gravatar.com/site/implement/images/)
      * - class: The css class of the image tag (gravatar default)
