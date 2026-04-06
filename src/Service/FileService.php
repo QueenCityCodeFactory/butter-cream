@@ -194,9 +194,9 @@ class FileService
      *  - model - the model/table name this file belongs to
      *  - foreign_key - the foreign key of the related record
      *  - original_filename - the original uploaded filename
-     * @return string|int|bool The file id if successfully added, otherwise false
+     * @return int|bool The file id if successfully added, otherwise false
      */
-    public function put(array|string $tmpFilePath, array $metaData = []): int|string|bool
+    public function put(array|string $tmpFilePath, array $metaData = []): int|bool
     {
         $adapter = new LocalFilesystemAdapter($this->getBasePath());
         $filesystem = new Filesystem($adapter);

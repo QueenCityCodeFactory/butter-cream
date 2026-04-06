@@ -351,9 +351,9 @@ class HtmlHelper extends Helper
      * Add Button for Cards
      *
      * @param array<string, mixed> $options The options
-     * @return string|bool Html Link
+     * @return string Html Link
      */
-    public function addBtn(array $options = []): string|bool
+    public function addBtn(array $options = []): string
     {
         $url = ['action' => 'add'];
         $options['default'] = false;
