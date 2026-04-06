@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace ButterCream\Service;
 
 use ButterCream\Message\Exception\StatusMessageException;
-use ButterCream\Model\Entity\File;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
@@ -91,10 +91,10 @@ class FileService
     /**
      * Build the relative filesystem path for a file entity.
      *
-     * @param \ButterCream\Model\Entity\File $file The file entity
+     * @param \Cake\Datasource\EntityInterface $file The file entity
      * @return string
      */
-    protected function buildRelativePath(File $file): string
+    protected function buildRelativePath(EntityInterface $file): string
     {
         return $file->model . DS . $file->foreign_key . DS . $file->filename;
     }
@@ -104,9 +104,9 @@ class FileService
      *
      * @param int|string $id The id of the file to get
      * @param bool $contents Whether to include the file contents
-     * @return \ButterCream\Model\Entity\File The file entity
+     * @return \Cake\Datasource\EntityInterface The file entity
      */
-    public function get(int|string $id, bool $contents = false): File
+    public function get(int|string $id, bool $contents = false): EntityInterface
     {
         $file = $this->data($id);
         $file->path = $this->getBasePath() . $this->buildRelativePath($file);
@@ -123,9 +123,9 @@ class FileService
      * Get the base file data from the database.
      *
      * @param int|string $id The id of the file
-     * @return \ButterCream\Model\Entity\File
+     * @return \Cake\Datasource\EntityInterface
      */
-    public function data(int|string $id): File
+    public function data(int|string $id): EntityInterface
     {
         /** @var \ButterCream\Model\Entity\File $file */
         $file = $this->filesTable->get($id);
