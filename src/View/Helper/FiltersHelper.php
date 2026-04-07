@@ -21,7 +21,7 @@ use Cake\View\Helper;
 class FiltersHelper extends Helper
 {
     /**
-     * @var array<string>
+     * @var array<string, array<string, string>|string>
      */
     public array $helpers = [
         'Form' => ['className' => 'ButterCream.Form'],

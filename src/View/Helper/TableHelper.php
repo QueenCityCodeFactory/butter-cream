@@ -23,7 +23,7 @@ class TableHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var list<string>
+     * @var array<string, array<string, string>|string>
      */
     public array $helpers = [
         'Html' => ['className' => 'ButterCream.Html'],
@@ -183,7 +183,7 @@ class TableHelper extends Helper
                 'view' => $this->Html->viewBtn($primaryKey, $options),
                 'edit' => $this->Html->editBtn($primaryKey, $options),
                 'delete' => $this->_View->loadHelper('Form', ['className' => 'ButterCream.Form'])
-                    ->deleteBtn($primaryKey, $options),
+                    ->deleteBtn($primaryKey, $options), // @phpstan-ignore method.notFound
                 default => '',
             };
             $html .= "\n";

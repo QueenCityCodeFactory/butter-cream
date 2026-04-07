@@ -20,7 +20,7 @@ class BadgeHelper extends Helper
     use StringTemplateTrait;
 
     /**
-     * @var list<string>
+     * @var array<string, array<string, string>|string>
      */
     public array $helpers = ['Html' => ['className' => 'ButterCream.Html']];
 

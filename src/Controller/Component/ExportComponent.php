@@ -40,7 +40,7 @@ class ExportComponent extends Component
     /**
      * Export a query as a CSV download.
      *
-     * @param iterable $data Query, ResultSet, or array of rows.
+     * @param iterable<mixed> $data Query, ResultSet, or array of rows.
      * @param string $filename Download filename.
      * @param array<string> $columns Column names to include. Empty = all.
      * @return \Cake\Http\Response

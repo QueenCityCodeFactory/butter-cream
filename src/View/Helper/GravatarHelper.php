@@ -16,7 +16,7 @@ class GravatarHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var list<string>
+     * @var array<string, array<string, string>|string>
      */
     public array $helpers = ['Html' => ['className' => 'ButterCream.Html']];
 
