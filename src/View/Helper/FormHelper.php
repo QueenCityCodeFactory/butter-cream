@@ -5,6 +5,7 @@ namespace ButterCream\View\Helper;
 
 use BootstrapUI\View\Helper\FormHelper as Helper;
 use Cake\Utility\Hash;
+use Traversable;
 
 /**
  * Form Helper
@@ -24,7 +25,8 @@ class FormHelper extends Helper
         parent::initialize($config);
 
         $this->templater()->add([
-            'inputGroupContainer' => '<div class="mb-3">{{label}}<div class="input-group">{{prepend}}{{input}}{{append}}</div>{{error}}</div>',
+            'inputGroupContainer' => '<div class="mb-3">{{label}}'
+                . '<div class="input-group">{{prepend}}{{input}}{{append}}</div>{{error}}</div>',
             'inputGroupText' => '<span class="input-group-text">{{content}}</span>',
         ]);
     }
@@ -396,7 +398,11 @@ class FormHelper extends Helper
             'enhancedSelect' => true,
         ];
 
-        if ($options['enhancedSelect'] !== false && isset($options['options']) && (is_array($options['options']) || $options['options'] instanceof \Traversable)) {
+        if (
+            $options['enhancedSelect'] !== false
+            && isset($options['options'])
+            && (is_array($options['options']) || $options['options'] instanceof Traversable)
+        ) {
             $detectedType = $options['type'] ?: $this->_inputType($fieldName, $options);
 
             if ($detectedType == 'select') {

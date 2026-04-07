@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace ButterCream\View\Helper;
 
 use BootstrapUI\View\Helper\OptionsAwareTrait;
+use Cake\Datasource\EntityInterface;
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
 
@@ -20,6 +22,7 @@ use Cake\View\StringTemplateTrait;
  * ```
  *
  * @property \ButterCream\View\Helper\HtmlHelper $Html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class AlertHelper extends Helper
 {
@@ -38,7 +41,8 @@ class AlertHelper extends Helper
         'templates' => [
             'alert' => '<div{{attrs}}>{{icon}}{{dismiss}}{{content}}</div>',
             'alertIcon' => '<div class="me-2">{{icon}}</div>',
-            'alertDismiss' => '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            'alertDismiss' => '<button type="button" class="btn-close"'
+                . ' data-bs-dismiss="alert" aria-label="Close"></button>',
             'alertContent' => '<div class="flex-grow-1">{{content}}</div>',
             'callout' => '<div{{attrs}}>{{title}}{{content}}</div>',
             'calloutTitle' => '<h5>{{content}}</h5>',
@@ -193,7 +197,7 @@ class AlertHelper extends Helper
      * @param array<string, mixed> $options Alert options.
      * @return string Empty string if no errors.
      */
-    public function validationErrors(\Cake\Datasource\EntityInterface $entity, array $options = []): string
+    public function validationErrors(EntityInterface $entity, array $options = []): string
     {
         $errors = $entity->getErrors();
         if (empty($errors)) {
@@ -204,7 +208,7 @@ class AlertHelper extends Helper
         foreach ($errors as $field => $fieldErrors) {
             foreach ($fieldErrors as $error) {
                 $items[] = $this->formatTemplate('validationItem', [
-                    'field' => h(\Cake\Utility\Inflector::humanize($field)),
+                    'field' => h(Inflector::humanize($field)),
                     'error' => h($error),
                 ]);
             }

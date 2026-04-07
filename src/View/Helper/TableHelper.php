@@ -25,7 +25,11 @@ class TableHelper extends Helper
      *
      * @var list<string>
      */
-    public array $helpers = ['Html' => ['className' => 'ButterCream.Html'], 'Paginator' => ['className' => 'ButterCream.Paginator'], 'Form' => ['className' => 'ButterCream.Form']];
+    public array $helpers = [
+        'Html' => ['className' => 'ButterCream.Html'],
+        'Paginator' => ['className' => 'ButterCream.Paginator'],
+        'Form' => ['className' => 'ButterCream.Form'],
+    ];
 
     /**
      * Default config for this class
@@ -36,9 +40,11 @@ class TableHelper extends Helper
         'templates' => [
             'tableheader' => '<th{{attrs}}>{{content}}{{help}}</th>',
             'checkboxAll' => '<input type="checkbox" class="form-check-input" data-check-all>',
-            'rowCheckbox' => '<td class="text-center"><input type="checkbox" class="form-check-input bulk-check" name="{{name}}" value="{{value}}"></td>',
+            'rowCheckbox' => '<td class="text-center"><input type="checkbox"'
+                . ' class="form-check-input bulk-check" name="{{name}}" value="{{value}}"></td>',
             'actionsCell' => '<td class="actions">{{content}}</td>',
-            'emptyState' => '<tr><td colspan="{{colspan}}" class="text-center text-muted py-5">{{icon}}{{message}}{{action}}</td></tr>',
+            'emptyState' => '<tr><td colspan="{{colspan}}"'
+                . ' class="text-center text-muted py-5">{{icon}}{{message}}{{action}}</td></tr>',
             'emptyStateIcon' => '<em class="fa-solid fa-{{icon}} fa-3x mb-3 d-block text-muted"></em>',
             'emptyStateAction' => '<div class="mt-2">{{content}}</div>',
         ],
@@ -166,14 +172,18 @@ class TableHelper extends Helper
      * @param array<string, mixed> $options Additional options passed to each button method.
      * @return string `<td>` with action buttons.
      */
-    public function actions(string|int $primaryKey, array $buttons = ['view', 'edit', 'delete'], array $options = []): string
-    {
+    public function actions(
+        string|int $primaryKey,
+        array $buttons = ['view', 'edit', 'delete'],
+        array $options = [],
+    ): string {
         $html = '';
         foreach ($buttons as $btn) {
             $html .= match ($btn) {
                 'view' => $this->Html->viewBtn($primaryKey, $options),
                 'edit' => $this->Html->editBtn($primaryKey, $options),
-                'delete' => $this->_View->loadHelper('Form', ['className' => 'ButterCream.Form'])->deleteBtn($primaryKey, $options),
+                'delete' => $this->_View->loadHelper('Form', ['className' => 'ButterCream.Form'])
+                    ->deleteBtn($primaryKey, $options),
                 default => '',
             };
             $html .= "\n";

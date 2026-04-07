@@ -5,6 +5,8 @@ namespace ButterCream\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Http\Response;
+use Cake\Utility\Inflector;
+use RuntimeException;
 
 /**
  * ExportComponent — Convenience methods for exporting query results.
@@ -49,7 +51,7 @@ class ExportComponent extends Component
 
         $stream = fopen('php://temp', 'r+');
         if ($stream === false) {
-            throw new \RuntimeException('Unable to open temp stream for CSV export.');
+            throw new RuntimeException('Unable to open temp stream for CSV export.');
         }
 
         // BOM for Excel UTF-8 compatibility
@@ -76,7 +78,7 @@ class ExportComponent extends Component
 
             if (!$headerWritten) {
                 $headers = array_map(
-                    fn($key) => \Cake\Utility\Inflector::humanize((string)$key),
+                    fn($key) => Inflector::humanize((string)$key),
                     array_keys($row),
                 );
                 fputcsv($stream, $headers, $delimiter, $enclosure);

@@ -18,6 +18,8 @@ use Cake\View\StringTemplateTrait;
  *     ['value' => 10, 'variant' => 'danger'],
  * ]);
  * ```
+ *
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class ProgressHelper extends Helper
 {
@@ -46,7 +48,7 @@ class ProgressHelper extends Helper
      * - `min` (int)        — Minimum value. Default 0.
      * - `max` (int)        — Maximum value. Default 100.
      *
-     * @param int|float $value Current progress value.
+     * @param float|int $value Current progress value.
      * @param array<string, mixed> $options Bar options.
      * @return string
      */
@@ -105,7 +107,7 @@ class ProgressHelper extends Helper
     /**
      * Internal — render a single progress-bar div.
      *
-     * @param int|float $value Current value.
+     * @param float|int $value Current value.
      * @param array<string, mixed> $options Bar options.
      * @return string
      */
@@ -121,7 +123,7 @@ class ProgressHelper extends Helper
         ];
 
         $range = $options['max'] - $options['min'];
-        $percentage = $range > 0 ? (($value - $options['min']) / $range) * 100 : 0;
+        $percentage = $range > 0 ? ($value - $options['min']) / $range * 100 : 0;
         $percentage = max(0, min(100, $percentage));
 
         $classes = ['progress-bar'];
@@ -136,7 +138,7 @@ class ProgressHelper extends Helper
         }
 
         $barAttrs = $this->injectClasses($classes, []);
-        $barAttrs['style'] = 'width: ' . round($percentage, 1) . '%';
+        $barAttrs['style'] = 'width: ' . (string)round($percentage, 1) . '%';
 
         return $this->formatTemplate('progressBar', [
             'attrs' => $this->templater()->formatAttributes($barAttrs),

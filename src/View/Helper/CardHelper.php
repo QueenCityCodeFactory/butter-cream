@@ -15,6 +15,8 @@ use Cake\View\StringTemplateTrait;
  * echo $tableContent;
  * echo $this->Card->end(['footer' => $paginationHtml]);
  * ```
+ *
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class CardHelper extends Helper
 {
@@ -34,7 +36,9 @@ class CardHelper extends Helper
             'cardStart' => '<div{{attrs}}>',
             'cardEnd' => '</div>',
             'cardHeader' => '<div{{attrs}}>{{content}}</div>',
-            'cardHeaderWithButtons' => '<div class="row justify-content-between"><div class="col-auto">{{title}}</div><div class="col-auto card-header-buttons">{{buttons}}</div></div>',
+            'cardHeaderWithButtons' => '<div class="row justify-content-between">'
+                . '<div class="col-auto">{{title}}</div>'
+                . '<div class="col-auto card-header-buttons">{{buttons}}</div></div>',
             'cardBody' => '<div{{attrs}}>{{content}}</div>',
             'cardFooter' => '<div{{attrs}}>{{content}}</div>',
             'tableResponsiveStart' => '<div class="table-responsive">',

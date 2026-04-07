@@ -12,6 +12,7 @@ use Cake\View\StringTemplateTrait;
  * BadgeHelper — Render Bootstrap 5 badges, pills, and enum-mapped status indicators.
  *
  * @property \ButterCream\View\Helper\HtmlHelper $Html
+ * @extends \Cake\View\Helper<\Cake\View\View>
  */
 class BadgeHelper extends Helper
 {
@@ -165,7 +166,7 @@ class BadgeHelper extends Helper
     /**
      * Render a boolean as a Yes/No badge.
      *
-     * @param bool|int|null $value Boolean-ish value.
+     * @param int|bool|null $value Boolean-ish value.
      * @param array<string, mixed> $options Supports `trueLabel`, `falseLabel`, `trueVariant`, `falseVariant`.
      * @return string
      */

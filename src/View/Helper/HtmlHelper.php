@@ -26,8 +26,10 @@ class HtmlHelper extends Helper
                 'aria-expanded="false">{{content}}</a>',
             'tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>',
             'nullSafe' => '<span class="text-muted">{{content}}</span>',
-            'alertDismissBtn' => '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-            'listGroupItemBadge' => '<div class="d-flex justify-content-between align-items-center">{{content}} {{badge}}</div>',
+            'alertDismissBtn' => '<button type="button" class="btn-close"'
+                . ' data-bs-dismiss="alert" aria-label="Close"></button>',
+            'listGroupItemBadge' => '<div class="d-flex justify-content-between'
+                . ' align-items-center">{{content}} {{badge}}</div>',
             'accordionItem' => '<div class="accordion-item">{{header}}{{collapse}}</div>',
             'accordionHeader' => '<h2 class="accordion-header"><button{{attrs}}>{{title}}</button></h2>',
             'accordionCollapse' => '<div{{attrs}}>{{body}}</div>',
