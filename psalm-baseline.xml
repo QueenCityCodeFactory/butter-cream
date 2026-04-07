@@ -99,8 +99,6 @@
       <code><![CDATA[__('Apply')]]></code>
       <code><![CDATA[__('Clear')]]></code>
       <code><![CDATA[__('Filters')]]></code>
-      <code><![CDATA[h($setup['id'])]]></code>
-      <code><![CDATA[h($setup['title'])]]></code>
     </UndefinedFunction>
   </file>
   <file src="src/View/Helper/FormHelper.php">
@@ -108,11 +106,13 @@
       <code><![CDATA[public function control(string $fieldName, array $options = []): string]]></code>
       <code><![CDATA[public function create(mixed $context = null, array $options = []): string]]></code>
       <code><![CDATA[public function error(string $field, string|array|null $text = null, array $options = []): string]]></code>
+      <code><![CDATA[public function initialize(array $config): void]]></code>
       <code><![CDATA[public function postLink(string $title, string|array|null $url = null, array $options = []): string]]></code>
     </MissingOverrideAttribute>
   </file>
   <file src="src/View/Helper/HtmlHelper.php">
     <MissingOverrideAttribute>
+      <code><![CDATA[public function badge(string $text, array $options = []): string]]></code>
       <code><![CDATA[public function icon(string $name, array $options = []): string]]></code>
       <code><![CDATA[public function link(array|string $title, string|array|null $url = null, array $options = []): string]]></code>
     </MissingOverrideAttribute>
@@ -120,13 +120,9 @@
       <code><![CDATA[$title]]></code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/View/Helper/NestedTreeHelper.php">
-    <UndefinedFunction>
-      <code><![CDATA[h($treeItem->name)]]></code>
-    </UndefinedFunction>
-  </file>
   <file src="src/View/Helper/PaginatorHelper.php">
     <MissingOverrideAttribute>
+      <code><![CDATA[public function initialize(array $config): void]]></code>
       <code><![CDATA[public function next(string $title = '<em class="fa-solid fa-angle-right"></em>', array $options = []): string]]></code>
       <code><![CDATA[public function numbers(array $options = []): string]]></code>
       <code><![CDATA[public function prev(string $title = '<em class="fa-solid fa-angle-left"></em>', array $options = []): string]]></code>

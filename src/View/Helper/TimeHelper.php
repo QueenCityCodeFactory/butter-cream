@@ -10,6 +10,8 @@ use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 
+use function Cake\Core\h;
+
 /**
  * TimeHelper Class
  */

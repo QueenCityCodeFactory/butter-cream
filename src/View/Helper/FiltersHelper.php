@@ -5,6 +5,8 @@ namespace ButterCream\View\Helper;
 
 use Cake\View\Helper;
 
+use function Cake\Core\h;
+
 /**
  * Filters Helper
  *

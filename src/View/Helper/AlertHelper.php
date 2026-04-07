@@ -9,6 +9,8 @@ use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
 
+use function Cake\Core\h;
+
 /**
  * AlertHelper — Render Bootstrap 5 inline alerts and callouts.
  *

@@ -7,6 +7,8 @@ use BootstrapUI\View\Helper\HtmlHelper as Helper;
 use BootstrapUI\View\Helper\OptionsAwareTrait;
 use Cake\View\View;
 
+use function Cake\Core\h;
+
 /**
  * Html Helper
  */
@@ -421,7 +423,7 @@ class HtmlHelper extends Helper
      * ```
      *
      * @param string $text Badge text.
-     * @param array<string, mixed> $options Supports `variant` (string), `pill` (bool), plus standard HTML attributes.
+     * @param array<array-key, mixed> $options Supports `variant` (string), `pill` (bool), plus standard HTML attributes.
      * @return string
      */
     public function badge(string $text, array $options = []): string

@@ -8,6 +8,8 @@ use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
 
+use function Cake\Core\h;
+
 /**
  * Table Helper
  *
@@ -182,6 +184,7 @@ class TableHelper extends Helper
             $html .= match ($btn) {
                 'view' => $this->Html->viewBtn($primaryKey, $options),
                 'edit' => $this->Html->editBtn($primaryKey, $options),
+                /** @psalm-suppress UndefinedMethod */
                 'delete' => $this->_View->loadHelper('Form', ['className' => 'ButterCream.Form'])
                     ->deleteBtn($primaryKey, $options), // @phpstan-ignore method.notFound
                 default => '',

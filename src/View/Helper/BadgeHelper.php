@@ -8,6 +8,8 @@ use BootstrapUI\View\Helper\OptionsAwareTrait;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
 
+use function Cake\Core\h;
+
 /**
  * BadgeHelper — Render Bootstrap 5 badges, pills, and enum-mapped status indicators.
  *
