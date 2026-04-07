@@ -1,0 +1,88 @@
+{#
+/**
+ * ButterCream Entity bake template
+ *
+ * Enhanced entity generation with:
+ *  - Referer field marked inaccessible (via BakeHelper)
+ *  - Password field in _hidden by default
+ *  - Auto-detection of created_by/modified_by as inaccessible
+ */
+#}
+{% set propertyHintMap = DocBlock.buildEntityPropertyHintTypeMap(propertySchema ?: []) %}
+{% set associationHintMap = DocBlock.buildEntityAssociationHintTypeMap(propertySchema ?: []) %}
+{% set annotations = DocBlock.propertyHints(propertyHintMap) %}
+
+{%- if associationHintMap %}
+    {%~ set annotations = annotations|merge(['']) %}
+    {%~ set annotations = annotations|merge(DocBlock.propertyHints(associationHintMap)) %}
+{% endif %}
+
+{%- set accessible = Bake.getFieldAccessibility(fields, primaryKey) %}
+
+{#- Mark audit/stamp fields as inaccessible -#}
+{% if accessible %}
+    {%- for stampField in ['created_by', 'modified_by', 'updated_by', 'deleted_by'] %}
+        {%- if stampField in fields %}
+            {%- set accessible = accessible|merge({(stampField): 'false'}) %}
+        {%- endif %}
+    {%- endfor %}
+{% endif %}
+
+{#- Build hidden fields list: include password and any sensitive columns -#}
+{%- set hiddenFields = hidden ?? [] %}
+{%- for sensitiveField in ['password', 'passwd', 'token', 'secret', 'ssn', 'social_security_number'] %}
+    {%- if sensitiveField in fields and sensitiveField not in hiddenFields %}
+        {%- set hiddenFields = hiddenFields|merge([sensitiveField]) %}
+    {%- endif %}
+{%- endfor %}
+
+{%- set generatedProperties = [] %}
+{{ element('Bake.file_header', {
+    namespace: fileBuilder.namespace,
+    classImports: fileBuilder.classImports(['Cake\\ORM\\Entity']),
+}) }}
+
+{{ DocBlock.classDescription(name, 'Entity', annotations)|raw }}
+class {{ name }} extends Entity{{ fileBuilder.classBuilder.implements ? ' implements ' ~ fileBuilder.classBuilder.implements|join(', ') : '' }}
+{
+{% set userConstants = fileBuilder.classBuilder.userConstants([]) %}
+{% if userConstants %}
+    {{~ Bake.concat('\n\n', userConstants) }}
+
+{% endif %}
+{% if accessible %}
+{%~ set generatedProperties = generatedProperties|merge(['_accessible']) %}
+    /**
+     * Fields that can be mass assigned using newEntity() or patchEntity().
+     *
+     * Note that when '*' is set to true, this allows all unspecified fields to
+     * be mass assigned. For security purposes, it is advised to set '*' to false
+     * (or remove it), and explicitly make individual fields accessible as needed.
+     *
+     * @var array<string, bool>
+     */
+    protected array $_accessible = {{ Bake.exportVar(accessible, 1)|raw }};
+{% endif %}
+{% if accessible and hiddenFields %}
+
+{% endif %}
+{% if hiddenFields %}
+    {%~ set generatedProperties = generatedProperties|merge(['_hidden']) %}
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var list<string>
+     */
+    protected array $_hidden = {{ Bake.exportVar(hiddenFields, 1)|raw }};
+{% endif %}
+{% set userProperties = fileBuilder.classBuilder.userProperties(generatedProperties) %}
+{% if userProperties %}
+
+    {{~ Bake.concat('\n\n', userProperties) }}
+{% endif %}
+{% set userFunctions = fileBuilder.classBuilder.userFunctions([]) %}
+{% if userFunctions %}
+
+    {{~ Bake.concat('\n\n', userFunctions) }}
+{% endif %}
+}

@@ -25,6 +25,13 @@ class HtmlHelper extends Helper
                 'action-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" ' .
                 'aria-expanded="false">{{content}}</a>',
             'tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>',
+            'nullSafe' => '<span class="text-muted">{{content}}</span>',
+            'alertDismissBtn' => '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            'listGroupItemBadge' => '<div class="d-flex justify-content-between align-items-center">{{content}} {{badge}}</div>',
+            'accordionItem' => '<div class="accordion-item">{{header}}{{collapse}}</div>',
+            'accordionHeader' => '<h2 class="accordion-header"><button{{attrs}}>{{title}}</button></h2>',
+            'accordionCollapse' => '<div{{attrs}}>{{body}}</div>',
+            'accordionBody' => '<div class="accordion-body">{{content}}</div>',
         ],
     ];
 
@@ -401,5 +408,236 @@ class HtmlHelper extends Helper
         }
 
         return false;
+    }
+
+    /**
+     * Render a Bootstrap 5 badge.
+     *
+     * ```
+     * echo $this->Html->badge('New', ['variant' => 'primary']);
+     * echo $this->Html->badge('3', ['variant' => 'danger', 'pill' => true]);
+     * ```
+     *
+     * @param string $text Badge text.
+     * @param array<string, mixed> $options Supports `variant` (string), `pill` (bool), plus standard HTML attributes.
+     * @return string
+     */
+    public function badge(string $text, array $options = []): string
+    {
+        $options += ['pill' => false, 'variant' => 'secondary'];
+
+        $variant = $options['variant'];
+        unset($options['variant']);
+
+        $classes = ['badge', 'text-bg-' . $variant];
+        if ($options['pill']) {
+            $classes[] = 'rounded-pill';
+        }
+        unset($options['pill']);
+
+        $options = $this->injectClasses($classes, $options);
+
+        return $this->tag('span', h($text), $options);
+    }
+
+    /**
+     * Render a Bootstrap 5 inline alert.
+     *
+     * @param string $variant Bootstrap colour (success, danger, warning, info, …).
+     * @param string $message Alert content (HTML allowed).
+     * @param array<string, mixed> $options Supports `dismissible` (bool), `icon` (string|bool).
+     * @return string
+     */
+    public function alert(string $variant, string $message, array $options = []): string
+    {
+        $options += ['dismissible' => true, 'icon' => false];
+
+        $classes = ['alert', 'alert-' . $variant];
+        if ($options['dismissible']) {
+            $classes[] = 'alert-dismissible';
+            $classes[] = 'fade';
+            $classes[] = 'show';
+        }
+
+        $iconHtml = '';
+        if ($options['icon']) {
+            $iconName = is_string($options['icon']) ? $options['icon'] : 'info-circle';
+            $iconHtml = $this->icon($iconName, ['class' => 'me-2']) . ' ';
+        }
+
+        $dismissHtml = '';
+        if ($options['dismissible']) {
+            $dismissHtml = $this->formatTemplate('alertDismissBtn', []);
+        }
+
+        unset($options['dismissible'], $options['icon']);
+        $options += ['role' => 'alert'];
+        $options = $this->injectClasses($classes, $options);
+
+        return $this->tag('div', $iconHtml . $message . $dismissHtml, $options);
+    }
+
+    /**
+     * Render a Bootstrap 5 list group.
+     *
+     * ```
+     * echo $this->Html->listGroup([
+     *     'Dashboard',
+     *     ['text' => 'Users', 'url' => ['controller' => 'Users'], 'active' => true],
+     *     ['text' => 'Settings', 'badge' => '3'],
+     * ]);
+     * ```
+     *
+     * @param array<int, string|array<string, mixed>> $items List of items.
+     * @param array<string, mixed> $options Wrapper HTML attributes.
+     * @return string
+     */
+    public function listGroup(array $items, array $options = []): string
+    {
+        $options += ['flush' => false];
+        $classes = ['list-group'];
+        if ($options['flush']) {
+            $classes[] = 'list-group-flush';
+        }
+        unset($options['flush']);
+
+        $html = '';
+        foreach ($items as $item) {
+            if (is_string($item)) {
+                $item = ['text' => $item];
+            }
+            $item += ['text' => '', 'url' => null, 'active' => false, 'badge' => null, 'variant' => null];
+
+            $itemClasses = ['list-group-item'];
+            if ($item['url']) {
+                $itemClasses[] = 'list-group-item-action';
+            }
+            if ($item['active']) {
+                $itemClasses[] = 'active';
+            }
+            if ($item['variant']) {
+                $itemClasses[] = 'list-group-item-' . $item['variant'];
+            }
+
+            $content = h($item['text']);
+            if ($item['badge'] !== null) {
+                $content = $this->formatTemplate('listGroupItemBadge', [
+                    'content' => $content,
+                    'badge' => $this->badge((string)$item['badge'], ['variant' => 'primary', 'pill' => true]),
+                ]);
+            }
+
+            if ($item['url']) {
+                $html .= $this->link($content, $item['url'], [
+                    'class' => implode(' ', $itemClasses),
+                    'escape' => false,
+                ]);
+            } else {
+                $html .= $this->tag('li', $content, $this->injectClasses($itemClasses, []));
+            }
+        }
+
+        $tag = 'ul';
+        // If any item has a URL, use div wrapper instead
+        foreach ($items as $item) {
+            if (is_array($item) && !empty($item['url'])) {
+                $tag = 'div';
+                break;
+            }
+        }
+
+        $options = $this->injectClasses($classes, $options);
+
+        return $this->tag($tag, $html, $options);
+    }
+
+    /**
+     * Render a Bootstrap 5 accordion.
+     *
+     * ```
+     * echo $this->Html->accordion('faq', [
+     *     ['title' => 'Question 1', 'body' => 'Answer 1', 'open' => true],
+     *     ['title' => 'Question 2', 'body' => 'Answer 2'],
+     * ]);
+     * ```
+     *
+     * @param string $id Unique accordion ID.
+     * @param array<array<string, mixed>> $items Array of items, each with `title`, `body`, `open`.
+     * @param array<string, mixed> $options Supports `flush` (bool), `alwaysOpen` (bool).
+     * @return string
+     */
+    public function accordion(string $id, array $items, array $options = []): string
+    {
+        $options += ['flush' => false, 'alwaysOpen' => false];
+
+        $classes = ['accordion'];
+        if ($options['flush']) {
+            $classes[] = 'accordion-flush';
+        }
+        unset($options['flush']);
+        $alwaysOpen = $options['alwaysOpen'];
+        unset($options['alwaysOpen']);
+
+        $html = '';
+        foreach ($items as $i => $item) {
+            $item += ['title' => '', 'body' => '', 'open' => false];
+            $itemId = $id . '-item-' . $i;
+            $collapsed = $item['open'] ? '' : ' collapsed';
+            $show = $item['open'] ? ' show' : '';
+            $parentAttr = $alwaysOpen ? '' : ' data-bs-parent="#' . $id . '"';
+
+            $buttonAttrs = $this->templater()->formatAttributes([
+                'class' => 'accordion-button' . $collapsed,
+                'type' => 'button',
+                'data-bs-toggle' => 'collapse',
+                'data-bs-target' => '#' . $itemId,
+                'aria-expanded' => $item['open'] ? 'true' : 'false',
+                'aria-controls' => $itemId,
+            ]);
+
+            $header = $this->formatTemplate('accordionHeader', [
+                'attrs' => $buttonAttrs,
+                'title' => h($item['title']),
+            ]);
+
+            $collapseAttrs = ' id="' . $itemId . '" class="accordion-collapse collapse' . $show . '"' . $parentAttr;
+
+            $body = $this->formatTemplate('accordionBody', [
+                'content' => $item['body'],
+            ]);
+
+            $collapse = $this->formatTemplate('accordionCollapse', [
+                'attrs' => $collapseAttrs,
+                'body' => $body,
+            ]);
+
+            $html .= $this->formatTemplate('accordionItem', [
+                'header' => $header,
+                'collapse' => $collapse,
+            ]);
+        }
+
+        $options = $this->injectClasses($classes, $options);
+        $options['id'] = $id;
+
+        return $this->tag('div', $html, $options);
+    }
+
+    /**
+     * Render a null-safe display value. Returns a dash for null/empty values.
+     *
+     * @param mixed $value The value to display.
+     * @param string $empty Text to show when value is null/empty. Default '—'.
+     * @return string
+     */
+    public function nullSafe(mixed $value, string $empty = '—'): string
+    {
+        if ($value === null || $value === '') {
+            return $this->formatTemplate('nullSafe', [
+                'content' => h($empty),
+            ]);
+        }
+
+        return (string)$value;
     }
 }

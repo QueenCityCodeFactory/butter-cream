@@ -18,7 +18,7 @@ class GravatarHelper extends Helper
      *
      * @var list<string>
      */
-    public array $helpers = ['Html'];
+    public array $helpers = ['Html' => ['className' => 'ButterCream.Html']];
 
     /**
      * Takes and email address and options and returns a gravatar

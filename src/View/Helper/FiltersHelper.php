@@ -23,7 +23,7 @@ class FiltersHelper extends Helper
     /**
      * @var array<string>
      */
-    public array $helpers = ['Form', 'Html'];
+    public array $helpers = ['Form' => ['className' => 'ButterCream.Form'], 'Html' => ['className' => 'ButterCream.Html']];
 
     /**
      * Setup options for the current drawer.

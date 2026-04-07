@@ -60,15 +60,50 @@ public function bootstrap(): void
   - `isMatch()` - Check if referer matches a URL
   - `ignore()` - Add URL to ignore list
 
+#### Export Component
+- **`ButterCream\Controller\Component\ExportComponent`**
+- Export controller support for spreadsheet and PDF downloads
+
 ### View Helpers
 
 #### Ajax Helper
 - **`ButterCream\View\Helper\AjaxHelper`**
 - `relatedData()` - Create containers for AJAX-loaded content
 
+#### Alert Helper
+- **`ButterCream\View\Helper\AlertHelper`**
+- Bootstrap 5 alert and callout rendering
+- `success()`, `error()`, `warning()`, `info()` - Typed alerts with icons
+- `callout()` - Callout-style alerts
+- Dismissible and non-dismissible variants
+
+#### Badge Helper
+- **`ButterCream\View\Helper\BadgeHelper`**
+- Bootstrap 5 badge rendering with configurable color maps
+- `badge()` - Generic badge with any variant
+- `status()` - Status badges with automatic color mapping
+- `priority()` - Priority badges with automatic color mapping
+- `boolean()` - Yes/No badges for boolean values
+
+#### Card Helper
+- **`ButterCream\View\Helper\CardHelper`**
+- Bootstrap 5 card rendering
+- `card()` - Standard card with header, body, footer
+- `statsCard()` - Stats/metric display card
+- `listGroupCard()` - Card with list group body
+
 #### Flash Helper
 - **`ButterCream\View\Helper\FlashHelper`**
 - Enhanced flash message rendering with Bootstrap 5 styling
+
+#### Filters Helper
+- **`ButterCream\View\Helper\FiltersHelper`**
+- Bootstrap 5 dropdown-based filter drawer for index pages
+- `setup()` - Configure drawer ID, title, update selector, URL
+- `addControl()` - Register filter fields (passed through to FormHelper)
+- `render()` - Output toggle button and drawer panel with GET form
+- Works in both standalone page and AJAX (relatedData) contexts
+- Active filter count shown as badge on toggle button
 
 #### Form Helper
 - **`ButterCream\View\Helper\FormHelper`**
@@ -77,7 +112,14 @@ public function bootstrap(): void
 - `postLink()` - Enhanced POST links with modal confirmation
 - `deleteBtn()` - Pre-configured delete button
 - `saveButton()` - Pre-configured save button with icon
-- Custom postLink with Bootstrap modal integration
+- `cancelButton()` - Cancel with referer redirect
+- `backButton()` - Back navigation button
+- `continueButton()` - Continue/next step button
+- `confirmButton()` - Modal-confirm enabled button
+- `resetButton()` - Form reset button with icon
+- `switch()` - Bootstrap 5 form-switch toggle
+- `colorPicker()` - Color picker input with Bootstrap styling
+- `control()` - Enhanced with `enhancedSelect` (auto TomSelect), input groups (`prepend`/`append`), floating labels
 
 #### Format Helper
 - **`ButterCream\View\Helper\FormatHelper`**
@@ -91,23 +133,36 @@ public function bootstrap(): void
 #### HTML Helper
 - **`ButterCream\View\Helper\HtmlHelper`**
 - Extended Bootstrap 5 HTML helper
+- `icon()` - Font Awesome icon shorthand
+- `nullSafe()` - Display em-dash for null values
+- `accordion()` - Bootstrap 5 accordion from array config
+- `viewBtn()` / `editBtn()` / `addBtn()` - Pre-styled action buttons
+- `actionDropdownMenu()` - Bootstrap 5 dropdown action menu
 
 #### Paginator Helper
 - **`ButterCream\View\Helper\PaginatorHelper`**
 - Bootstrap 5 styled pagination
-- `ajaxTemplateOptions()` - Configure AJAX pagination links
+- `ajaxTemplateOptions()` - Configure AJAX pagination link templates with `data-update` attribute
 - Custom Font Awesome icons for prev/next
 - Enhanced `prev()`, `next()`, `numbers()` methods
 
+#### Progress Helper
+- **`ButterCream\View\Helper\ProgressHelper`**
+- Bootstrap 5 progress bar rendering
+- `bar()` - Single progress bar with variant, label, striped, animated options
+- `stacked()` - Multiple stacked progress bars
+
 #### Table Helper
 - **`ButterCream\View\Helper\TableHelper`**
-- `header()` - Generate sortable table headers
+- `header()` - Generate sortable table column headers with sort direction indicators
 - Bootstrap 5 table styling
-- Automatic sort integration
+- AJAX-aware: generates `ajax-pagination-link` class and `data-update` attributes when in AJAX context
 
 #### Time Helper
 - **`ButterCream\View\Helper\TimeHelper`**
-- Extended Bootstrap 5 time helper
+- `semantic()` - `<time>` element with Bootstrap tooltip showing relative time
+- `relativeTime()` - Human-friendly relative time strings
+- `userFormat()` - Configurable date/datetime formatting
 
 #### URL Helper
 - **`ButterCream\View\Helper\UrlHelper`**

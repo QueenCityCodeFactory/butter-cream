@@ -20,6 +20,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive test coverage for FlashComponent, RefererComponent, JsonArrayType, TreeviewTrait, AppTable, StatusMessage, StatusMessageException, ButterCreamPlugin
 - CategoriesFixture class for TreeviewTrait tests
 - `league/flysystem` added as a suggested dependency for file management
+- `AlertHelper` — Bootstrap 5 alert rendering (`success()`, `error()`, `warning()`, `info()`, `callout()`, dismissible/non-dismissible)
+- `BadgeHelper` — Bootstrap 5 badge rendering with `status()`, `priority()`, `boolean()`, and generic `badge()` methods; includes configurable color maps
+- `CardHelper` — Bootstrap 5 card rendering (`card()`, `statsCard()`, `listGroupCard()`)
+- `ProgressHelper` — Bootstrap 5 progress bars (`bar()`, `stacked()`, striped/animated variants)
+- `ExportComponent` — Export controller support for spreadsheet and PDF downloads
+- `FormHelper::switch()` — Bootstrap 5 form-switch toggle shorthand
+- `FormHelper::colorPicker()` — `<input type="color">` with Bootstrap styling
+- `FormHelper::resetButton()` — reset button with icon
+- `FormHelper::confirmButton()` — modal-confirm support
+- `FormHelper::control()` — enhanced with input group support (`prepend`/`append`) and floating label support
+- `HtmlHelper::nullSafe()` — display em-dash for null values
+- `HtmlHelper::accordion()` — Bootstrap 5 accordion from array config
+- `HtmlHelper::viewBtn()` / `editBtn()` / `addBtn()` — pre-styled action buttons
+- `HtmlHelper::actionDropdownMenu()` — Bootstrap 5 dropdown action menu
+- `HtmlHelper::icon()` — Font Awesome icon shorthand
+- `PaginatorHelper::ajaxTemplateOptions()` — configure paginator link templates for AJAX pagination
+- `TableHelper::header()` — sortable table column headers with Bootstrap-styled sort indicators, AJAX-aware
+- `TimeHelper::semantic()` — `<time>` element with relative time tooltip
+- `TimeHelper::relativeTime()` — human-friendly relative time strings
+- `TimeHelper::userFormat()` — configurable date/datetime formatting
+- Updated `ButterCreamHelpersTrait` to load new helpers (Alert, Badge, Card, Progress, Filters)
+- Updated bake templates: entity template with typed properties and virtual fields, improved index/view templates with ButterCream helpers
 
 ### Changed
 - **BREAKING:** Minimum PHP version raised to 8.4

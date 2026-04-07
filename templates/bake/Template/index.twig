@@ -48,10 +48,18 @@ $this->Filters->addControl('{{ details.foreignKey }}', ['options' => ${{ alias|v
 {% for field in fields %}
             <?= $this->Table->header('{{ field }}') ?>
 {% endfor %}
-            <th class="actions">Actions</th>
+            <th scope="col" class="actions">Actions</th>
         </tr>
     </thead>
     <tbody>
+        <?php if (empty(iterator_to_array(${{ pluralVar }}))) : ?>
+        <tr>
+            <td colspan="{{ fields|length + 1 }}" class="text-center text-muted py-5">
+                <em class="fa-solid fa-inbox fa-3x mb-3 d-block"></em>
+                No {{ pluralHumanName|lower }} found.
+            </td>
+        </tr>
+        <?php endif; ?>
         <?php foreach (${{ pluralVar }} as ${{ singularVar }}) : ?>
         <tr>
 {% for field in fields %}
@@ -74,7 +82,9 @@ $this->Filters->addControl('{{ details.foreignKey }}', ['options' => ${{ alias|v
 {% endif %}
 {% if isKey is not same as(true) %}
 {% set columnData = Bake.columnData(field, schema) %}
-{% if columnData.type in ['date', 'datetime', 'datetimefractional', 'timestamp', 'timestampfractional', 'time', 'timestamptimezone'] %}
+{% if columnData.type == 'boolean' %}
+            <td data-title="{{ field|humanize }}: "><?= $this->Badge->boolean(${{ singularVar }}->{{ field }}) ?></td>
+{% elseif columnData.type in ['date', 'datetime', 'datetimefractional', 'timestamp', 'timestampfractional', 'time', 'timestamptimezone'] %}
             <td data-title="{{ field|humanize }}: "><?= $this->Time->userFormat(${{ singularVar }}->{{ field }}) ?></td>
 {% elseif columnData.type not in ['integer', 'float', 'decimal', 'biginteger', 'smallinteger', 'tinyinteger'] %}
             <td data-title="{{ field|humanize }}: "><?= h(${{ singularVar }}->{{ field }}) ?></td>

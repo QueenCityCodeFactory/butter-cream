@@ -20,7 +20,7 @@ class NestedTreeHelper extends Helper
      *
      * @var list<string>
      */
-    public array $helpers = ['Html'];
+    public array $helpers = ['Html' => ['className' => 'ButterCream.Html']];
 
     /**
      * Default config for this class

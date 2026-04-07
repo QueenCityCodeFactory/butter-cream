@@ -8,6 +8,23 @@ use BootstrapUI\View\Helper\PaginatorHelper as Helper;
 class PaginatorHelper extends Helper
 {
     /**
+     * Initialize the helper and add custom templates.
+     *
+     * @param array<string, mixed> $config Configuration.
+     * @return void
+     */
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+
+        $this->templater()->add([
+            'paginatorInfo' => '<span class="text-muted small">{{content}}</span>',
+            'perPageSelect' => '<select data-page-limit{{attrs}}>{{content}}</select>',
+            'perPageOption' => '<option value="{{value}}"{{attrs}}>{{text}}</option>',
+        ]);
+    }
+
+    /**
      * Set Ajax Link templates
      *
      * @param string $domId Html DOM ID
@@ -150,5 +167,53 @@ class PaginatorHelper extends Helper
         $options += $defaults;
 
         return parent::numbers($options);
+    }
+
+    /**
+     * Render a "Showing X to Y of Z" counter with Bootstrap styling.
+     *
+     * @param array<string, mixed> $options Supports `format` to override the counter string.
+     * @return string
+     */
+    public function info(array $options = []): string
+    {
+        $options += [
+            'format' => 'Showing {{start}} to {{end}} of {{count}}',
+        ];
+
+        return $this->formatTemplate('paginatorInfo', [
+            'content' => $this->counter($options['format']),
+        ]);
+    }
+
+    /**
+     * Render a per-page limit dropdown.
+     *
+     * Works with AJAX pagination JS via `data-page-limit` attribute.
+     *
+     * @param array<int> $limits List of per-page options. Default: [10, 25, 50, 100].
+     * @param array<string, mixed> $options HTML attributes for the select.
+     * @return string
+     */
+    public function perPage(array $limits = [10, 25, 50, 100], array $options = []): string
+    {
+        $options += ['class' => 'form-select form-select-sm d-inline-block w-auto'];
+
+        $current = $this->param('perPage') ?? $this->param('limit') ?? $limits[0] ?? 10;
+
+        $optionsHtml = '';
+        foreach ($limits as $limit) {
+            $selected = (int)$limit === (int)$current ? ' selected' : '';
+            $optionsHtml .= $this->formatTemplate('perPageOption', [
+                'value' => (string)$limit,
+                'attrs' => $selected,
+                'text' => $limit . ' per page',
+            ]);
+        }
+
+        return $this->formatTemplate('perPageSelect', [
+            'attrs' => $this->templater()->formatAttributes($options),
+            'content' => $optionsHtml,
+        ]);
     }
 }

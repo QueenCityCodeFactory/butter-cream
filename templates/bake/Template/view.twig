@@ -44,49 +44,57 @@ $this->end(); ?>
 <div class="row">
 {% if groupedFields['string'] %}
     <div class="col-lg-5">
+        <dl class="row mb-0">
 {% for field in groupedFields['string'] %}
 {% if associationFields[field] %}
 {% set details = associationFields[field] %}
-        <h6>{{ details.property|humanize }}</h6>
-        <p><?= ${{ singularVar }}->{{ details.property }} ? $this->Html->link(${{ singularVar }}->{{ details.property }}->{{ details.displayField }} ?? '', ['controller' => '{{ details.controller }}', 'action' => 'view', ${{ singularVar }}->{{ details.property }}->{{ details.primaryKey[0] }}]) : '' ?></p>
+            <dt class="col-sm-4">{{ details.property|humanize }}</dt>
+            <dd class="col-sm-8"><?= ${{ singularVar }}->{{ details.property }} ? $this->Html->link(${{ singularVar }}->{{ details.property }}->{{ details.displayField }} ?? '', ['controller' => '{{ details.controller }}', 'action' => 'view', ${{ singularVar }}->{{ details.property }}->{{ details.primaryKey[0] }}]) : '<span class="text-muted">&mdash;</span>' ?></dd>
 {% else %}
-        <h6>{{ field|humanize }}</h6>
-        <p><?= h(${{ singularVar }}->{{ field }}) ?></p>
+            <dt class="col-sm-4">{{ field|humanize }}</dt>
+            <dd class="col-sm-8"><?= $this->Html->nullSafe(h(${{ singularVar }}->{{ field }})) ?></dd>
 {% endif %}
 {% endfor %}
+        </dl>
     </div>
 {% endif %}
 {% if groupedFields.number %}
     <div class="col-lg-2">
+        <dl class="row mb-0">
 {% for field in groupedFields.number %}
-        <h6>{{ field|humanize }}</h6>
-        <p><?= $this->Number->format(${{ singularVar }}->{{ field }}) ?></p>
+            <dt class="col-sm-6">{{ field|humanize }}</dt>
+            <dd class="col-sm-6"><?= ${{ singularVar }}->{{ field }} !== null ? $this->Number->format(${{ singularVar }}->{{ field }}) : '<span class="text-muted">&mdash;</span>' ?></dd>
 {% endfor %}
+        </dl>
     </div>
 {% endif %}
 {% if groupedFields.date %}
-    <div class="col-lg-2">
+    <div class="col-lg-3">
+        <dl class="row mb-0">
 {% for field in groupedFields.date %}
-        <h6>{{ field|humanize }}</h6>
-        <p><?= $this->Time->userFormat(${{ singularVar }}->{{ field }}) ?></p>
+            <dt class="col-sm-6">{{ field|humanize }}</dt>
+            <dd class="col-sm-6"><?= $this->Html->nullSafe($this->Time->userFormat(${{ singularVar }}->{{ field }})) ?></dd>
 {% endfor %}
+        </dl>
     </div>
 {% endif %}
 {% if groupedFields.boolean %}
     <div class="col-lg-2">
+        <dl class="row mb-0">
 {% for field in groupedFields.boolean %}
-        <h6>{{ field|humanize }}</h6>
-        <p><?= ${{ singularVar }}->{{ field }} ? 'Yes' : 'No' ?></p>
+            <dt class="col-sm-6">{{ field|humanize }}</dt>
+            <dd class="col-sm-6"><?= $this->Badge->boolean(${{ singularVar }}->{{ field }}) ?></dd>
 {% endfor %}
+        </dl>
     </div>
 {% endif %}
 </div>
 {% if groupedFields.text %}
 {% for field in groupedFields.text %}
-<div class="row">
+<div class="row mt-3">
     <div class="col-lg-12">
         <h6>{{ field|humanize }}</h6>
-        <?= $this->Text->autoParagraph(h(${{ singularVar }}->{{ field }})) ?>
+        <?= ${{ singularVar }}->{{ field }} !== null ? $this->Text->autoParagraph(h(${{ singularVar }}->{{ field }})) : '<p class="text-muted">&mdash;</p>' ?>
     </div>
 </div>
 {% endfor %}

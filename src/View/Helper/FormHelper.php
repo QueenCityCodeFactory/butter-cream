@@ -14,6 +14,22 @@ use Cake\Utility\Hash;
 class FormHelper extends Helper
 {
     /**
+     * Initialize the helper and add custom templates.
+     *
+     * @param array<string, mixed> $config Configuration.
+     * @return void
+     */
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+
+        $this->templater()->add([
+            'inputGroupContainer' => '<div class="mb-3">{{label}}<div class="input-group">{{prepend}}{{input}}{{append}}</div>{{error}}</div>',
+            'inputGroupText' => '<span class="input-group-text">{{content}}</span>',
+        ]);
+    }
+
+    /**
      * Returns an HTML FORM element.
      *
      * @param mixed $context The context for which the form is being defined.
@@ -380,12 +396,10 @@ class FormHelper extends Helper
             'enhancedSelect' => true,
         ];
 
-        if ($options['enhancedSelect'] !== false && isset($options['options']) && is_array($options['options'])) {
-            if (empty($options['type'])) {
-                $options['type'] = $this->_inputType($fieldName, $options);
-            }
+        if ($options['enhancedSelect'] !== false && isset($options['options']) && (is_array($options['options']) || $options['options'] instanceof \Traversable)) {
+            $detectedType = $options['type'] ?: $this->_inputType($fieldName, $options);
 
-            if ($options['type'] == 'select') {
+            if ($detectedType == 'select') {
                 $options += [
                     'class' => ['enhanced-select'],
                 ];
@@ -394,6 +408,148 @@ class FormHelper extends Helper
 
         unset($options['enhancedSelect']);
 
+        // Input group support: prepend/append
+        $prepend = $options['prepend'] ?? null;
+        $append = $options['append'] ?? null;
+        unset($options['prepend'], $options['append']);
+
+        if ($prepend !== null || $append !== null) {
+            return $this->_inputGroup($fieldName, $options, $prepend, $append);
+        }
+
+        // Floating label support
+        if (!empty($options['floating'])) {
+            unset($options['floating']);
+            $options['spacing'] = 'form-floating mb-3';
+            $options['label'] = $options['label'] ?? ['floating' => true];
+        }
+
         return parent::control($fieldName, $options);
+    }
+
+    /**
+     * Render a Bootstrap 5 form-switch toggle.
+     *
+     * ```
+     * echo $this->Form->switch('is_active', ['label' => 'Active']);
+     * ```
+     *
+     * @param string $fieldName Field name.
+     * @param array<string, mixed> $options Standard checkbox options.
+     * @return string
+     */
+    public function switch(string $fieldName, array $options = []): string
+    {
+        $options += ['type' => 'checkbox', 'switch' => true];
+
+        return parent::control($fieldName, $options);
+    }
+
+    /**
+     * Creates a reset button.
+     *
+     * @param string|null $title Button caption.
+     * @param array<string, mixed> $options HTML attributes.
+     * @return string
+     */
+    public function resetButton(?string $title = null, array $options = []): string
+    {
+        if (empty($title)) {
+            $title = $this->Html->icon('rotate-left') . ' Reset';
+        }
+        $options += [
+            'type' => 'reset',
+            'escapeTitle' => false,
+            'class' => 'btn btn-outline-secondary',
+        ];
+
+        return parent::button($title, $options);
+    }
+
+    /**
+     * Render a Bootstrap 5 color picker input.
+     *
+     * Produces an `<input type="color">` with Bootstrap's
+     * `form-control form-control-color` styling. Can optionally be wrapped
+     * in an input group with a prepend/append.
+     *
+     * ```
+     * echo $this->Form->colorPicker('color');
+     * echo $this->Form->colorPicker('color', ['label' => 'Brand Color']);
+     * ```
+     *
+     * @param string $fieldName Field name.
+     * @param array<string, mixed> $options Standard control options.
+     * @return string
+     */
+    public function colorPicker(string $fieldName, array $options = []): string
+    {
+        $options += [
+            'type' => 'color',
+            'enhancedSelect' => false,
+        ];
+        $options = $this->injectClasses('form-control-color', $options);
+
+        return $this->control($fieldName, $options);
+    }
+
+    /**
+     * Internal: wrap a control in a Bootstrap 5 input group.
+     *
+     * @param string $fieldName Field name.
+     * @param array<string, mixed> $options Control options.
+     * @param string|null $prepend Text/HTML to prepend.
+     * @param string|null $append Text/HTML to append.
+     * @return string
+     */
+    protected function _inputGroup(string $fieldName, array $options, ?string $prepend, ?string $append): string
+    {
+        // Extract label before rendering the raw input
+        $label = $options['label'] ?? null;
+        $options['label'] = false;
+
+        // Build the label manually
+        $labelHtml = '';
+        if ($label !== false) {
+            $labelText = is_string($label) ? $label : null;
+            $labelOptions = is_array($label) ? $label : [];
+            $labelHtml = $this->label($fieldName, $labelText, $labelOptions);
+        }
+
+        // Strip the container wrapper via inline template override so the
+        // raw <input> sits directly inside the input-group flex container.
+        $options['error'] = false;
+        $options['templates'] = array_merge($options['templates'] ?? [], [
+            'inputContainer' => '{{content}}',
+            'inputContainerError' => '{{content}}',
+        ]);
+        $input = parent::control($fieldName, $options);
+
+        $prependHtml = '';
+        if ($prepend !== null) {
+            $prependHtml = $this->formatTemplate('inputGroupText', [
+                'content' => $prepend,
+            ]);
+        }
+
+        $appendHtml = '';
+        if ($append !== null) {
+            $appendHtml = $this->formatTemplate('inputGroupText', [
+                'content' => $append,
+            ]);
+        }
+
+        $errorHtml = '';
+        if ($this->isFieldError($fieldName)) {
+            $errorHtml = $this->error($fieldName);
+        }
+
+        return $this->formatTemplate('inputGroupContainer', [
+            'label' => $labelHtml,
+            'prepend' => $prependHtml,
+            'input' => $input,
+            'append' => $appendHtml,
+            'error' => $errorHtml,
+        ]);
     }
 }

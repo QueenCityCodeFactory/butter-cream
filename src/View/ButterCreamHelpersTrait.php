@@ -22,6 +22,15 @@ trait ButterCreamHelpersTrait
         $this->addHelper('Ajax', [
             'className' => 'ButterCream.Ajax',
         ]);
+        $this->addHelper('Alert', [
+            'className' => 'ButterCream.Alert',
+        ]);
+        $this->addHelper('Badge', [
+            'className' => 'ButterCream.Badge',
+        ]);
+        $this->addHelper('Card', [
+            'className' => 'ButterCream.Card',
+        ]);
         $this->addHelper('Filters', [
             'className' => 'ButterCream.Filters',
         ]);
@@ -52,6 +61,9 @@ trait ButterCreamHelpersTrait
         ]);
         $this->addHelper('Paginator', [
             'className' => 'ButterCream.Paginator',
+        ]);
+        $this->addHelper('Progress', [
+            'className' => 'ButterCream.Progress',
         ]);
         $this->addHelper('Table', [
             'className' => 'ButterCream.Table',
