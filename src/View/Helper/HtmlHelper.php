@@ -6,7 +6,6 @@ namespace ButterCream\View\Helper;
 use BootstrapUI\View\Helper\HtmlHelper as Helper;
 use BootstrapUI\View\Helper\OptionsAwareTrait;
 use Cake\View\View;
-
 use function Cake\Core\h;
 
 /**

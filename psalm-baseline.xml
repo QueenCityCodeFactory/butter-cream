@@ -132,6 +132,9 @@
     <UndefinedFunction>
       <code><![CDATA[__(Inflector::humanize((string)preg_replace('/_id$/', '', $title)))]]></code>
     </UndefinedFunction>
+    <UndefinedMethod>
+      <code><![CDATA[deleteBtn]]></code>
+    </UndefinedMethod>
   </file>
   <file src="src/View/Helper/UrlHelper.php">
     <MissingOverrideAttribute>

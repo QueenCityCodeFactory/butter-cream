@@ -7,7 +7,6 @@ use BootstrapUI\View\Helper\OptionsAwareTrait;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
-
 use function Cake\Core\h;
 
 /**

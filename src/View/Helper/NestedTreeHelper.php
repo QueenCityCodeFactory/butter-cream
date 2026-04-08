@@ -5,7 +5,6 @@ namespace ButterCream\View\Helper;
 
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
-
 use function Cake\Core\h;
 
 /**
