@@ -46,7 +46,7 @@ class TableHelper extends Helper
             'actionsCell' => '<td class="actions">{{content}}</td>',
             'emptyState' => '<tr><td colspan="{{colspan}}"'
                 . ' class="text-center text-muted py-5">{{icon}}{{message}}{{action}}</td></tr>',
-            'emptyStateIcon' => '<em class="fa-solid fa-{{icon}} fa-3x mb-3 d-block text-muted"></em>',
+            'emptyStateIcon' => '<em class="fa-solid fa-{{icon}} fa-3x mb-3 text-muted"></em>',
             'emptyStateAction' => '<div class="mt-2">{{content}}</div>',
             'sortHeader' => '<th{{attrs}}></th>',
             'sortHandle' => '<td{{attrs}}><i class="fa-solid fa-grip-vertical text-muted"></i></td>',
