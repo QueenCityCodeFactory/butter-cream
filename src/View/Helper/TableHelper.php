@@ -48,8 +48,60 @@ class TableHelper extends Helper
                 . ' class="text-center text-muted py-5">{{icon}}{{message}}{{action}}</td></tr>',
             'emptyStateIcon' => '<em class="fa-solid fa-{{icon}} fa-3x mb-3 d-block text-muted"></em>',
             'emptyStateAction' => '<div class="mt-2">{{content}}</div>',
+            'sortHeader' => '<th{{attrs}}></th>',
+            'sortHandle' => '<td{{attrs}}><i class="fa-solid fa-grip-vertical text-muted"></i></td>',
         ],
     ];
+
+    /**
+     * Render a `<th>` column header for a drag-and-drop sort handle.
+     *
+     * ```
+     * <?= $this->Table->sortHeader() ?>
+     * ```
+     *
+     * @param array<string, mixed> $options HTML attributes for the `<th>`.
+     * @return string
+     */
+    public function sortHeader(array $options = []): string
+    {
+        $options += [
+            'scope' => 'col',
+            'class' => 'text-center',
+            'style' => 'width:2rem;',
+            'aria-label' => 'Drag to Reorder',
+        ];
+
+        return $this->formatTemplate('sortHeader', [
+            'attrs' => $this->templater()->formatAttributes($options),
+        ]);
+    }
+
+    /**
+     * Render a `<td>` drag handle cell for a sortable table row.
+     *
+     * Attach `draggable="true"` and the corresponding drag events to the row itself.
+     * This cell only provides the visual grip icon and the `.drag-handle` hook.
+     *
+     * ```
+     * <?= $this->Table->sortHandle() ?>
+     * ```
+     *
+     * @param array<string, mixed> $options HTML attributes for the `<td>`.
+     * @return string
+     */
+    public function sortHandle(array $options = []): string
+    {
+        $options += [
+            'class' => 'text-center drag-handle',
+            'title' => 'Drag to reorder',
+            'style' => 'cursor:grab;',
+        ];
+
+        return $this->formatTemplate('sortHandle', [
+            'attrs' => $this->templater()->formatAttributes($options),
+        ]);
+    }
 
     /**
      * Generate Table header
