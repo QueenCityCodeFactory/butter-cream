@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ButterCream\View\Helper;
 
+use ArrayAccess;
 use Cake\I18n\DateTime;
 use Cake\View\Helper\TimeHelper as Helper;
 use Cake\View\StringTemplateTrait;
@@ -24,6 +25,10 @@ class TimeHelper extends Helper
      * @var array<string, mixed>
      */
     protected array $_defaultConfig = [
+        'outputTimezone' => null,
+        'timezoneAttribute' => 'timezone',
+        'identityAttribute' => 'identity',
+        'identityTimezoneField' => 'timezone',
         'templates' => [
             'timeTag' => '<time datetime="{{datetime}}">{{content}}</time>',
         ],
@@ -48,20 +53,13 @@ class TimeHelper extends Helper
         bool|string $invalid = false,
         string|DateTimeZone|null $timezone = null,
     ): string {
-        if (empty($date)) {
+        if ($date === null || $date === '') {
             return (string)$invalid;
         }
-        if (empty($timezone) && $this->getView()->getRequest()->getSession()->check('Auth.timezone')) {
-            $timezone = $this->getView()->getRequest()->getSession()->read('Auth.timezone');
-        }
+
         try {
-            if (!$date instanceof DateTime) {
-                if ($date instanceof DateTimeInterface) {
-                    $date = new DateTime($date->format('Y-m-d H:i:s'));
-                } else {
-                    $date = new DateTime((string)$date);
-                }
-            }
+            $timezone = $this->resolveUserTimezone($timezone);
+            $date = $this->normalizeDateTime($date);
             if ($timezone) {
                 $date = $date->setTimezone($timezone);
             }
@@ -87,17 +85,11 @@ class TimeHelper extends Helper
         int|string|DateTimeInterface|null $date,
         array $options = [],
     ): string {
-        if (empty($date)) {
+        if ($date === null || $date === '') {
             return '';
         }
 
-        if (!$date instanceof DateTime) {
-            if ($date instanceof DateTimeInterface) {
-                $date = new DateTime($date->format('Y-m-d H:i:s'));
-            } else {
-                $date = new DateTime((string)$date);
-            }
-        }
+        $date = $this->normalizeDateTime($date);
 
         return $this->timeAgoInWords($date, $options);
     }
@@ -148,7 +140,7 @@ class TimeHelper extends Helper
         ?string $format = null,
         bool|string $invalid = false,
     ): string {
-        if (empty($date)) {
+        if ($date === null || $date === '') {
             return (string)$invalid;
         }
 
@@ -157,12 +149,10 @@ class TimeHelper extends Helper
             return $display;
         }
 
-        if (!$date instanceof DateTimeInterface) {
-            try {
-                $date = new DateTime((string)$date);
-            } catch (Exception) {
-                return $display;
-            }
+        try {
+            $date = $this->normalizeDateTime($date);
+        } catch (Exception) {
+            return $display;
         }
 
         $iso = $date->format('c');
@@ -171,5 +161,126 @@ class TimeHelper extends Helper
             'datetime' => h($iso),
             'content' => h($display),
         ]);
+    }
+
+    /**
+     * Resolve the output timezone for a user-facing date.
+     *
+     * Resolution order is the explicit argument, helper outputTimezone config,
+     * request timezone attribute, authenticated identity field, then the legacy
+     * Auth.timezone session value.
+     *
+     * @param \DateTimeZone|string|null $timezone Explicit timezone override.
+     * @return \DateTimeZone|string|null
+     */
+    protected function resolveUserTimezone(
+        string|DateTimeZone|null $timezone = null,
+    ): string|DateTimeZone|null {
+        if ($timezone instanceof DateTimeZone || (is_string($timezone) && $timezone !== '')) {
+            return $timezone;
+        }
+
+        $timezone = $this->validTimezone($this->getConfig('outputTimezone'));
+        if ($timezone !== null) {
+            return $timezone;
+        }
+
+        $request = $this->getView()->getRequest();
+        $timezoneAttribute = $this->getConfig('timezoneAttribute');
+        if (is_string($timezoneAttribute) && $timezoneAttribute !== '') {
+            $timezone = $this->validTimezone($request->getAttribute($timezoneAttribute));
+            if ($timezone !== null) {
+                return $timezone;
+            }
+        }
+
+        $identityAttribute = $this->getConfig('identityAttribute');
+        $identityTimezoneField = $this->getConfig('identityTimezoneField');
+        if (is_string($identityAttribute) && is_string($identityTimezoneField)) {
+            $identity = $request->getAttribute($identityAttribute);
+            $timezone = $this->validTimezone($this->readIdentityField($identity, $identityTimezoneField));
+            if ($timezone !== null) {
+                return $timezone;
+            }
+        }
+
+        $session = $request->getSession();
+        if ($session->check('Auth.timezone')) {
+            return $this->validTimezone($session->read('Auth.timezone'));
+        }
+
+        return null;
+    }
+
+    /**
+     * Normalize a supported date value without changing its instant.
+     *
+     * @param \DateTimeInterface|string|int $date Date value.
+     * @return \Cake\I18n\DateTime
+     */
+    protected function normalizeDateTime(
+        int|string|DateTimeInterface $date,
+    ): DateTime {
+        if ($date instanceof DateTime) {
+            return $date;
+        }
+        if ($date instanceof DateTimeInterface) {
+            return DateTime::createFromInterface($date);
+        }
+        if (is_int($date)) {
+            return DateTime::createFromTimestamp($date);
+        }
+
+        return new DateTime($date);
+    }
+
+    /**
+     * Return a valid timezone candidate or null.
+     *
+     * @param mixed $timezone Timezone candidate.
+     * @return \DateTimeZone|string|null
+     */
+    protected function validTimezone(mixed $timezone): string|DateTimeZone|null
+    {
+        if ($timezone instanceof DateTimeZone) {
+            return $timezone;
+        }
+        if (!is_string($timezone) || trim($timezone) === '') {
+            return null;
+        }
+
+        $timezone = trim($timezone);
+        try {
+            new DateTimeZone($timezone);
+        } catch (Exception) {
+            return null;
+        }
+
+        return $timezone;
+    }
+
+    /**
+     * Read a timezone field from a framework-neutral identity value.
+     *
+     * @param mixed $identity Request identity.
+     * @param string $field Identity timezone field.
+     * @return mixed
+     */
+    protected function readIdentityField(mixed $identity, string $field): mixed
+    {
+        if ($field === '') {
+            return null;
+        }
+        if (is_array($identity)) {
+            return $identity[$field] ?? null;
+        }
+        if ($identity instanceof ArrayAccess && isset($identity[$field])) {
+            return $identity[$field];
+        }
+        if (is_object($identity) && isset($identity->{$field})) {
+            return $identity->{$field};
+        }
+
+        return null;
     }
 }

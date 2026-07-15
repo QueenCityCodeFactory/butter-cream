@@ -9,6 +9,7 @@
  */
 declare(strict_types=1);
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 
@@ -32,6 +33,10 @@ require_once $root . '/vendor/autoload.php';
 
 Configure::write('App.encoding', 'UTF-8');
 Configure::write('App.fullBaseUrl', 'http://localhost');
+
+Cache::setConfig('_cake_translations_', [
+    'className' => 'Array',
+]);
 
 if (!getenv('DB_URL')) {
     ConnectionManager::setConfig('test', [

@@ -162,7 +162,9 @@ public function bootstrap(): void
 - **`ButterCream\View\Helper\TimeHelper`**
 - `semantic()` - `<time>` element with Bootstrap tooltip showing relative time
 - `relativeTime()` - Human-friendly relative time strings
-- `userFormat()` - Configurable date/datetime formatting
+- `userFormat()` - Configurable user-timezone formatting. Resolution order is the explicit method argument,
+  helper `outputTimezone` config, request `timezone` attribute, identity `timezone`, then legacy session
+  `Auth.timezone`. Attribute and field names are configurable.
 
 #### URL Helper
 - **`ButterCream\View\Helper\UrlHelper`**

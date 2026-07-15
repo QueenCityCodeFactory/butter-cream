@@ -59,6 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.gitattributes` updated to export-ignore additional dev files (CHANGELOG, CONTRIBUTING, SECURITY, phpcs.xml)
 
 ### Fixed
+- `TimeHelper` now resolves user timezones from helper config, request context, identity, or legacy session;
+  preserves the instant of native `DateTimeInterface` values; and correctly supports integer timestamps including `0`
 - **Security:** XSS vulnerability in `templates/layout/main.php` — session data now encoded via `json_encode()` instead of raw string interpolation
 - **Security:** XSS vulnerability in `NestedTreeHelper` — tree item names now escaped with `h()`
 - **Security:** `javascript:void()` replaced with `'#'` in `FormHelper::cancelButton()`
